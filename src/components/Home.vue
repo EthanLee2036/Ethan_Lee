@@ -108,6 +108,9 @@ export default {
   margin-bottom: 18px;
   text-align: justify;
 }
+  .intro-description a{
+    color: var(--primary-blue);
+  }
 
 .intro-img-block {
   flex: 0 0 380px;
