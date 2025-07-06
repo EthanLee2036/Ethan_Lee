@@ -27,28 +27,27 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
             </svg>
-            <span>LinkedIn</span>
+          
           </a>
           
           <a href="https://www.researchgate.net/profile/Ling-Jie-Cheng?ev=hdr_xprf" class="social-link researchgate" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M19.586 0H4.414A4.414 4.414 0 000 4.414v15.172A4.414 4.414 0 004.414 24h15.172A4.414 4.414 0 0024 19.586V4.414A4.414 4.414 0 0019.586 0zM8.707 19.79c-1.297 0-2.274-.702-2.274-1.297 0-.351.351-.702.702-.702.702 0 1.297.351 1.297 1.053 0 .351-.351.946-.351.946s1.648-1.405 1.648-3.243c0-1.892-1.405-3.594-3.594-3.594-1.892 0-3.243 1.351-3.243 3.243 0 1.648 1.297 2.946 2.946 2.946zM15.334 15.5c0 .405-.324.729-.729.729s-.729-.324-.729-.729v-2.7c0-.405.324-.729.729-.729s.729.324.729.729v2.7zm.729-4.374c0 .405-.324.729-.729.729s-.729-.324-.729-.729v-1.458c0-.405.324-.729.729-.729s.729.324.729.729v1.458zm.729-3.24c0 .405-.324.729-.729.729s-.729-.324-.729-.729V6.27c0-.405.324-.729.729-.729s.729.324.729.729v1.616z"/>
             </svg>
-            <span>ResearchGate</span>
           </a>
           
           <a href="https://scholar.google.com/citations?user=IjgLMBkAAAAJ&hl=en" class="social-link scholar" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
             </svg>
-            <span>Google Scholar</span>
+
           </a>
           
           <a href="https://twitter.com/JeremyChengLJ" class="social-link twitter" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
-            <span>X</span>
+ 
           </a>
           
           <a href="mailto:lingjie.cheng@npeu.ox.ac.uk" class="social-link contact">
