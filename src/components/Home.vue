@@ -20,6 +20,44 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
 
       <div class="intro-img-block">
         <img src="/img/CHENG-LING-JIE_NUS-OAM-9.jpg" alt="Dr Cheng Ling Jie (Jeremy)" />
+        
+        <!-- 新添加的社交链接区域 -->
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/chenglingjie/" class="social-link linkedin" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+            </svg>
+            <span>LinkedIn</span>
+          </a>
+          
+          <a href="https://www.researchgate.net/profile/Ling-Jie-Cheng?ev=hdr_xprf" class="social-link researchgate" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.586 0H4.414A4.414 4.414 0 000 4.414v15.172A4.414 4.414 0 004.414 24h15.172A4.414 4.414 0 0024 19.586V4.414A4.414 4.414 0 0019.586 0zM8.707 19.79c-1.297 0-2.274-.702-2.274-1.297 0-.351.351-.702.702-.702.702 0 1.297.351 1.297 1.053 0 .351-.351.946-.351.946s1.648-1.405 1.648-3.243c0-1.892-1.405-3.594-3.594-3.594-1.892 0-3.243 1.351-3.243 3.243 0 1.648 1.297 2.946 2.946 2.946zM15.334 15.5c0 .405-.324.729-.729.729s-.729-.324-.729-.729v-2.7c0-.405.324-.729.729-.729s.729.324.729.729v2.7zm.729-4.374c0 .405-.324.729-.729.729s-.729-.324-.729-.729v-1.458c0-.405.324-.729.729-.729s.729.324.729.729v1.458zm.729-3.24c0 .405-.324.729-.729.729s-.729-.324-.729-.729V6.27c0-.405.324-.729.729-.729s.729.324.729.729v1.616z"/>
+            </svg>
+            <span>ResearchGate</span>
+          </a>
+          
+          <a href="https://scholar.google.com/citations?user=IjgLMBkAAAAJ&hl=en" class="social-link scholar" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
+            </svg>
+            <span>Google Scholar</span>
+          </a>
+          
+          <a href="https://twitter.com/JeremyChengLJ" class="social-link twitter" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            <span>X</span>
+          </a>
+          
+          <a href="mailto:lingjie.cheng@npeu.ox.ac.uk" class="social-link contact">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            <span>Contact Dr Cheng</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -108,15 +146,17 @@ export default {
   margin-bottom: 18px;
   text-align: justify;
 }
-  .intro-description a{
-    color: var(--primary-blue);
-  }
+.intro-description a {
+  color: var(--primary-blue);
+}
 
 .intro-img-block {
   flex: 0 0 380px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 
 .intro-img-block img {
@@ -133,6 +173,101 @@ export default {
 .intro-img-block img:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 40px rgba(21, 76, 121, 0.2);
+}
+
+/* 社交链接样式 */
+.social-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 420px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: white;
+  border: 2px solid #e3e9f1;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.85em;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(21, 76, 121, 0.08);
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(21, 76, 121, 0.15);
+}
+
+.social-link svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.social-link span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.social-link.linkedin {
+  color: #0077b5;
+  border-color: #0077b5;
+}
+
+.social-link.linkedin:hover {
+  background: #0077b5;
+  color: white;
+}
+
+.social-link.researchgate {
+  color: #00d0b6;
+  border-color: #00d0b6;
+}
+
+.social-link.researchgate:hover {
+  background: #00d0b6;
+  color: white;
+}
+
+.social-link.scholar {
+  color: #4285f4;
+  border-color: #4285f4;
+}
+
+.social-link.scholar:hover {
+  background: #4285f4;
+  color: white;
+}
+
+.social-link.twitter {
+  color: #1da1f2;
+  border-color: #1da1f2;
+}
+
+.social-link.twitter:hover {
+  background: #1da1f2;
+  color: white;
+}
+
+.social-link.contact {
+  color: var(--primary-blue);
+  border-color: var(--primary-blue);
+}
+
+.social-link.contact:hover {
+  background: var(--primary-blue);
+  color: white;
 }
 
 h2 {
@@ -244,6 +379,28 @@ h2 {
     flex-direction: column;
     gap: 20px;
   }
+  
+  .social-links {
+    gap: 8px;
+    max-width: 300px;
+  }
+  
+  .social-link {
+    padding: 8px 10px;
+    font-size: 0.8em;
+    gap: 5px;
+    flex: 1 1 calc(50% - 4px);
+    min-width: calc(50% - 4px);
+  }
+  
+  .social-link svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .social-link span {
+    font-size: 0.9em;
+  }
 }
 
 @media (max-width: 480px) {
@@ -254,6 +411,24 @@ h2 {
   
   #intro-info h1 {
     font-size: 1.6em;
+  }
+  
+  .social-links {
+    gap: 6px;
+    max-width: 280px;
+  }
+  
+  .social-link {
+    padding: 6px 8px;
+    font-size: 0.75em;
+    gap: 4px;
+    flex: 1 1 calc(50% - 3px);
+    min-width: calc(50% - 3px);
+  }
+  
+  .social-link svg {
+    width: 12px;
+    height: 12px;
   }
 }
 </style>
