@@ -1,0 +1,21 @@
+{
+  "name": "value-lab-website",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "vue": "^3.4.0",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "gh-pages": "^6.1.1",
+    "vite": "^5.0.10"
+  },
+  "homepage": "https://EthanLee2036.github.io/Ethan_Lee",
+  "license": "MIT"
+}
