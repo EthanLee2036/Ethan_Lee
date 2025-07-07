@@ -35,7 +35,7 @@
     <div class="section-title">Collaborators</div>
     <ul class="team-list">
       <li v-for="member in collaborators" :key="member.name" class="team-member">
-        <strong>{{ member.name }}<span v-if="member.degree" class="degree"> [{{ member.degree }}]</span></strong>
+        <strong>{{ member.name }} [{{ member.degree }}]</strong>
         <span class="member-education">{{ member.institution }}</span>
       </li>
     </ul>
@@ -43,7 +43,7 @@
     <div class="section-title">Research Team Members</div>
     <ul class="team-list">
       <li v-for="member in teamMembers" :key="member.name" class="team-member">
-        <strong>{{ member.name }}<span v-if="member.degree" class="degree"> [{{ member.degree }}]</span></strong>
+        <strong>{{ member.name }} [{{ member.degree }}]</strong>
         <span class="member-education">{{ member.institution }}</span>
       </li>
     </ul>
@@ -51,7 +51,7 @@
     <div class="section-title">Current Graduate Students</div>
     <ul class="student-list">
       <li v-for="student in currentStudents" :key="student.name" class="student-item">
-        <strong>{{ student.name }}<span v-if="student.degree" class="degree"> [{{ student.degree }}]</span></strong>
+        <strong>{{ student.name }} [{{ student.degree }}]</strong>
         <span class="research-topic">{{ student.program }}</span>
       </li>
     </ul>
@@ -59,7 +59,7 @@
     <div class="section-title">Current Undergraduate Students</div>
     <ul class="student-list">
       <li v-for="student in currentUndergraduates" :key="student.name" class="student-item">
-        <strong>{{ student.name }}<span v-if="student.degree" class="degree"> [{{ student.degree }}]</span></strong>
+        <strong>{{ student.name }} [{{ student.degree }}]</strong>
         <span class="research-topic">{{ student.program }}</span>
       </li>
     </ul>
@@ -67,7 +67,7 @@
     <div class="section-title">Past Graduate Students</div>
     <ul class="student-list">
       <li v-for="student in pastStudents" :key="student.name" class="student-item">
-        <strong>{{ student.name }}<span v-if="student.degree" class="degree"> [{{ student.degree }}]</span></strong>
+        <strong>{{ student.name }} [{{ student.degree }}]</strong>
         <span class="research-topic">{{ student.program }}</span>
       </li>
     </ul>
@@ -75,7 +75,7 @@
     <div class="section-title">Past Undergraduate Students</div>
     <ul class="student-list">
       <li v-for="student in pastUndergraduates" :key="student.name" class="student-item">
-        <strong>{{ student.name }}<span v-if="student.degree" class="degree"> [{{ student.degree }}]</span></strong>
+        <strong>{{ student.name }} [{{ student.degree }}]</strong>
         <span class="research-topic">{{ student.program }}</span>
         <span v-if="student.award" class="award">{{ student.award }}</span>
       </li>
@@ -367,12 +367,6 @@ h1 {
   font-size: 1.05em;
   display: block;
   margin-bottom: 4px;
-}
-
-.degree {
-  display: inline;
-  color: var(--primary-blue);
-  font-weight: 500;
 }
 
 .member-education,
