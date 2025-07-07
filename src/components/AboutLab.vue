@@ -59,9 +59,9 @@ export default {
     return {
       colorPalette: [
         {
-          name: 'Deep Purple',
+          name: 'NPEU Deep Purple',
           hex: '#5c3478',
-          meaning: 'NPEU: Wisdom, dignity, research excellence'
+          meaning: 'Wisdom, dignity, research excellence'
         },
         {
           name: 'NUS Blue',
