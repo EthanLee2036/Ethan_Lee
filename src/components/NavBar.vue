@@ -80,7 +80,16 @@ export default {
   border-bottom: 1px solid var(--border-light);
   padding: 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  width:100%;
+  z-index:1000;
 }
+  body{
+    padding-top:72px;
+  }
 
 .navbar {
   max-width: 1200px;
