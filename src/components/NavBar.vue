@@ -94,7 +94,7 @@ export default {
 }
 
 .logo img {
-  height: 72px;
+  height: 100px;
   width: auto;
   display: block;
 }
