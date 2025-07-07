@@ -98,9 +98,9 @@ export default {
 }
 
 .lab-logo {
-  width: 520px;
-  max-width: 100%;
-  height: 140px;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
   object-fit: contain;
   margin-bottom: 16px;
   border-radius: 8px;
