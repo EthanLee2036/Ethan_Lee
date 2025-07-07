@@ -88,7 +88,7 @@ export default {
   z-index:1000;
 }
   body{
-    padding-top:110px;
+    padding-top:85px;
   }
 
 .navbar {
@@ -97,13 +97,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 110px;
+  height: 85px;
   padding: 0 28px;
   position: relative;
 }
 
 .logo img {
-  height: 100px;
+  height: 75px;
   width: auto;
   display: block;
 }
@@ -143,7 +143,7 @@ export default {
   display: none;
   position: absolute;
   left: 0;
-  top: 32px;
+  top: 45px;
   background: white;
   min-width: 170px;
   box-shadow: 0 4px 16px rgba(21,76,121,0.13);
