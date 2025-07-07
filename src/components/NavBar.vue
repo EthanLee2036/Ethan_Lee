@@ -86,29 +86,29 @@ export default {
 }
 
 body {
-  padding-top: 70px;
+  padding-top: 72px;
 }
 
 .navbar {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
-  padding: 0 60px;
+  height: 72px;
+  padding: 0 28px;
   position: relative;
 }
 
 .logo img {
-  height: 50px;
+  height: 72px;
   width: auto;
   display: block;
 }
 
 .nav-menu {
   display: flex;
-  gap: 35px;
+  gap: 32px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -118,12 +118,12 @@ body {
 .dropdown-toggle {
   color: white;
   text-decoration: none;
-  font-size: 1em;
+  font-size: 1.07em;
   font-weight: 500;
   transition: color 0.2s;
   padding: 4px 0;
   border-bottom: 2px solid transparent;
-  letter-spacing: 0.3px;
+  letter-spacing: 1px;
 }
 
 .nav-menu li a:hover,
@@ -141,7 +141,7 @@ body {
   display: none;
   position: absolute;
   left: 0;
-  top: 30px;
+  top: 32px;
   background: white;
   min-width: 170px;
   box-shadow: 0 4px 16px rgba(21,76,121,0.13);
@@ -239,23 +239,6 @@ body {
   color: var(--primary-orange);
 }
 
-@media (max-width: 1200px) {
-  .navbar {
-    max-width: 1200px;
-    padding: 0 40px;
-  }
-}
-
-@media (max-width: 1000px) {
-  .navbar {
-    padding: 0 30px;
-  }
-  
-  .nav-menu {
-    gap: 28px;
-  }
-}
-
 @media (max-width: 800px) {
   .nav-menu {
     display: none;
@@ -266,21 +249,7 @@ body {
   }
   
   .navbar {
-    padding: 0 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .logo img {
-    height: 45px;
-  }
-  
-  .navbar {
-    height: 65px;
-  }
-  
-  body {
-    padding-top: 65px;
+    padding: 0 12px;
   }
 }
 </style>
