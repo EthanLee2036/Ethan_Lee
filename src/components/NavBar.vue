@@ -86,7 +86,7 @@ export default {
 }
 
 body {
-  padding-top: 72px;
+  padding-top: 100px;
 }
 
 .navbar {
