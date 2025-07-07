@@ -35,16 +35,16 @@
     <div class="section-title">Collaborators</div>
     <ul class="team-list">
       <li v-for="member in collaborators" :key="member.name" class="team-member">
-        <strong>{{ member.name }}</strong>
-        <span class="member-education">{{ member.education }}</span>
+        <strong>{{ member.name }}<span v-if="member.degree" class="degree"> [{{ member.degree }}]</span></strong>
+        <span class="member-education">{{ member.institution }}</span>
       </li>
     </ul>
 
     <div class="section-title">Research Team Members</div>
     <ul class="team-list">
       <li v-for="member in teamMembers" :key="member.name" class="team-member">
-        <strong>{{ member.name }}</strong>
-        <span class="member-education">{{ member.education }}</span>
+        <strong>{{ member.name }}<span v-if="member.degree" class="degree"> [{{ member.degree }}]</span></strong>
+        <span class="member-education">{{ member.institution }}</span>
       </li>
     </ul>
 
@@ -107,15 +107,15 @@ export default {
         ]
       },
       collaborators: [
-        { name: 'Annushiah Vasan Thakumar (PhD)', education: 'Universiti Sains Malaysia' },
-        { name: 'Zhang Xin (PhD)', education: 'University of Groningen' }
+        { name: 'Annushiah Vasan Thakumar', degree: 'PhD', institution: 'Universiti Sains Malaysia' },
+        { name: 'Zhang Xin', degree: 'PhD', institution: 'University of Groningen' }
       ],
       teamMembers: [
-        { name: 'Chen Le Ann', education: 'MPH, National University of Singapore' },
-        { name: 'Chern Wei Jie Calvin', education: 'BSN (Hons), National University of Singapore' },
-        { name: 'Cheng Jing Ying', education: 'BSN (Hons), National University of Singapore' },
-        { name: 'Yen Kai Yoong', education: 'BSN (Hons), National University of Singapore' },
-        { name: 'Yap Xin Yi', education: 'BSc, National University of Singapore' }
+        { name: 'Chen Le Ann', degree: 'MPH', institution: 'National University of Singapore' },
+        { name: 'Chern Wei Jie Calvin', degree: 'BSN (Hons)', institution: 'National University of Singapore' },
+        { name: 'Cheng Jing Ying', degree: 'BSN (Hons)', institution: 'National University of Singapore' },
+        { name: 'Yen Kai Yoong', degree: 'BSN (Hons)', institution: 'National University of Singapore' },
+        { name: 'Yap Xin Yi', degree: 'BSc', institution: 'National University of Singapore' }
       ],
       currentStudents: [
         {
