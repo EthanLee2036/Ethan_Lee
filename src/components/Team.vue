@@ -51,7 +51,7 @@
     <div class="section-title">Current Graduate Students</div>
     <ul class="student-list">
       <li v-for="student in currentStudents" :key="student.name" class="student-item">
-        <strong>{{ student.name }}</strong> ({{ student.degree }})
+        <strong>{{ student.name }}<span v-if="student.degree" class="degree"> [{{ student.degree }}]</span></strong>
         <span class="research-topic">{{ student.program }}</span>
       </li>
     </ul>
@@ -59,7 +59,7 @@
     <div class="section-title">Current Undergraduate Students</div>
     <ul class="student-list">
       <li v-for="student in currentUndergraduates" :key="student.name" class="student-item">
-        <strong>{{ student.name }}</strong> ({{ student.degree }})
+        <strong>{{ student.name }}<span v-if="student.degree" class="degree"> [{{ student.degree }}]</span></strong>
         <span class="research-topic">{{ student.program }}</span>
       </li>
     </ul>
@@ -67,7 +67,7 @@
     <div class="section-title">Past Graduate Students</div>
     <ul class="student-list">
       <li v-for="student in pastStudents" :key="student.name" class="student-item">
-        <strong>{{ student.name }}</strong> ({{ student.degree }})
+        <strong>{{ student.name }}<span v-if="student.degree" class="degree"> [{{ student.degree }}]</span></strong>
         <span class="research-topic">{{ student.program }}</span>
       </li>
     </ul>
@@ -75,7 +75,7 @@
     <div class="section-title">Past Undergraduate Students</div>
     <ul class="student-list">
       <li v-for="student in pastUndergraduates" :key="student.name" class="student-item">
-        <strong>{{ student.name }}</strong> ({{ student.degree }})
+        <strong>{{ student.name }}<span v-if="student.degree" class="degree"> [{{ student.degree }}]</span></strong>
         <span class="research-topic">{{ student.program }}</span>
         <span v-if="student.award" class="award">{{ student.award }}</span>
       </li>
@@ -107,116 +107,139 @@ export default {
         ]
       },
       collaborators: [
-        { name: 'Annushiah Vasan Thakumar [PhD]', education: 'Universiti Sains Malaysia' },
-        { name: 'Zhang Xin [PhD]', education: 'University of Groningen' }
+        { name: 'Annushiah Vasan Thakumar (PhD)', education: 'Universiti Sains Malaysia' },
+        { name: 'Zhang Xin (PhD)', education: 'University of Groningen' }
       ],
       teamMembers: [
-        { name: 'Chen Le Ann [MPH]', education: 'National University of Singapore' },
-        { name: 'Chern Wei Jie Calvin [BSN (Hons)]', education: 'National University of Singapore' },
-        { name: 'Cheng Jing Ying [BSN (Hons)]', education: 'National University of Singapore' },
-        { name: 'Yen Kai Yoong [BSN (Hons)]', education: 'National University of Singapore' },
-        { name: 'Yap Xin Yi [BSN (Hons)]', education: 'National University of Singapore' }
+        { name: 'Chen Le Ann', education: 'MPH, National University of Singapore' },
+        { name: 'Chern Wei Jie Calvin', education: 'BSN (Hons), National University of Singapore' },
+        { name: 'Cheng Jing Ying', education: 'BSN (Hons), National University of Singapore' },
+        { name: 'Yen Kai Yoong', education: 'BSN (Hons), National University of Singapore' },
+        { name: 'Yap Xin Yi', education: 'BSc, National University of Singapore' }
       ],
       currentStudents: [
         {
-          name: 'Tay Jie Yin [MPH]',
+          name: 'Tay Jie Yin',
+          degree: 'MPH',
           program: 'NUS Public Health, National University of Singapore, Singapore'
         }
       ],
       currentUndergraduates: [
         {
-          name: 'Joshua Teoh Ee-An [BSN (Hons) candidate]',
+          name: 'Joshua Teoh Ee-An',
+          degree: 'BSN (Hons) candidate',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Mabel Madeline Lee De Ean [BSN (Hons) candidate]',
+          name: 'Mabel Madeline Lee De Ean',
+          degree: 'BSN (Hons) candidate',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         }
       ],
       pastStudents: [
         {
-          name: 'Ustunkan Fulya [MPH]',
+          name: 'Ustunkan Fulya',
+          degree: 'MPH',
           program: 'NUS Public Health, National University of Singapore, Singapore'
         }
       ],
       pastUndergraduates: [
         {
-          name: 'Chua Ee Shen [BPharm]',
+          name: 'Chua Ee Shen',
+          degree: 'BPharm',
           program: 'School of Pharmacy, Taylor\'s University, Malaysia'
         },
         {
-          name: 'Chern Wei Jie Calvin [BSN (Hons)]',
+          name: 'Chern Wei Jie Calvin',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore',
           award: 'Winner of the NUS Outstanding Undergraduate Researcher Prize'
         },
         {
-          name: 'Glenys Chiang [BSN (Hons)]',
+          name: 'Glenys Chiang',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Teow Eau Liang [BSN (Hons)]',
+          name: 'Teow Eau Liang',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore',
           award: 'Winner of the NUS Outstanding Undergraduate Researcher Prize'
         },
         {
-          name: 'Lew Shu Ling [BSN (Hons)]',
+          name: 'Lew Shu Ling',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Yap Siat Yee [BSN (Hons)]',
+          name: 'Yap Siat Yee',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Yeo Ying Yee [BSN (Hons)]',
+          name: 'Yeo Ying Yee',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Lee Zi Rong [BSN (Hons)]',
+          name: 'Lee Zi Rong',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Quek Yu Yi [BSN (Hons)]',
+          name: 'Quek Yu Yi',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Ng Yu Xuan [BSN (Hons)]',
+          name: 'Ng Yu Xuan',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Lam Xin Rong [BSN (Hons)]',
+          name: 'Lam Xin Rong',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Celest Leo Su Yi [BSN (Hons)]',
+          name: 'Celest Leo Su Yi',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Mong Mei Siew Andrea [BSN (Hons)]',
+          name: 'Mong Mei Siew Andrea',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Lai Min Yi Calida [BSN (Hons)]',
+          name: 'Lai Min Yi Calida',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Teo Rui Hong [BSN (Hons)]',
+          name: 'Teo Rui Hong',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Cheng Wen Hui [BSN (Hons)]',
+          name: 'Cheng Wen Hui',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore',
           award: 'Winner of the Nursing Research Medal'
         },
         {
-          name: 'David Lau Chia Ern [BSN (Hons)]',
+          name: 'David Lau Chia Ern',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Goh Qin Ling Pearlyn [BSN (Hons)]',
+          name: 'Goh Qin Ling Pearlyn',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         },
         {
-          name: 'Ser Ting Fang [BSN (Hons)]',
+          name: 'Ser Ting Fang',
+          degree: 'BSN (Hons)',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         }
       ]
@@ -344,6 +367,12 @@ h1 {
   font-size: 1.05em;
   display: block;
   margin-bottom: 4px;
+}
+
+.degree {
+  display: inline;
+  color: var(--primary-blue);
+  font-weight: 500;
 }
 
 .member-education,
