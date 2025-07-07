@@ -96,17 +96,23 @@ export default {
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   height: 85px;
-  padding: 0 28px;
+  padding: 0 40px;
   position: relative;
 }
+ .logo{
+   flex:0 0 auto;
+ }
 
 .logo img {
-  height: 75px;
+  height: 65px;
   width: auto;
   display: block;
 }
+  nav{
+    flex:0 0 auto;
+  }
 
 .nav-menu {
   display: flex;
@@ -120,12 +126,12 @@ export default {
 .dropdown-toggle {
   color: white;
   text-decoration: none;
-  font-size: 1.07em;
+  font-size: 1.05em;
   font-weight: 500;
   transition: color 0.2s;
   padding: 4px 0;
   border-bottom: 2px solid transparent;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .nav-menu li a:hover,
