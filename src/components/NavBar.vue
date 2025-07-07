@@ -1,4 +1,3 @@
-// components/NavBar.vue
 <template>
   <header class="site-header">
     <div class="navbar">
@@ -23,14 +22,12 @@
           <li><router-link to="/contact">Contact</router-link></li>
         </ul>
         
-        <!-- Mobile menu button -->
         <button class="mobile-menu-btn" @click="toggleMobileMenu" :class="{ active: mobileMenuVisible }">
           <span></span>
           <span></span>
           <span></span>
         </button>
         
-        <!-- Mobile menu -->
         <ul class="mobile-menu" :class="{ active: mobileMenuVisible }">
           <li><router-link to="/" @click="closeMobileMenu">Home</router-link></li>
           <li><router-link to="/about" @click="closeMobileMenu">About VALUE Lab</router-link></li>
@@ -80,25 +77,26 @@ export default {
   border-bottom: 1px solid var(--border-light);
   padding: 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  width:100%;
-  z-index:1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
 }
-  body{
-    padding-top:70px;
-  }
+
+body {
+  padding-top: 70px;
+}
 
 .navbar {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 70px;
-  padding: 0 30px;
+  padding: 0 60px;
   position: relative;
 }
 
@@ -110,7 +108,7 @@ export default {
 
 .nav-menu {
   display: flex;
-  gap: 30px;
+  gap: 35px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -241,15 +239,23 @@ export default {
   color: var(--primary-orange);
 }
 
-@media(max-width:1000px){
-  .nav-menu {
-    gap: 24px;
-  }
-  
+@media (max-width: 1200px) {
   .navbar {
-    padding: 0 20px;
+    max-width: 1200px;
+    padding: 0 40px;
   }
 }
+
+@media (max-width: 1000px) {
+  .navbar {
+    padding: 0 30px;
+  }
+  
+  .nav-menu {
+    gap: 28px;
+  }
+}
+
 @media (max-width: 800px) {
   .nav-menu {
     display: none;
@@ -263,7 +269,8 @@ export default {
     padding: 0 15px;
   }
 }
-  @media (max-width: 480px) {
+
+@media (max-width: 480px) {
   .logo img {
     height: 45px;
   }
