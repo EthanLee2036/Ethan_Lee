@@ -85,10 +85,6 @@ export default {
   z-index: 1000;
 }
 
-body {
-  padding-top: 100px;
-}
-
 .navbar {
   max-width: 1200px;
   margin: 0 auto;
