@@ -33,6 +33,7 @@ body {
   background: #f7fafd;
   color: #222;
   line-height: 1.7;
+  padding-top:100px !important;
 }
 
 :root {
