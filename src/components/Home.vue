@@ -48,7 +48,7 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
           </div>
           
           <div class="contact-link-row">
-            <a href="mailto:lingjie.cheng@npeu.ox.ac.uk" class="social-link contact">
+            <a href="#" onclick="window.open('mailto:ethanlee2036@gmail.com?subject=Contact%20from%20VALUE%20Lab&body=Dear%20Dr%20Cheng%2C%0A%0AI%20would%20like%20to%20get%20in%20touch%20with%20you%20regarding...','_blank'); return false;" class="social-link contact">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
               </svg>
