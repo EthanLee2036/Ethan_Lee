@@ -159,6 +159,7 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
                 placeholder="Type your message..." 
                 class="chat-input"
                 :disabled="isTyping"
+                ref="chatInput"
               >
               <button @click="sendMessage" class="send-btn" :disabled="!currentMessage.trim() || isTyping">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -273,6 +274,10 @@ export default {
         this.hasNewMessage = false;
         this.$nextTick(() => {
           this.scrollToBottom();
+          // 自动聚焦到输入框
+          if (this.$refs.chatInput) {
+            this.$refs.chatInput.focus();
+          }
         });
       }
     },
@@ -281,6 +286,13 @@ export default {
     },
     toggleMode() {
       this.currentMode = this.currentMode === 'chat' ? 'message' : 'chat';
+      if (this.currentMode === 'chat') {
+        this.$nextTick(() => {
+          if (this.$refs.chatInput) {
+            this.$refs.chatInput.focus();
+          }
+        });
+      }
     },
     getCurrentTime() {
       return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -661,6 +673,7 @@ h2 {
   max-width: 90vw;
   height: 600px;
   max-height: 80vh;
+  min-height: 500px; /* 确保最小高度 */
   background: white;
   border-radius: 20px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -744,6 +757,7 @@ h2 {
   flex: 1;
   display: flex;
   flex-direction: column;
+  height: 0; /* 确保flex布局正常工作 */
 }
 
 .chat-messages {
@@ -753,6 +767,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-height: 0; /* 确保可以滚动 */
 }
 
 .message {
@@ -832,15 +847,17 @@ h2 {
 }
 
 .chat-input-area {
-  padding: 20px;
+  padding: 16px 20px 20px 20px;
   border-top: 1px solid #e1e5e9;
   background: #f8f9fa;
+  flex-shrink: 0; /* 防止被压缩 */
 }
 
 .chat-input-container {
   display: flex;
   gap: 12px;
   align-items: center;
+  min-height: 56px; /* 确保输入容器有足够高度 */
 }
 
 .chat-input {
@@ -1134,6 +1151,11 @@ h2 {
 
   .chat-widget-overlay {
     padding: 10px;
+  }
+
+  .chat-widget {
+    width: 95vw;
+    height: 85vh; /* 减少高度确保输入框可见 */
   }
 
   .floating-chat-btn {
