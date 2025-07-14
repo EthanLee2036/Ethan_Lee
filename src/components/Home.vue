@@ -115,6 +115,11 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
             </div>
           </div>
           <div class="chat-header-actions">
+            <button @click="showAdminPanel" class="mode-toggle" title="Admin Panel (Dr Cheng only)" style="opacity: 0.3;">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM19 7V6C19 3.8 17.2 2 15 2H9C6.8 2 5 3.8 5 6V7H3V9H5V19C5 20.1 5.9 21 7 21H17C18.1 21 19 20.1 19 19V9H21V7H19ZM17 19H7V9H17V19Z"/>
+              </svg>
+            </button>
             <button @click="toggleMode" class="mode-toggle" :title="currentMode === 'chat' ? 'Switch to Message' : 'Switch to Chat'">
               <svg v-if="currentMode === 'chat'" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
@@ -295,7 +300,7 @@ export default {
         {
           id: 1,
           sender: 'assistant',
-          text: 'Hello! I\'m Dr Cheng\'s AI assistant. How can I help you today? I can answer questions about research, collaborations, or help you get in touch.',
+          text: 'Hello! I\'m Dr Cheng\'s AI assistant. How can I help you today? I can answer questions about research, collaborations, or help you get in touch. 😊',
           time: this.getCurrentTime()
         }
       ],
@@ -384,24 +389,41 @@ export default {
       this.isTyping = true;
       
       try {
+        // 构建更智能的提示词，包含对话历史
+        const conversationHistory = this.messages.slice(-5).map(msg => 
+          `${msg.sender === 'user' ? 'User' : 'Assistant'}: ${msg.text}`
+        ).join('\n');
+        
         // Using Claude API through window.claude.complete
-        const response = await window.claude.complete(`You are Dr Cheng Ling Jie's AI assistant. You help visitors to his academic website by answering questions about his research, background, and facilitating contact. 
+        const response = await window.claude.complete(`You are Dr Cheng Ling Jie's AI assistant helping visitors on his academic website. You should provide helpful, contextual responses based on the conversation.
 
 Context about Dr Cheng:
 - Postdoctoral Fellow at National Perinatal Epidemiology Unit, University of Oxford
 - Senior Tutor at Alice Lee Centre for Nursing Studies, National University of Singapore  
 - PhD, MPH, BSN (Hons), RN
-- Research focus: health economics and outcomes research
-- Has led projects securing over SGD 1.6 million in funding
+- Research focus: health economics and outcomes research, healthcare decision-making
+- Led projects securing over SGD 1.6 million in funding
 - Published 70+ peer-reviewed articles
 - Supervised 30+ undergraduate and 8 postgraduate theses
-- Senior Editor for Systematic Reviews journal
-- Associate Editor for Quality of Life Research journal
+- Senior Editor for Systematic Reviews journal, Associate Editor for Quality of Life Research
 - Member of EuroQol Group, ISPOR, ISOQOL, PROMIS Health Organization
+- Expert in health economics, quality of life research, systematic reviews
 
-User message: "${messageToSend}"
+Recent conversation context:
+${conversationHistory}
 
-Please respond naturally and helpfully as Dr Cheng's AI assistant. Keep responses concise but informative. If asked about collaboration or contacting Dr Cheng directly, suggest they can use the "Connect with Dr Cheng" button or email lingjie.cheng@npeu.ox.ac.uk.`);
+Current user message: "${messageToSend}"
+
+Guidelines:
+- Respond naturally and conversationally to the specific message
+- If asked about research topics, provide specific details about Dr Cheng's work
+- If asked about collaboration, explain his areas of expertise and suggest next steps
+- If the message is very short/unclear, ask clarifying questions
+- Keep responses helpful but concise (2-3 sentences max)
+- If appropriate, suggest using "Connect with Dr Cheng" button for detailed discussions
+- Be friendly and professional
+
+Respond only with your reply, no extra formatting:`);
 
         // Add assistant response
         const assistantMessage = {
@@ -420,11 +442,13 @@ Please respond naturally and helpfully as Dr Cheng's AI assistant. Keep response
         });
         
       } catch (error) {
-        // Fallback response if Claude API fails
+        // 智能的备用回复，基于消息内容
+        let fallbackResponse = this.generateFallbackResponse(messageToSend);
+        
         const assistantMessage = {
           id: this.messageIdCounter++,
           sender: 'assistant',
-          text: 'Thank you for your message! For detailed inquiries, I recommend using the "Connect with Dr Cheng" button or contacting Dr Cheng directly at lingjie.cheng@npeu.ox.ac.uk. Is there anything specific about his research or background I can help clarify?',
+          text: fallbackResponse,
           time: this.getCurrentTime()
         };
         this.messages.push(assistantMessage);
@@ -610,89 +634,194 @@ Please respond naturally and helpfully as Dr Cheng's AI assistant. Keep response
     },
     
     async sendNotificationToDrCheng(data) {
-      // 这里可以集成各种通知方式
+      // 实际可用的通知方式
       
-      // 方式1: Webhook 到 Slack/Discord/Teams
+      // 方式1: 生成mailto链接，自动打开邮件客户端
+      const emailSubject = encodeURIComponent(`🔔 Website Chat: ${data.type === 'human_chat_request' ? 'Direct Chat Request' : 'New Visitor'} from ${data.visitor?.name || 'Anonymous'}`);
+      const emailBody = encodeURIComponent(this.formatEmailNotification(data));
+      const mailtoLink = `mailto:lingjie.cheng@npeu.ox.ac.uk?subject=${emailSubject}&body=${emailBody}`;
+      
+      // 方式2: 复制到剪贴板
       try {
-        // 替换为你的 Webhook URL
-        const webhookUrl = 'YOUR_SLACK_WEBHOOK_URL';
-        
-        const slackMessage = {
-          text: "🔔 New chat request from website visitor",
-          attachments: [{
-            color: "good",
-            fields: [
-              {
-                title: "Visitor",
-                value: `${data.visitor.name} (${data.visitor.email})`,
-                short: true
-              },
-              {
-                title: "Request Type",
-                value: data.type === 'human_chat_request' ? 'Direct Chat Request' : 'Info Collection',
-                short: true
-              },
-              {
-                title: "Messages",
-                value: `${data.messages?.length || 0} messages exchanged`,
-                short: true
-              },
-              {
-                title: "Time",
-                value: new Date().toLocaleString(),
-                short: true
-              }
-            ]
-          }]
-        };
-        
-        // await fetch(webhookUrl, {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify(slackMessage)
-        // });
-        
+        await navigator.clipboard.writeText(this.formatEmailNotification(data));
+        console.log('✅ Chat details copied to clipboard');
       } catch (error) {
-        console.log('Webhook notification failed:', error);
+        console.log('Clipboard not available');
       }
       
-      // 方式2: 邮件通知 (使用 EmailJS 或类似服务)
+      // 方式3: Webhook 到 Slack/Discord/Teams (如果配置了)
       try {
+        // 你可以在这里添加你的 Slack Webhook URL
+        const webhookUrl = ''; // 'https://hooks.slack.com/services/YOUR/WEBHOOK/URL';
+        
+        if (webhookUrl) {
+          const slackMessage = {
+            text: "🔔 New website visitor interaction",
+            attachments: [{
+              color: data.type === 'human_chat_request' ? 'warning' : 'good',
+              fields: [
+                {
+                  title: "Visitor",
+                  value: data.visitor ? `${data.visitor.name} (${data.visitor.email})` : 'Anonymous',
+                  short: true
+                },
+                {
+                  title: "Type",
+                  value: data.type === 'human_chat_request' ? '🤝 Direct Chat Request' : '📝 Contact Info Collected',
+                  short: true
+                },
+                {
+                  title: "Messages",
+                  value: `${data.messages?.length || data.chatHistory?.length || 0} exchanged`,
+                  short: true
+                },
+                {
+                  title: "Time",
+                  value: new Date().toLocaleString(),
+                  short: true
+                }
+              ],
+              text: data.chatHistory ? 
+                `Recent conversation:\n${data.chatHistory.slice(-3).map(msg => 
+                  `${msg.type === 'user_message' ? '👤' : '🤖'} ${msg.content}`
+                ).join('\n')}` : ''
+            }]
+          };
+          
+          await fetch(webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(slackMessage)
+          });
+          console.log('✅ Slack notification sent');
+        }
+      } catch (error) {
+        console.log('❌ Webhook notification failed:', error);
+      }
+      
+      // 方式4: 使用第三方邮件服务 (EmailJS)
+      try {
+        // 如果你配置了 EmailJS，可以取消注释以下代码
+        /*
         const emailData = {
-          to_email: 'ethanlee2036@gmail.com',
-          subject: `🔔 Website Chat Request from ${data.visitor.name}`,
+          to_email: 'lingjie.cheng@npeu.ox.ac.uk',
+          from_name: data.visitor?.name || 'Website Visitor',
+          from_email: data.visitor?.email || 'no-reply@valuelab.com',
+          subject: `Website Chat: ${data.type}`,
           message: this.formatEmailNotification(data)
         };
         
-        // 这里集成你的邮件服务
-        // await emailjs.send('service_id', 'template_id', emailData);
-        
+        await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', emailData, 'YOUR_PUBLIC_KEY');
+        console.log('✅ EmailJS notification sent');
+        */
       } catch (error) {
-        console.log('Email notification failed:', error);
+        console.log('❌ EmailJS notification failed:', error);
+      }
+      
+      // 方式5: 自动打开邮件客户端
+      window.open(mailtoLink, '_blank');
+      
+      return true;
+    },
+    
+    async notifyDrCheng(eventType) {
+      // 简单的通知，当访客提供联系信息时
+      if (eventType === 'visitor_info_collected') {
+        try {
+          await this.sendNotificationToDrCheng({
+            type: 'visitor_info_collected',
+            visitor: this.visitorInfo,
+            chatHistory: this.chatHistory,
+            timestamp: new Date().toISOString()
+          });
+        } catch (error) {
+          console.log('Notification failed:', error);
+        }
       }
     },
     
+    // 添加管理员查看功能（用于测试和调试）
+    showAdminPanel() {
+      if (confirm('Show admin panel? (For Dr Cheng only)')) {
+        const adminData = {
+          totalChats: this.messages.length,
+          visitorInfo: this.visitorInfo,
+          chatHistory: this.chatHistory,
+          lastActive: new Date().toISOString()
+        };
+        
+        console.log('📊 Admin Panel Data:', adminData);
+        
+        // 显示管理信息
+        alert(`Chat Admin Info:
+📧 Visitor: ${this.visitorInfo.name || 'Anonymous'} (${this.visitorInfo.email || 'No email'})
+💬 Messages: ${this.messages.length}
+📝 History entries: ${this.chatHistory.length}
+🕐 Session started: ${this.messages[0]?.time || 'Unknown'}
+
+Check console for detailed logs.`);
+      }
+    }
+    
     formatEmailNotification(data) {
-      return `
-New chat request from your website:
+      const visitorName = data.visitor?.name || 'Anonymous Visitor';
+      const visitorEmail = data.visitor?.email || 'No email provided';
+      
+      let emailContent = `
+🔔 NEW WEBSITE VISITOR INTERACTION
 
 Visitor Information:
-- Name: ${data.visitor.name}
-- Email: ${data.visitor.email}
-- Time: ${new Date().toLocaleString()}
+👤 Name: ${visitorName}
+📧 Email: ${visitorEmail}
+🕐 Time: ${new Date().toLocaleString()}
+📍 Page: VALUE Lab Website Chat
 
-Request Type: ${data.type === 'human_chat_request' ? 'Direct Chat Request' : 'Contact Info Collection'}
+Request Type: ${data.type === 'human_chat_request' ? '🤝 DIRECT CHAT REQUEST' : '📝 Contact Info Collected'}
 
-Recent Conversation:
-${data.messages?.slice(-5).map(msg => 
-  `[${msg.time}] ${msg.sender === 'user' ? data.visitor.name : 'AI Assistant'}: ${msg.text}`
-).join('\n') || 'No messages yet'}
+`;
 
-Please respond to the visitor at: ${data.visitor.email}
+      if (data.chatHistory && data.chatHistory.length > 0) {
+        emailContent += `
+📋 CONVERSATION HISTORY:
+${data.chatHistory.map(entry => {
+  const time = new Date(entry.timestamp).toLocaleTimeString();
+  if (entry.type === 'user_message') {
+    return `[${time}] 👤 ${visitorName}: ${entry.content}`;
+  } else if (entry.type === 'assistant_response') {
+    return `[${time}] 🤖 AI Assistant: ${entry.content}`;
+  }
+  return '';
+}).filter(Boolean).join('\n')}
+
+`;
+      }
+
+      if (data.messages && data.messages.length > 1) {
+        emailContent += `
+💬 FULL CHAT MESSAGES:
+${data.messages.map(msg => 
+  `[${msg.time}] ${msg.sender === 'user' ? '👤 ' + visitorName : '🤖 AI Assistant'}: ${msg.text}`
+).join('\n')}
+
+`;
+      }
+
+      emailContent += `
+📞 NEXT STEPS:
+${data.type === 'human_chat_request' ? 
+  `The visitor has specifically requested to chat with you directly. Please respond to them at: ${visitorEmail}` :
+  `The visitor provided their contact information. You may want to follow up about their interests.`
+}
 
 ---
-Sent from VALUE Lab Website Chat System
+📧 Reply directly to: ${visitorEmail}
+🌐 Sent from: VALUE Lab Website Chat System
+⚙️ To configure notifications: Check the admin panel in the chat widget
+
+This is an automated notification from your website chat system.
       `.trim();
+      
+      return emailContent;
     },
     
     async sendEmailWithChatHistory(chatSummary) {
@@ -723,18 +852,24 @@ VALUE Lab - University of Oxford & National University of Singapore
       console.log('Email content generated:', emailContent);
     },
     
-    async notifyDrCheng(eventType) {
-      // 简单的通知，当访客提供联系信息时
-      if (eventType === 'visitor_info_collected') {
-        try {
-          await this.sendNotificationToDrCheng({
-            type: 'visitor_info_collected',
-            visitor: this.visitorInfo,
-            timestamp: new Date().toISOString()
-          });
-        } catch (error) {
-          console.log('Notification failed:', error);
-        }
+    generateFallbackResponse(message) {
+      const lowerMsg = message.toLowerCase();
+      
+      // 检测常见关键词并给出相应回复
+      if (lowerMsg.includes('research') || lowerMsg.includes('study')) {
+        return "Dr Cheng's research focuses on health economics and outcomes research. He's particularly interested in improving healthcare decision-making through evidence-based approaches. Would you like to know more about any specific research area?";
+      } else if (lowerMsg.includes('collaboration') || lowerMsg.includes('collaborate')) {
+        return "Dr Cheng is always open to research collaborations! His areas include health economics, quality of life research, and systematic reviews. Click 'Connect with Dr Cheng' to discuss potential partnerships.";
+      } else if (lowerMsg.includes('phd') || lowerMsg.includes('student') || lowerMsg.includes('supervision')) {
+        return "Dr Cheng has supervised over 30 undergraduate and 8 postgraduate students. He's experienced in mentoring research in health economics and nursing. Are you interested in pursuing research under his guidance?";
+      } else if (lowerMsg.includes('publication') || lowerMsg.includes('paper') || lowerMsg.includes('article')) {
+        return "Dr Cheng has published more than 70 peer-reviewed articles in health economics and outcomes research. He also serves as Senior Editor for Systematic Reviews journal. Looking for specific publications?";
+      } else if (lowerMsg.includes('contact') || lowerMsg.includes('email') || lowerMsg.includes('reach')) {
+        return "You can reach Dr Cheng at lingjie.cheng@npeu.ox.ac.uk or use the 'Connect with Dr Cheng' button below for priority contact. What would you like to discuss with him?";
+      } else if (lowerMsg.length <= 3) {
+        return "I'd be happy to help! Could you tell me more about what you're interested in regarding Dr Cheng's work? Are you looking for research collaboration, publication information, or something else?";
+      } else {
+        return `Thanks for your message! I'd be happy to help you learn more about Dr Cheng's work in health economics and outcomes research. Could you elaborate on what specific information you're looking for?`;
       }
     },
   },
