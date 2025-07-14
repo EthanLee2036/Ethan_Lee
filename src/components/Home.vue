@@ -281,16 +281,16 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
 <script>
 export default {
   name: 'Home',
-  data() {
+  data: function() {
     return {
       showChatWidget: false,
-      currentMode: 'chat', // 'chat' or 'message'
+      currentMode: 'chat',
       isOnline: true,
       isTyping: false,
       isSubmitting: false,
       hasNewMessage: false,
       currentMessage: '',
-      showContactInfo: false, // 是否显示联系信息收集
+      showContactInfo: false,
       visitorInfo: {
         name: '',
         email: '',
@@ -311,8 +311,8 @@ export default {
         message: ''
       },
       messageIdCounter: 2,
-      chatHistory: [] // 存储完整的聊天记录
-    }
+      chatHistory: []
+    };
   },
   computed: {
     isFormValid: function() {
@@ -330,7 +330,6 @@ export default {
         var self = this;
         this.$nextTick(function() {
           self.scrollToBottom();
-          // 自动聚焦到输入框
           if (self.$refs.chatInput) {
             self.$refs.chatInput.focus();
           }
@@ -359,14 +358,12 @@ export default {
       
       if (!this.currentMessage.trim() || this.isTyping) return;
 
-      // 第3条消息后提示收集联系信息
       if (this.messages.length === 3 && !this.visitorInfo.collected) {
         this.showContactInfo = true;
         return;
       }
 
-      // Add user message
-      const userMessage = {
+      var userMessage = {
         id: this.messageIdCounter++,
         sender: 'user',
         text: this.currentMessage,
@@ -374,7 +371,6 @@ export default {
       };
       this.messages.push(userMessage);
       
-      // 保存到聊天历史
       this.chatHistory.push({
         type: 'user_message',
         content: this.currentMessage,
@@ -382,49 +378,23 @@ export default {
         visitor: this.visitorInfo.collected ? this.visitorInfo : null
       });
       
-      const messageToSend = this.currentMessage;
+      var messageToSend = this.currentMessage;
       this.currentMessage = '';
       
       this.$nextTick(function() {
         self.scrollToBottom();
       });
 
-      // Simulate typing
       this.isTyping = true;
       
-      // 构建更智能的提示词，包含对话历史
-      const conversationHistory = this.messages.slice(-5).map(function(msg) {
+      var conversationHistory = this.messages.slice(-5).map(function(msg) {
         return (msg.sender === 'user' ? 'User' : 'Assistant') + ': ' + msg.text;
       }).join('\n');
       
-      // Using Claude API through window.claude.complete
       if (window.claude && window.claude.complete) {
-        window.claude.complete('You are Dr Cheng Ling Jie\'s AI assistant helping visitors on his academic website. You should provide helpful, contextual responses based on the conversation.\n\n' +
-          'Context about Dr Cheng:\n' +
-          '- Postdoctoral Fellow at National Perinatal Epidemiology Unit, University of Oxford\n' +
-          '- Senior Tutor at Alice Lee Centre for Nursing Studies, National University of Singapore\n' +
-          '- PhD, MPH, BSN (Hons), RN\n' +
-          '- Research focus: health economics and outcomes research, healthcare decision-making\n' +
-          '- Led projects securing over SGD 1.6 million in funding\n' +
-          '- Published 70+ peer-reviewed articles\n' +
-          '- Supervised 30+ undergraduate and 8 postgraduate theses\n' +
-          '- Senior Editor for Systematic Reviews journal, Associate Editor for Quality of Life Research\n' +
-          '- Member of EuroQol Group, ISPOR, ISOQOL, PROMIS Health Organization\n' +
-          '- Expert in health economics, quality of life research, systematic reviews\n\n' +
-          'Recent conversation context:\n' + conversationHistory + '\n\n' +
-          'Current user message: "' + messageToSend + '"\n\n' +
-          'Guidelines:\n' +
-          '- Respond naturally and conversationally to the specific message\n' +
-          '- If asked about research topics, provide specific details about Dr Cheng\'s work\n' +
-          '- If asked about collaboration, explain his areas of expertise and suggest next steps\n' +
-          '- If the message is very short/unclear, ask clarifying questions\n' +
-          '- Keep responses helpful but concise (2-3 sentences max)\n' +
-          '- If appropriate, suggest using "Connect with Dr Cheng" button for detailed discussions\n' +
-          '- Be friendly and professional\n\n' +
-          'Respond only with your reply, no extra formatting:').then(function(response) {
+        window.claude.complete('You are Dr Cheng Ling Jie\'s AI assistant helping visitors on his academic website. You should provide helpful, contextual responses based on the conversation.\n\nContext about Dr Cheng:\n- Postdoctoral Fellow at National Perinatal Epidemiology Unit, University of Oxford\n- Senior Tutor at Alice Lee Centre for Nursing Studies, National University of Singapore\n- PhD, MPH, BSN (Hons), RN\n- Research focus: health economics and outcomes research, healthcare decision-making\n- Led projects securing over SGD 1.6 million in funding\n- Published 70+ peer-reviewed articles\n- Supervised 30+ undergraduate and 8 postgraduate theses\n- Senior Editor for Systematic Reviews journal, Associate Editor for Quality of Life Research\n- Member of EuroQol Group, ISPOR, ISOQOL, PROMIS Health Organization\n- Expert in health economics, quality of life research, systematic reviews\n\nRecent conversation context:\n' + conversationHistory + '\n\nCurrent user message: "' + messageToSend + '"\n\nGuidelines:\n- Respond naturally and conversationally to the specific message\n- If asked about research topics, provide specific details about Dr Cheng\'s work\n- If asked about collaboration, explain his areas of expertise and suggest next steps\n- If the message is very short/unclear, ask clarifying questions\n- Keep responses helpful but concise (2-3 sentences max)\n- If appropriate, suggest using "Connect with Dr Cheng" button for detailed discussions\n- Be friendly and professional\n\nRespond only with your reply, no extra formatting:').then(function(response) {
           
-          // Add assistant response
-          const assistantMessage = {
+          var assistantMessage = {
             id: self.messageIdCounter++,
             sender: 'assistant',
             text: response,
@@ -432,7 +402,6 @@ export default {
           };
           self.messages.push(assistantMessage);
           
-          // 保存助手回复到聊天历史
           self.chatHistory.push({
             type: 'assistant_response',
             content: response,
@@ -445,10 +414,9 @@ export default {
           });
           
         }).catch(function(error) {
-          // 智能的备用回复，基于消息内容
-          let fallbackResponse = self.generateFallbackResponse(messageToSend);
+          var fallbackResponse = self.generateFallbackResponse(messageToSend);
           
-          const assistantMessage = {
+          var assistantMessage = {
             id: self.messageIdCounter++,
             sender: 'assistant',
             text: fallbackResponse,
@@ -462,11 +430,10 @@ export default {
           });
         });
       } else {
-        // Fallback if Claude API not available
         setTimeout(function() {
-          let fallbackResponse = self.generateFallbackResponse(messageToSend);
+          var fallbackResponse = self.generateFallbackResponse(messageToSend);
           
-          const assistantMessage = {
+          var assistantMessage = {
             id: self.messageIdCounter++,
             sender: 'assistant',
             text: fallbackResponse,
@@ -488,9 +455,7 @@ export default {
       
       this.isSubmitting = true;
       
-      // Simulate sending email
       setTimeout(function() {
-        // Reset form
         self.messageForm = {
           name: '',
           email: '',
@@ -498,7 +463,6 @@ export default {
           message: ''
         };
         
-        // Show success message
         alert('Message sent successfully! Dr Cheng will get back to you soon.');
         self.closeChatWidget();
         self.isSubmitting = false;
@@ -512,14 +476,12 @@ export default {
     handleInput: function() {
       // Could add typing indicators or other real-time features
     },
-    
     collectVisitorInfo: function() {
       if (!this.visitorInfo.name.trim() || !this.visitorInfo.email.trim()) return;
       
       this.visitorInfo.collected = true;
       this.showContactInfo = false;
       
-      // 记录访客信息
       this.chatHistory.push({
         type: 'visitor_info',
         content: {
@@ -529,8 +491,7 @@ export default {
         timestamp: new Date().toISOString()
       });
       
-      // 添加确认消息
-      const confirmMessage = {
+      var confirmMessage = {
         id: this.messageIdCounter++,
         sender: 'assistant',
         text: 'Thank you, ' + this.visitorInfo.name + '! I\'ve noted your contact information. Dr Cheng will be able to follow up with you directly at ' + this.visitorInfo.email + '. How else can I help you today?',
@@ -538,7 +499,6 @@ export default {
       };
       this.messages.push(confirmMessage);
       
-      // 发送通知给Dr Cheng
       this.notifyDrCheng('visitor_info_collected');
       
       var self = this;
@@ -549,11 +509,10 @@ export default {
         }
       });
     },
-    
     skipContactInfo: function() {
       this.showContactInfo = false;
       
-      const skipMessage = {
+      var skipMessage = {
         id: this.messageIdCounter++,
         sender: 'assistant',
         text: 'No problem! You can continue our conversation. If you need Dr Cheng to follow up with you later, just click "Connect with Dr Cheng" button below.',
@@ -569,17 +528,14 @@ export default {
         }
       });
     },
-    
     requestHumanChat: function() {
       var self = this;
       
-      // 如果没有收集联系信息，先收集
       if (!this.visitorInfo.collected) {
         this.showContactInfo = true;
         return;
       }
       
-      // 发送完整聊天记录给Dr Cheng
       this.sendNotificationToDrCheng({
         type: 'human_chat_request',
         visitor: this.visitorInfo,
@@ -587,7 +543,7 @@ export default {
         messages: this.messages,
         timestamp: new Date().toISOString()
       }).then(function() {
-        const notifyMessage = {
+        var notifyMessage = {
           id: self.messageIdCounter++,
           sender: 'assistant',
           text: 'I\'ve notified Dr Cheng about your request to chat directly. He will reach out to you at ' + self.visitorInfo.email + ' soon. In the meantime, feel free to continue our conversation or leave a detailed message using the message form.',
@@ -608,7 +564,6 @@ export default {
         });
       });
     },
-    
     sendChatHistory: function() {
       var self = this;
       
@@ -617,12 +572,10 @@ export default {
         return;
       }
       
-      // 生成聊天记录摘要
-      const chatSummary = this.generateChatSummary();
+      var chatSummary = this.generateChatSummary();
       
-      // 发送邮件给访客和Dr Cheng
       this.sendEmailWithChatHistory(chatSummary).then(function() {
-        const confirmMessage = {
+        var confirmMessage = {
           id: self.messageIdCounter++,
           sender: 'assistant',
           text: 'I\'ve emailed a copy of our conversation to both you (' + self.visitorInfo.email + ') and Dr Cheng. You should receive it shortly.',
@@ -643,237 +596,164 @@ export default {
         });
       });
     },
-    
-    generateChatSummary() {
-      const summary = {
+    generateChatSummary: function() {
+      var summary = {
         visitor: this.visitorInfo,
         startTime: this.messages[0].time,
         endTime: this.getCurrentTime(),
         messageCount: this.messages.length,
-        conversation: this.messages.map(msg => ({
-          sender: msg.sender,
-          message: msg.text,
-          time: msg.time
-        }))
+        conversation: this.messages.map(function(msg) {
+          return {
+            sender: msg.sender,
+            message: msg.text,
+            time: msg.time
+          };
+        })
       };
       return summary;
-    },,
-    
-    async sendNotificationToDrCheng(data) {
-      // 实际可用的通知方式
+    },
+    sendNotificationToDrCheng: function(data) {
+      var emailSubject = encodeURIComponent('Website Chat: ' + (data.type === 'human_chat_request' ? 'Direct Chat Request' : 'New Visitor') + ' from ' + ((data.visitor && data.visitor.name) || 'Anonymous'));
+      var emailBody = encodeURIComponent(this.formatEmailNotification(data));
+      var mailtoLink = 'mailto:lingjie.cheng@npeu.ox.ac.uk?subject=' + emailSubject + '&body=' + emailBody;
       
-      // 方式1: 生成mailto链接，自动打开邮件客户端
-      const emailSubject = encodeURIComponent(`🔔 Website Chat: ${data.type === 'human_chat_request' ? 'Direct Chat Request' : 'New Visitor'} from ${data.visitor?.name || 'Anonymous'}`);
-      const emailBody = encodeURIComponent(this.formatEmailNotification(data));
-      const mailtoLink = `mailto:lingjie.cheng@npeu.ox.ac.uk?subject=${emailSubject}&body=${emailBody}`;
-      
-      // 方式2: 复制到剪贴板
-      try {
-        await navigator.clipboard.writeText(this.formatEmailNotification(data));
+      navigator.clipboard.writeText(this.formatEmailNotification(data)).then(function() {
         console.log('✅ Chat details copied to clipboard');
-      } catch (error) {
+      }).catch(function(error) {
         console.log('Clipboard not available');
-      }
+      });
       
-      // 方式3: Webhook 到 Slack/Discord/Teams (如果配置了)
-      try {
-        // 你可以在这里添加你的 Slack Webhook URL
-        const webhookUrl = ''; // 'https://hooks.slack.com/services/YOUR/WEBHOOK/URL';
-        
-        if (webhookUrl) {
-          const slackMessage = {
-            text: "🔔 New website visitor interaction",
-            attachments: [{
-              color: data.type === 'human_chat_request' ? 'warning' : 'good',
-              fields: [
-                {
-                  title: "Visitor",
-                  value: data.visitor ? `${data.visitor.name} (${data.visitor.email})` : 'Anonymous',
-                  short: true
-                },
-                {
-                  title: "Type",
-                  value: data.type === 'human_chat_request' ? '🤝 Direct Chat Request' : '📝 Contact Info Collected',
-                  short: true
-                },
-                {
-                  title: "Messages",
-                  value: `${data.messages?.length || data.chatHistory?.length || 0} exchanged`,
-                  short: true
-                },
-                {
-                  title: "Time",
-                  value: new Date().toLocaleString(),
-                  short: true
-                }
-              ],
-              text: data.chatHistory ? 
-                `Recent conversation:\n${data.chatHistory.slice(-3).map(msg => 
-                  `${msg.type === 'user_message' ? '👤' : '🤖'} ${msg.content}`
-                ).join('\n')}` : ''
-            }]
-          };
-          
-          await fetch(webhookUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(slackMessage)
-          });
-          console.log('✅ Slack notification sent');
-        }
-      } catch (error) {
-        console.log('❌ Webhook notification failed:', error);
-      }
+      var webhookUrl = '';
       
-      // 方式4: 使用第三方邮件服务 (EmailJS)
-      try {
-        // 如果你配置了 EmailJS，可以取消注释以下代码
-        /*
-        const emailData = {
-          to_email: 'lingjie.cheng@npeu.ox.ac.uk',
-          from_name: data.visitor?.name || 'Website Visitor',
-          from_email: data.visitor?.email || 'no-reply@valuelab.com',
-          subject: `Website Chat: ${data.type}`,
-          message: this.formatEmailNotification(data)
+      if (webhookUrl) {
+        var slackMessage = {
+          text: "🔔 New website visitor interaction",
+          attachments: [{
+            color: data.type === 'human_chat_request' ? 'warning' : 'good',
+            fields: [
+              {
+                title: "Visitor",
+                value: data.visitor ? (data.visitor.name + ' (' + data.visitor.email + ')') : 'Anonymous',
+                short: true
+              },
+              {
+                title: "Type",
+                value: data.type === 'human_chat_request' ? '🤝 Direct Chat Request' : '📝 Contact Info Collected',
+                short: true
+              },
+              {
+                title: "Messages",
+                value: ((data.messages && data.messages.length) || (data.chatHistory && data.chatHistory.length) || 0) + ' exchanged',
+                short: true
+              },
+              {
+                title: "Time",
+                value: new Date().toLocaleString(),
+                short: true
+              }
+            ],
+            text: data.chatHistory ? 
+              'Recent conversation:\n' + data.chatHistory.slice(-3).map(function(msg) {
+                return (msg.type === 'user_message' ? '👤' : '🤖') + ' ' + msg.content;
+              }).join('\n') : ''
+          }]
         };
         
-        await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', emailData, 'YOUR_PUBLIC_KEY');
-        console.log('✅ EmailJS notification sent');
-        */
-      } catch (error) {
-        console.log('❌ EmailJS notification failed:', error);
+        fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(slackMessage)
+        }).then(function() {
+          console.log('✅ Slack notification sent');
+        }).catch(function(error) {
+          console.log('❌ Webhook notification failed:', error);
+        });
       }
       
-      // 方式5: 自动打开邮件客户端
       window.open(mailtoLink, '_blank');
       
-      return true;
+      return Promise.resolve(true);
     },
-    
-    async notifyDrCheng(eventType) {
-      // 简单的通知，当访客提供联系信息时
+    notifyDrCheng: function(eventType) {
       if (eventType === 'visitor_info_collected') {
-        try {
-          await this.sendNotificationToDrCheng({
-            type: 'visitor_info_collected',
-            visitor: this.visitorInfo,
-            chatHistory: this.chatHistory,
-            timestamp: new Date().toISOString()
-          });
-        } catch (error) {
-          console.log('Notification failed:', error);
-        }
-      }
-    },,
-    
-    // 添加管理员查看功能（用于测试和调试）
-    showAdminPanel() {
-      if (confirm('Show admin panel? (For Dr Cheng only)')) {
-        const adminData = {
-          totalChats: this.messages.length,
-          visitorInfo: this.visitorInfo,
+        this.sendNotificationToDrCheng({
+          type: 'visitor_info_collected',
+          visitor: this.visitorInfo,
           chatHistory: this.chatHistory,
-          lastActive: new Date().toISOString()
-        };
-        
-        console.log('📊 Admin Panel Data:', adminData);
-        
-        // 显示管理信息
-        alert('Chat Admin Info:\n' +
-          '📧 Visitor: ' + (this.visitorInfo.name || 'Anonymous') + ' (' + (this.visitorInfo.email || 'No email') + ')\n' +
-          '💬 Messages: ' + this.messages.length + '\n' +
-          '📝 History entries: ' + this.chatHistory.length + '\n' +
-          '🕐 Session started: ' + ((this.messages[0] && this.messages[0].time) || 'Unknown') + '\n\n' +
-          'Check console for detailed logs.');
+          timestamp: new Date().toISOString()
+        }).catch(function(error) {
+          console.log('Notification failed:', error);
+        });
       }
     },
-    
-    formatEmailNotification(data) {
-      const visitorName = (data.visitor && data.visitor.name) ? data.visitor.name : 'Anonymous Visitor';
-      const visitorEmail = (data.visitor && data.visitor.email) ? data.visitor.email : 'No email provided';
+    formatEmailNotification: function(data) {
+      var visitorName = (data.visitor && data.visitor.name) ? data.visitor.name : 'Anonymous Visitor';
+      var visitorEmail = (data.visitor && data.visitor.email) ? data.visitor.email : 'No email provided';
       
-      let emailContent = `
-🔔 NEW WEBSITE VISITOR INTERACTION
-
-Visitor Information:
-👤 Name: ${visitorName}
-📧 Email: ${visitorEmail}
-🕐 Time: ${new Date().toLocaleString()}
-📍 Page: VALUE Lab Website Chat
-
-Request Type: ${data.type === 'human_chat_request' ? '🤝 DIRECT CHAT REQUEST' : '📝 Contact Info Collected'}
-
-`;
+      var emailContent = '\n🔔 NEW WEBSITE VISITOR INTERACTION\n\n' +
+        'Visitor Information:\n' +
+        '👤 Name: ' + visitorName + '\n' +
+        '📧 Email: ' + visitorEmail + '\n' +
+        '🕐 Time: ' + new Date().toLocaleString() + '\n' +
+        '📍 Page: VALUE Lab Website Chat\n\n' +
+        'Request Type: ' + (data.type === 'human_chat_request' ? '🤝 DIRECT CHAT REQUEST' : '📝 Contact Info Collected') + '\n\n';
 
       if (data.chatHistory && data.chatHistory.length > 0) {
-        emailContent += `
-📋 CONVERSATION HISTORY:
-${data.chatHistory.map(entry => {
-  const time = new Date(entry.timestamp).toLocaleTimeString();
-  if (entry.type === 'user_message') {
-    return `[${time}] 👤 ${visitorName}: ${entry.content}`;
-  } else if (entry.type === 'assistant_response') {
-    return `[${time}] 🤖 AI Assistant: ${entry.content}`;
-  }
-  return '';
-}).filter(Boolean).join('\n')}
-
-`;
+        emailContent += '\n📋 CONVERSATION HISTORY:\n' +
+          data.chatHistory.map(function(entry) {
+            var time = new Date(entry.timestamp).toLocaleTimeString();
+            if (entry.type === 'user_message') {
+              return '[' + time + '] 👤 ' + visitorName + ': ' + entry.content;
+            } else if (entry.type === 'assistant_response') {
+              return '[' + time + '] 🤖 AI Assistant: ' + entry.content;
+            }
+            return '';
+          }).filter(Boolean).join('\n') + '\n\n';
       }
 
       if (data.messages && data.messages.length > 1) {
-        emailContent += `
-💬 FULL CHAT MESSAGES:
-${data.messages.map(msg => 
-  `[${msg.time}] ${msg.sender === 'user' ? '👤 ' + visitorName : '🤖 AI Assistant'}: ${msg.text}`
-).join('\n')}
-
-`;
+        emailContent += '\n💬 FULL CHAT MESSAGES:\n' +
+          data.messages.map(function(msg) {
+            return '[' + msg.time + '] ' + (msg.sender === 'user' ? '👤 ' + visitorName : '🤖 AI Assistant') + ': ' + msg.text;
+          }).join('\n') + '\n\n';
       }
 
-      emailContent += `
-📞 NEXT STEPS:
-${data.type === 'human_chat_request' ? 
-  `The visitor has specifically requested to chat with you directly. Please respond to them at: ${visitorEmail}` :
-  `The visitor provided their contact information. You may want to follow up about their interests.`
-}
-
----
-📧 Reply directly to: ${visitorEmail}
-🌐 Sent from: VALUE Lab Website Chat System
-⚙️ To configure notifications: Check the admin panel in the chat widget
-
-This is an automated notification from your website chat system.
-      `.trim();
+      emailContent += '\n📞 NEXT STEPS:\n' +
+        (data.type === 'human_chat_request' ? 
+          'The visitor has specifically requested to chat with you directly. Please respond to them at: ' + visitorEmail :
+          'The visitor provided their contact information. You may want to follow up about their interests.'
+        ) + '\n\n' +
+        '---\n' +
+        '📧 Reply directly to: ' + visitorEmail + '\n' +
+        '🌐 Sent from: VALUE Lab Website Chat System\n' +
+        '⚙️ To configure notifications: Check the admin panel in the chat widget\n\n' +
+        'This is an automated notification from your website chat system.';
       
-      return emailContent;
-    }
-    
-    async sendEmailWithChatHistory(chatSummary) {
-      // 发送详细的聊天记录邮件
-      const emailContent = '\nDear ' + chatSummary.visitor.name + ',\n\n' +
+      return emailContent.trim();
+    },
+    sendEmailWithChatHistory: function(chatSummary) {
+      var emailContent = '\nDear ' + chatSummary.visitor.name + ',\n\n' +
         'Thank you for your interest in Dr Cheng\'s research. Below is a copy of our conversation:\n\n' +
         'Conversation Summary:\n' +
         '- Started: ' + chatSummary.startTime + '\n' +
         '- Messages: ' + chatSummary.messageCount + '\n' +
         '- Your Email: ' + chatSummary.visitor.email + '\n\n' +
         'Full Conversation:\n' +
-        chatSummary.conversation.map(msg => 
-          '[' + msg.time + '] ' + (msg.sender === 'user' ? chatSummary.visitor.name : 'AI Assistant') + ': ' + msg.message
-        ).join('\n\n') + '\n\n' +
+        chatSummary.conversation.map(function(msg) {
+          return '[' + msg.time + '] ' + (msg.sender === 'user' ? chatSummary.visitor.name : 'AI Assistant') + ': ' + msg.message;
+        }).join('\n\n') + '\n\n' +
         'Dr Cheng will follow up with you directly at ' + chatSummary.visitor.email + '.\n\n' +
         'Best regards,\n' +
         'Dr Cheng\'s AI Assistant\n' +
         'VALUE Lab - University of Oxford & National University of Singapore';
       
-      // 这里集成邮件服务发送给访客和Dr Cheng
       console.log('Email content generated:', emailContent);
-    },,
-    
-    generateFallbackResponse(message) {
-      const lowerMsg = message.toLowerCase();
       
-      // 检测常见关键词并给出相应回复
+      return Promise.resolve(true);
+    },
+    generateFallbackResponse: function(message) {
+      var lowerMsg = message.toLowerCase();
+      
       if (lowerMsg.includes('research') || lowerMsg.includes('study')) {
         return "Dr Cheng's research focuses on health economics and outcomes research. He's particularly interested in improving healthcare decision-making through evidence-based approaches. Would you like to know more about any specific research area?";
       } else if (lowerMsg.includes('collaboration') || lowerMsg.includes('collaborate')) {
@@ -890,10 +770,28 @@ This is an automated notification from your website chat system.
         return 'Thanks for your message! I\'d be happy to help you learn more about Dr Cheng\'s work in health economics and outcomes research. Could you elaborate on what specific information you\'re looking for?';
       }
     },
+    showAdminPanel: function() {
+      if (confirm('Show admin panel? (For Dr Cheng only)')) {
+        var adminData = {
+          totalChats: this.messages.length,
+          visitorInfo: this.visitorInfo,
+          chatHistory: this.chatHistory,
+          lastActive: new Date().toISOString()
+        };
+        
+        console.log('📊 Admin Panel Data:', adminData);
+        
+        alert('Chat Admin Info:\n' +
+          '📧 Visitor: ' + (this.visitorInfo.name || 'Anonymous') + ' (' + (this.visitorInfo.email || 'No email') + ')\n' +
+          '💬 Messages: ' + this.messages.length + '\n' +
+          '📝 History entries: ' + this.chatHistory.length + '\n' +
+          '🕐 Session started: ' + ((this.messages[0] && this.messages[0].time) || 'Unknown') + '\n\n' +
+          'Check console for detailed logs.');
+      }
+    }
   },
-  mounted() {
-    // Simulate receiving a message after 5 seconds
-    const self = this;
+  mounted: function() {
+    var self = this;
     setTimeout(function() {
       if (!self.showChatWidget) {
         self.hasNewMessage = true;
@@ -1282,6 +1180,8 @@ h2 {
   background: #17a2b8;
   color: white;
 }
+
+/* Chat Widget Styles */
 .chat-widget-overlay {
   position: fixed;
   top: 0;
@@ -1301,7 +1201,7 @@ h2 {
   max-width: 90vw;
   height: 600px;
   max-height: 80vh;
-  min-height: 500px; /* 确保最小高度 */
+  min-height: 500px;
   background: white;
   border-radius: 20px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -1385,7 +1285,7 @@ h2 {
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 0; /* 确保flex布局正常工作 */
+  height: 0;
 }
 
 .chat-messages {
@@ -1395,7 +1295,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: 0; /* 确保可以滚动 */
+  min-height: 0;
 }
 
 .message {
@@ -1478,14 +1378,14 @@ h2 {
   padding: 16px 20px 20px 20px;
   border-top: 1px solid #e1e5e9;
   background: #f8f9fa;
-  flex-shrink: 0; /* 防止被压缩 */
+  flex-shrink: 0;
 }
 
 .chat-input-container {
   display: flex;
   gap: 12px;
   align-items: center;
-  min-height: 56px; /* 确保输入容器有足够高度 */
+  min-height: 56px;
 }
 
 .chat-input {
@@ -1737,7 +1637,7 @@ h2 {
 
   .chat-widget {
     width: 95vw;
-    height: 90vh;
+    height: 85vh;
   }
 
   .floating-chat-btn {
@@ -1745,6 +1645,26 @@ h2 {
     right: 20px;
     width: 55px;
     height: 55px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .chat-actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .action-btn {
+    padding: 10px 12px;
+    font-size: 0.85em;
   }
 }
 
@@ -1781,34 +1701,14 @@ h2 {
     padding: 10px;
   }
 
-  .chat-widget {
-    width: 95vw;
-    height: 85vh; /* 减少高度确保输入框可见 */
-  }
-
   .floating-chat-btn {
     width: 50px;
     height: 50px;
   }
 
-  .form-row {
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .form-actions {
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .chat-actions {
-    flex-direction: column;
-    gap: 6px;
-  }
-  
-  .action-btn {
-    padding: 10px 12px;
-    font-size: 0.85em;
+  .floating-chat-btn svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
