@@ -617,7 +617,7 @@ export default {
     sendNotificationToDrCheng: function(data) {
       var emailSubject = encodeURIComponent('Website Chat: ' + (data.type === 'human_chat_request' ? 'Direct Chat Request' : 'New Visitor') + ' from ' + ((data.visitor && data.visitor.name) || 'Anonymous'));
       var emailBody = encodeURIComponent(this.formatEmailNotification(data));
-      var mailtoLink = 'mailto:lingjie.cheng@npeu.ox.ac.uk?subject=' + emailSubject + '&body=' + emailBody;
+      var mailtoLink = 'mailto:ethanlee2036@gmail.com?subject=' + emailSubject + '&body=' + emailBody;
       
       navigator.clipboard.writeText(this.formatEmailNotification(data)).then(function() {
         console.log('✅ Chat details copied to clipboard');
@@ -796,7 +796,7 @@ export default {
       
       // 联系方式
       if (lowerMsg.includes('contact') || lowerMsg.includes('email') || lowerMsg.includes('reach') || lowerMsg.includes('get in touch')) {
-        return "I'd be happy to help you connect with Dr Cheng! You can reach him at lingjie.cheng@npeu.ox.ac.uk, or use the 'Connect with Dr Cheng' button below for priority contact. He's very responsive to genuine research inquiries. What would you like to discuss with him?";
+        return "I'd be happy to help you connect with Dr Cheng! You can reach him at ethanlee2036@gmail.com, or use the 'Connect with Dr Cheng' button below for priority contact. He's very responsive to genuine research inquiries. What would you like to discuss with him?";
       }
       
       // 简单或不清楚的消息
