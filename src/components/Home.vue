@@ -757,15 +757,15 @@ Respond only with your reply, no extra formatting:`);
 📧 Visitor: ${this.visitorInfo.name || 'Anonymous'} (${this.visitorInfo.email || 'No email'})
 💬 Messages: ${this.messages.length}
 📝 History entries: ${this.chatHistory.length}
-🕐 Session started: ${this.messages[0]?.time || 'Unknown'}
+🕐 Session started: ${(this.messages[0] && this.messages[0].time) || 'Unknown'}
 
 Check console for detailed logs.`);
       }
     }
     
     formatEmailNotification(data) {
-      const visitorName = data.visitor?.name || 'Anonymous Visitor';
-      const visitorEmail = data.visitor?.email || 'No email provided';
+      const visitorName = (data.visitor && data.visitor.name) ? data.visitor.name : 'Anonymous Visitor';
+      const visitorEmail = (data.visitor && data.visitor.email) ? data.visitor.email : 'No email provided';
       
       let emailContent = `
 🔔 NEW WEBSITE VISITOR INTERACTION
