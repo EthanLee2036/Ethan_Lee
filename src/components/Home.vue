@@ -301,7 +301,7 @@ export default {
           id: 1,
           sender: 'assistant',
           text: 'Hello! I\'m Dr Cheng\'s AI assistant. How can I help you today? I can answer questions about research, collaborations, or help you get in touch. 😊',
-          time: this.getCurrentTime()
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }
       ],
       messageForm: {
@@ -354,7 +354,9 @@ export default {
     getCurrentTime: function() {
       return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     },
-    sendMessage: async function() {
+    sendMessage: function() {
+      var self = this;
+      
       if (!this.currentMessage.trim() || this.isTyping) return;
 
       // 第3条消息后提示收集联系信息
@@ -383,7 +385,6 @@ export default {
       const messageToSend = this.currentMessage;
       this.currentMessage = '';
       
-      var self = this;
       this.$nextTick(function() {
         self.scrollToBottom();
       });
@@ -391,14 +392,14 @@ export default {
       // Simulate typing
       this.isTyping = true;
       
-      try {
-        // 构建更智能的提示词，包含对话历史
-        const conversationHistory = this.messages.slice(-5).map(function(msg) {
-          return (msg.sender === 'user' ? 'User' : 'Assistant') + ': ' + msg.text;
-        }).join('\n');
-        
-        // Using Claude API through window.claude.complete
-        const response = await window.claude.complete('You are Dr Cheng Ling Jie\'s AI assistant helping visitors on his academic website. You should provide helpful, contextual responses based on the conversation.\n\n' +
+      // 构建更智能的提示词，包含对话历史
+      const conversationHistory = this.messages.slice(-5).map(function(msg) {
+        return (msg.sender === 'user' ? 'User' : 'Assistant') + ': ' + msg.text;
+      }).join('\n');
+      
+      // Using Claude API through window.claude.complete
+      if (window.claude && window.claude.complete) {
+        window.claude.complete('You are Dr Cheng Ling Jie\'s AI assistant helping visitors on his academic website. You should provide helpful, contextual responses based on the conversation.\n\n' +
           'Context about Dr Cheng:\n' +
           '- Postdoctoral Fellow at National Perinatal Epidemiology Unit, University of Oxford\n' +
           '- Senior Tutor at Alice Lee Centre for Nursing Studies, National University of Singapore\n' +
@@ -420,56 +421,77 @@ export default {
           '- Keep responses helpful but concise (2-3 sentences max)\n' +
           '- If appropriate, suggest using "Connect with Dr Cheng" button for detailed discussions\n' +
           '- Be friendly and professional\n\n' +
-          'Respond only with your reply, no extra formatting:');
-
-        // Add assistant response
-        const assistantMessage = {
-          id: this.messageIdCounter++,
-          sender: 'assistant',
-          text: response,
-          time: this.getCurrentTime()
-        };
-        this.messages.push(assistantMessage);
-        
-        // 保存助手回复到聊天历史
-        this.chatHistory.push({
-          type: 'assistant_response',
-          content: response,
-          timestamp: new Date().toISOString()
+          'Respond only with your reply, no extra formatting:').then(function(response) {
+          
+          // Add assistant response
+          const assistantMessage = {
+            id: self.messageIdCounter++,
+            sender: 'assistant',
+            text: response,
+            time: self.getCurrentTime()
+          };
+          self.messages.push(assistantMessage);
+          
+          // 保存助手回复到聊天历史
+          self.chatHistory.push({
+            type: 'assistant_response',
+            content: response,
+            timestamp: new Date().toISOString()
+          });
+          
+          self.isTyping = false;
+          self.$nextTick(function() {
+            self.scrollToBottom();
+          });
+          
+        }).catch(function(error) {
+          // 智能的备用回复，基于消息内容
+          let fallbackResponse = self.generateFallbackResponse(messageToSend);
+          
+          const assistantMessage = {
+            id: self.messageIdCounter++,
+            sender: 'assistant',
+            text: fallbackResponse,
+            time: self.getCurrentTime()
+          };
+          self.messages.push(assistantMessage);
+          
+          self.isTyping = false;
+          self.$nextTick(function() {
+            self.scrollToBottom();
+          });
         });
-        
-      } catch (error) {
-        // 智能的备用回复，基于消息内容
-        let fallbackResponse = this.generateFallbackResponse(messageToSend);
-        
-        const assistantMessage = {
-          id: this.messageIdCounter++,
-          sender: 'assistant',
-          text: fallbackResponse,
-          time: this.getCurrentTime()
-        };
-        this.messages.push(assistantMessage);
+      } else {
+        // Fallback if Claude API not available
+        setTimeout(function() {
+          let fallbackResponse = self.generateFallbackResponse(messageToSend);
+          
+          const assistantMessage = {
+            id: self.messageIdCounter++,
+            sender: 'assistant',
+            text: fallbackResponse,
+            time: self.getCurrentTime()
+          };
+          self.messages.push(assistantMessage);
+          
+          self.isTyping = false;
+          self.$nextTick(function() {
+            self.scrollToBottom();
+          });
+        }, 1000);
       }
-      
-      this.isTyping = false;
-      var self = this;
-      this.$nextTick(function() {
-        self.scrollToBottom();
-      });
     },
-    sendFormMessage: async function() {
+    sendFormMessage: function() {
+      var self = this;
+      
       if (!this.isFormValid || this.isSubmitting) return;
       
       this.isSubmitting = true;
       
       // Simulate sending email
-      try {
-        await new Promise(function(resolve) {
-          setTimeout(resolve, 2000);
-        });
-        
+      setTimeout(function() {
         // Reset form
-        this.messageForm = {
+        self.messageForm = {
           name: '',
           email: '',
           subject: '',
@@ -478,13 +500,9 @@ export default {
         
         // Show success message
         alert('Message sent successfully! Dr Cheng will get back to you soon.');
-        this.closeChatWidget();
-        
-      } catch (error) {
-        alert('Failed to send message. Please try again or email directly.');
-      } finally {
-        this.isSubmitting = false;
-      }
+        self.closeChatWidget();
+        self.isSubmitting = false;
+      }, 2000);
     },
     scrollToBottom: function() {
       if (this.$refs.chatMessages) {
@@ -552,73 +570,77 @@ export default {
       });
     },
     
-    requestHumanChat: async function() {
+    requestHumanChat: function() {
+      var self = this;
+      
       // 如果没有收集联系信息，先收集
       if (!this.visitorInfo.collected) {
         this.showContactInfo = true;
         return;
       }
       
-      try {
-        // 发送完整聊天记录给Dr Cheng
-        await this.sendNotificationToDrCheng({
-          type: 'human_chat_request',
-          visitor: this.visitorInfo,
-          chatHistory: this.chatHistory,
-          messages: this.messages,
-          timestamp: new Date().toISOString()
-        });
-        
+      // 发送完整聊天记录给Dr Cheng
+      this.sendNotificationToDrCheng({
+        type: 'human_chat_request',
+        visitor: this.visitorInfo,
+        chatHistory: this.chatHistory,
+        messages: this.messages,
+        timestamp: new Date().toISOString()
+      }).then(function() {
         const notifyMessage = {
-          id: this.messageIdCounter++,
+          id: self.messageIdCounter++,
           sender: 'assistant',
-          text: 'I\'ve notified Dr Cheng about your request to chat directly. He will reach out to you at ' + this.visitorInfo.email + ' soon. In the meantime, feel free to continue our conversation or leave a detailed message using the message form.',
-          time: this.getCurrentTime()
+          text: 'I\'ve notified Dr Cheng about your request to chat directly. He will reach out to you at ' + self.visitorInfo.email + ' soon. In the meantime, feel free to continue our conversation or leave a detailed message using the message form.',
+          time: self.getCurrentTime()
         };
-        this.messages.push(notifyMessage);
+        self.messages.push(notifyMessage);
         
         alert('Dr Cheng has been notified and will contact you directly!');
         
-      } catch (error) {
+        self.$nextTick(function() {
+          self.scrollToBottom();
+        });
+      }).catch(function(error) {
         alert('Unable to send notification. Please try using the message form instead.');
-      }
-      
-      var self = this;
-      this.$nextTick(function() {
-        self.scrollToBottom();
+        
+        self.$nextTick(function() {
+          self.scrollToBottom();
+        });
       });
     },
     
-    sendChatHistory: async function() {
+    sendChatHistory: function() {
+      var self = this;
+      
       if (!this.visitorInfo.collected) {
         alert('Please provide your contact information first.');
         return;
       }
       
-      try {
-        // 生成聊天记录摘要
-        const chatSummary = this.generateChatSummary();
-        
-        // 发送邮件给访客和Dr Cheng
-        await this.sendEmailWithChatHistory(chatSummary);
-        
+      // 生成聊天记录摘要
+      const chatSummary = this.generateChatSummary();
+      
+      // 发送邮件给访客和Dr Cheng
+      this.sendEmailWithChatHistory(chatSummary).then(function() {
         const confirmMessage = {
-          id: this.messageIdCounter++,
+          id: self.messageIdCounter++,
           sender: 'assistant',
-          text: 'I\'ve emailed a copy of our conversation to both you (' + this.visitorInfo.email + ') and Dr Cheng. You should receive it shortly.',
-          time: this.getCurrentTime()
+          text: 'I\'ve emailed a copy of our conversation to both you (' + self.visitorInfo.email + ') and Dr Cheng. You should receive it shortly.',
+          time: self.getCurrentTime()
         };
-        this.messages.push(confirmMessage);
+        self.messages.push(confirmMessage);
         
         alert('Chat history has been emailed to both parties!');
         
-      } catch (error) {
+        self.$nextTick(function() {
+          self.scrollToBottom();
+        });
+      }).catch(function(error) {
         alert('Unable to send email. Please try copying the conversation manually.');
-      }
-      
-      var self = this;
-      this.$nextTick(function() {
-        self.scrollToBottom();
+        
+        self.$nextTick(function() {
+          self.scrollToBottom();
+        });
       });
     },
     
