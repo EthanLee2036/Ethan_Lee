@@ -631,7 +631,7 @@ Respond only with your reply, no extra formatting:`);
         }))
       };
       return summary;
-    },
+    },,
     
     async sendNotificationToDrCheng(data) {
       // 实际可用的通知方式
@@ -738,7 +738,7 @@ Respond only with your reply, no extra formatting:`);
           console.log('Notification failed:', error);
         }
       }
-    },
+    },,
     
     // 添加管理员查看功能（用于测试和调试）
     showAdminPanel() {
@@ -761,7 +761,7 @@ Respond only with your reply, no extra formatting:`);
 
 Check console for detailed logs.`);
       }
-    }
+    },
     
     formatEmailNotification(data) {
       const visitorName = (data.visitor && data.visitor.name) ? data.visitor.name : 'Anonymous Visitor';
@@ -822,7 +822,7 @@ This is an automated notification from your website chat system.
       `.trim();
       
       return emailContent;
-    },
+    }
     
     async sendEmailWithChatHistory(chatSummary) {
       // 发送详细的聊天记录邮件
@@ -850,7 +850,7 @@ VALUE Lab - University of Oxford & National University of Singapore
       
       // 这里集成邮件服务发送给访客和Dr Cheng
       console.log('Email content generated:', emailContent);
-    },
+    },,
     
     generateFallbackResponse(message) {
       const lowerMsg = message.toLowerCase();
