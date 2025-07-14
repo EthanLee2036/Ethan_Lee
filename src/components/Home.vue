@@ -315,7 +315,7 @@ export default {
     }
   },
   computed: {
-    isFormValid() {
+    isFormValid: function() {
       return this.messageForm.name.trim() && 
              this.messageForm.email.trim() && 
              this.messageForm.subject.trim() && 
@@ -323,36 +323,38 @@ export default {
     }
   },
   methods: {
-    toggleChatWidget() {
+    toggleChatWidget: function() {
       this.showChatWidget = !this.showChatWidget;
       if (this.showChatWidget) {
         this.hasNewMessage = false;
-        this.$nextTick(() => {
-          this.scrollToBottom();
+        var self = this;
+        this.$nextTick(function() {
+          self.scrollToBottom();
           // 自动聚焦到输入框
-          if (this.$refs.chatInput) {
-            this.$refs.chatInput.focus();
+          if (self.$refs.chatInput) {
+            self.$refs.chatInput.focus();
           }
         });
       }
     },
-    closeChatWidget() {
+    closeChatWidget: function() {
       this.showChatWidget = false;
     },
-    toggleMode() {
+    toggleMode: function() {
       this.currentMode = this.currentMode === 'chat' ? 'message' : 'chat';
       if (this.currentMode === 'chat') {
-        this.$nextTick(() => {
-          if (this.$refs.chatInput) {
-            this.$refs.chatInput.focus();
+        var self = this;
+        this.$nextTick(function() {
+          if (self.$refs.chatInput) {
+            self.$refs.chatInput.focus();
           }
         });
       }
     },
-    getCurrentTime() {
+    getCurrentTime: function() {
       return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     },
-    async sendMessage() {
+    sendMessage: async function() {
       if (!this.currentMessage.trim() || this.isTyping) return;
 
       // 第3条消息后提示收集联系信息
@@ -381,8 +383,9 @@ export default {
       const messageToSend = this.currentMessage;
       this.currentMessage = '';
       
-      this.$nextTick(() => {
-        this.scrollToBottom();
+      var self = this;
+      this.$nextTick(function() {
+        self.scrollToBottom();
       });
 
       // Simulate typing
@@ -390,40 +393,34 @@ export default {
       
       try {
         // 构建更智能的提示词，包含对话历史
-        const conversationHistory = this.messages.slice(-5).map(msg => 
-          `${msg.sender === 'user' ? 'User' : 'Assistant'}: ${msg.text}`
-        ).join('\n');
+        const conversationHistory = this.messages.slice(-5).map(function(msg) {
+          return (msg.sender === 'user' ? 'User' : 'Assistant') + ': ' + msg.text;
+        }).join('\n');
         
         // Using Claude API through window.claude.complete
-        const response = await window.claude.complete(`You are Dr Cheng Ling Jie's AI assistant helping visitors on his academic website. You should provide helpful, contextual responses based on the conversation.
-
-Context about Dr Cheng:
-- Postdoctoral Fellow at National Perinatal Epidemiology Unit, University of Oxford
-- Senior Tutor at Alice Lee Centre for Nursing Studies, National University of Singapore  
-- PhD, MPH, BSN (Hons), RN
-- Research focus: health economics and outcomes research, healthcare decision-making
-- Led projects securing over SGD 1.6 million in funding
-- Published 70+ peer-reviewed articles
-- Supervised 30+ undergraduate and 8 postgraduate theses
-- Senior Editor for Systematic Reviews journal, Associate Editor for Quality of Life Research
-- Member of EuroQol Group, ISPOR, ISOQOL, PROMIS Health Organization
-- Expert in health economics, quality of life research, systematic reviews
-
-Recent conversation context:
-${conversationHistory}
-
-Current user message: "${messageToSend}"
-
-Guidelines:
-- Respond naturally and conversationally to the specific message
-- If asked about research topics, provide specific details about Dr Cheng's work
-- If asked about collaboration, explain his areas of expertise and suggest next steps
-- If the message is very short/unclear, ask clarifying questions
-- Keep responses helpful but concise (2-3 sentences max)
-- If appropriate, suggest using "Connect with Dr Cheng" button for detailed discussions
-- Be friendly and professional
-
-Respond only with your reply, no extra formatting:`);
+        const response = await window.claude.complete('You are Dr Cheng Ling Jie\'s AI assistant helping visitors on his academic website. You should provide helpful, contextual responses based on the conversation.\n\n' +
+          'Context about Dr Cheng:\n' +
+          '- Postdoctoral Fellow at National Perinatal Epidemiology Unit, University of Oxford\n' +
+          '- Senior Tutor at Alice Lee Centre for Nursing Studies, National University of Singapore\n' +
+          '- PhD, MPH, BSN (Hons), RN\n' +
+          '- Research focus: health economics and outcomes research, healthcare decision-making\n' +
+          '- Led projects securing over SGD 1.6 million in funding\n' +
+          '- Published 70+ peer-reviewed articles\n' +
+          '- Supervised 30+ undergraduate and 8 postgraduate theses\n' +
+          '- Senior Editor for Systematic Reviews journal, Associate Editor for Quality of Life Research\n' +
+          '- Member of EuroQol Group, ISPOR, ISOQOL, PROMIS Health Organization\n' +
+          '- Expert in health economics, quality of life research, systematic reviews\n\n' +
+          'Recent conversation context:\n' + conversationHistory + '\n\n' +
+          'Current user message: "' + messageToSend + '"\n\n' +
+          'Guidelines:\n' +
+          '- Respond naturally and conversationally to the specific message\n' +
+          '- If asked about research topics, provide specific details about Dr Cheng\'s work\n' +
+          '- If asked about collaboration, explain his areas of expertise and suggest next steps\n' +
+          '- If the message is very short/unclear, ask clarifying questions\n' +
+          '- Keep responses helpful but concise (2-3 sentences max)\n' +
+          '- If appropriate, suggest using "Connect with Dr Cheng" button for detailed discussions\n' +
+          '- Be friendly and professional\n\n' +
+          'Respond only with your reply, no extra formatting:');
 
         // Add assistant response
         const assistantMessage = {
@@ -455,18 +452,21 @@ Respond only with your reply, no extra formatting:`);
       }
       
       this.isTyping = false;
-      this.$nextTick(() => {
-        this.scrollToBottom();
+      var self = this;
+      this.$nextTick(function() {
+        self.scrollToBottom();
       });
     },
-    async sendFormMessage() {
+    sendFormMessage: async function() {
       if (!this.isFormValid || this.isSubmitting) return;
       
       this.isSubmitting = true;
       
       // Simulate sending email
       try {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(function(resolve) {
+          setTimeout(resolve, 2000);
+        });
         
         // Reset form
         this.messageForm = {
@@ -486,16 +486,16 @@ Respond only with your reply, no extra formatting:`);
         this.isSubmitting = false;
       }
     },
-    scrollToBottom() {
+    scrollToBottom: function() {
       if (this.$refs.chatMessages) {
         this.$refs.chatMessages.scrollTop = this.$refs.chatMessages.scrollHeight;
       }
     },
-    handleInput() {
+    handleInput: function() {
       // Could add typing indicators or other real-time features
     },
     
-    collectVisitorInfo() {
+    collectVisitorInfo: function() {
       if (!this.visitorInfo.name.trim() || !this.visitorInfo.email.trim()) return;
       
       this.visitorInfo.collected = true;
@@ -515,7 +515,7 @@ Respond only with your reply, no extra formatting:`);
       const confirmMessage = {
         id: this.messageIdCounter++,
         sender: 'assistant',
-        text: `Thank you, ${this.visitorInfo.name}! I've noted your contact information. Dr Cheng will be able to follow up with you directly at ${this.visitorInfo.email}. How else can I help you today?`,
+        text: 'Thank you, ' + this.visitorInfo.name + '! I\'ve noted your contact information. Dr Cheng will be able to follow up with you directly at ' + this.visitorInfo.email + '. How else can I help you today?',
         time: this.getCurrentTime()
       };
       this.messages.push(confirmMessage);
@@ -523,15 +523,16 @@ Respond only with your reply, no extra formatting:`);
       // 发送通知给Dr Cheng
       this.notifyDrCheng('visitor_info_collected');
       
-      this.$nextTick(() => {
-        this.scrollToBottom();
-        if (this.$refs.chatInput) {
-          this.$refs.chatInput.focus();
+      var self = this;
+      this.$nextTick(function() {
+        self.scrollToBottom();
+        if (self.$refs.chatInput) {
+          self.$refs.chatInput.focus();
         }
       });
     },
     
-    skipContactInfo() {
+    skipContactInfo: function() {
       this.showContactInfo = false;
       
       const skipMessage = {
@@ -542,15 +543,16 @@ Respond only with your reply, no extra formatting:`);
       };
       this.messages.push(skipMessage);
       
-      this.$nextTick(() => {
-        this.scrollToBottom();
-        if (this.$refs.chatInput) {
-          this.$refs.chatInput.focus();
+      var self = this;
+      this.$nextTick(function() {
+        self.scrollToBottom();
+        if (self.$refs.chatInput) {
+          self.$refs.chatInput.focus();
         }
       });
     },
     
-    async requestHumanChat() {
+    requestHumanChat: async function() {
       // 如果没有收集联系信息，先收集
       if (!this.visitorInfo.collected) {
         this.showContactInfo = true;
@@ -570,7 +572,7 @@ Respond only with your reply, no extra formatting:`);
         const notifyMessage = {
           id: this.messageIdCounter++,
           sender: 'assistant',
-          text: `I've notified Dr Cheng about your request to chat directly. He will reach out to you at ${this.visitorInfo.email} soon. In the meantime, feel free to continue our conversation or leave a detailed message using the message form.`,
+          text: 'I\'ve notified Dr Cheng about your request to chat directly. He will reach out to you at ' + this.visitorInfo.email + ' soon. In the meantime, feel free to continue our conversation or leave a detailed message using the message form.',
           time: this.getCurrentTime()
         };
         this.messages.push(notifyMessage);
@@ -581,12 +583,13 @@ Respond only with your reply, no extra formatting:`);
         alert('Unable to send notification. Please try using the message form instead.');
       }
       
-      this.$nextTick(() => {
-        this.scrollToBottom();
+      var self = this;
+      this.$nextTick(function() {
+        self.scrollToBottom();
       });
     },
     
-    async sendChatHistory() {
+    sendChatHistory: async function() {
       if (!this.visitorInfo.collected) {
         alert('Please provide your contact information first.');
         return;
@@ -602,7 +605,7 @@ Respond only with your reply, no extra formatting:`);
         const confirmMessage = {
           id: this.messageIdCounter++,
           sender: 'assistant',
-          text: `I've emailed a copy of our conversation to both you (${this.visitorInfo.email}) and Dr Cheng. You should receive it shortly.`,
+          text: 'I\'ve emailed a copy of our conversation to both you (' + this.visitorInfo.email + ') and Dr Cheng. You should receive it shortly.',
           time: this.getCurrentTime()
         };
         this.messages.push(confirmMessage);
@@ -613,8 +616,9 @@ Respond only with your reply, no extra formatting:`);
         alert('Unable to send email. Please try copying the conversation manually.');
       }
       
-      this.$nextTick(() => {
-        this.scrollToBottom();
+      var self = this;
+      this.$nextTick(function() {
+        self.scrollToBottom();
       });
     },
     
@@ -753,13 +757,12 @@ Respond only with your reply, no extra formatting:`);
         console.log('📊 Admin Panel Data:', adminData);
         
         // 显示管理信息
-        alert(`Chat Admin Info:
-📧 Visitor: ${this.visitorInfo.name || 'Anonymous'} (${this.visitorInfo.email || 'No email'})
-💬 Messages: ${this.messages.length}
-📝 History entries: ${this.chatHistory.length}
-🕐 Session started: ${(this.messages[0] && this.messages[0].time) || 'Unknown'}
-
-Check console for detailed logs.`);
+        alert('Chat Admin Info:\n' +
+          '📧 Visitor: ' + (this.visitorInfo.name || 'Anonymous') + ' (' + (this.visitorInfo.email || 'No email') + ')\n' +
+          '💬 Messages: ' + this.messages.length + '\n' +
+          '📝 History entries: ' + this.chatHistory.length + '\n' +
+          '🕐 Session started: ' + ((this.messages[0] && this.messages[0].time) || 'Unknown') + '\n\n' +
+          'Check console for detailed logs.');
       }
     },
     
@@ -826,27 +829,20 @@ This is an automated notification from your website chat system.
     
     async sendEmailWithChatHistory(chatSummary) {
       // 发送详细的聊天记录邮件
-      const emailContent = `
-Dear ${chatSummary.visitor.name},
-
-Thank you for your interest in Dr Cheng's research. Below is a copy of our conversation:
-
-Conversation Summary:
-- Started: ${chatSummary.startTime}
-- Messages: ${chatSummary.messageCount}
-- Your Email: ${chatSummary.visitor.email}
-
-Full Conversation:
-${chatSummary.conversation.map(msg => 
-  `[${msg.time}] ${msg.sender === 'user' ? chatSummary.visitor.name : 'AI Assistant'}: ${msg.message}`
-).join('\n\n')}
-
-Dr Cheng will follow up with you directly at ${chatSummary.visitor.email}.
-
-Best regards,
-Dr Cheng's AI Assistant
-VALUE Lab - University of Oxford & National University of Singapore
-      `.trim();
+      const emailContent = '\nDear ' + chatSummary.visitor.name + ',\n\n' +
+        'Thank you for your interest in Dr Cheng\'s research. Below is a copy of our conversation:\n\n' +
+        'Conversation Summary:\n' +
+        '- Started: ' + chatSummary.startTime + '\n' +
+        '- Messages: ' + chatSummary.messageCount + '\n' +
+        '- Your Email: ' + chatSummary.visitor.email + '\n\n' +
+        'Full Conversation:\n' +
+        chatSummary.conversation.map(msg => 
+          '[' + msg.time + '] ' + (msg.sender === 'user' ? chatSummary.visitor.name : 'AI Assistant') + ': ' + msg.message
+        ).join('\n\n') + '\n\n' +
+        'Dr Cheng will follow up with you directly at ' + chatSummary.visitor.email + '.\n\n' +
+        'Best regards,\n' +
+        'Dr Cheng\'s AI Assistant\n' +
+        'VALUE Lab - University of Oxford & National University of Singapore';
       
       // 这里集成邮件服务发送给访客和Dr Cheng
       console.log('Email content generated:', emailContent);
@@ -869,15 +865,16 @@ VALUE Lab - University of Oxford & National University of Singapore
       } else if (lowerMsg.length <= 3) {
         return "I'd be happy to help! Could you tell me more about what you're interested in regarding Dr Cheng's work? Are you looking for research collaboration, publication information, or something else?";
       } else {
-        return `Thanks for your message! I'd be happy to help you learn more about Dr Cheng's work in health economics and outcomes research. Could you elaborate on what specific information you're looking for?`;
+        return 'Thanks for your message! I\'d be happy to help you learn more about Dr Cheng\'s work in health economics and outcomes research. Could you elaborate on what specific information you\'re looking for?';
       }
     },
   },
   mounted() {
     // Simulate receiving a message after 5 seconds
-    setTimeout(() => {
-      if (!this.showChatWidget) {
-        this.hasNewMessage = true;
+    const self = this;
+    setTimeout(function() {
+      if (!self.showChatWidget) {
+        self.hasNewMessage = true;
       }
     }, 5000);
   }
