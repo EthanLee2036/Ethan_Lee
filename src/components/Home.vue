@@ -141,14 +141,15 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
           <!-- 访客信息收集 -->
           <div v-if="showContactInfo" class="visitor-info-form">
             <div class="form-header">
-              <h4>Before we continue...</h4>
-              <p>Please provide your contact info so Dr Cheng can follow up with you directly:</p>
+              <h4>It sounds like you're really interested in Dr Cheng's work! 🎓</h4>
+              <p>Would you mind sharing your contact info? That way Dr Cheng can follow up with you directly about potential collaboration or opportunities:</p>
             </div>
             <div class="form-row">
               <input 
                 v-model="visitorInfo.name" 
                 placeholder="Your name" 
                 class="visitor-input"
+                type="text"
               >
               <input 
                 v-model="visitorInfo.email" 
@@ -159,9 +160,9 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
             </div>
             <div class="form-actions">
               <button @click="collectVisitorInfo" class="collect-btn" :disabled="!visitorInfo.name.trim() || !visitorInfo.email.trim()">
-                Continue Chat
+                Continue Our Chat
               </button>
-              <button @click="skipContactInfo" class="skip-btn">Skip for now</button>
+              <button @click="skipContactInfo" class="skip-btn">Maybe later</button>
             </div>
           </div>
 
@@ -184,7 +185,7 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
           </div>
           <div class="chat-input-area">
             <!-- 操作按钮 -->
-            <div class="chat-actions" v-if="messages.length > 2">
+            <div class="chat-actions" v-if="messages.length > 4 && !showContactInfo">
               <button @click="requestHumanChat" class="action-btn human-btn">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.89 1 3 1.89 3 3V19A2 2 0 0 0 5 21H19A2 2 0 0 0 21 19V9Z"/>
@@ -300,7 +301,7 @@ export default {
         {
           id: 1,
           sender: 'assistant',
-          text: 'Hello! I\'m Dr Cheng\'s AI assistant. How can I help you today? I can answer questions about research, collaborations, or help you get in touch. 😊',
+          text: 'Hi there! 👋 I\'m Dr Cheng\'s AI assistant. I\'m here to help you learn about his research in health economics and connect you with opportunities for collaboration. What brings you to his website today?',
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }
       ],
@@ -358,6 +359,7 @@ export default {
       
       if (!this.currentMessage.trim() || this.isTyping) return;
 
+      // 调整联系信息收集时机 - 恢复到第3条消息
       if (this.messages.length === 3 && !this.visitorInfo.collected) {
         this.showContactInfo = true;
         return;
@@ -392,7 +394,7 @@ export default {
       }).join('\n');
       
       if (window.claude && window.claude.complete) {
-        window.claude.complete('You are Dr Cheng Ling Jie\'s AI assistant helping visitors on his academic website. You should provide helpful, contextual responses based on the conversation.\n\nContext about Dr Cheng:\n- Postdoctoral Fellow at National Perinatal Epidemiology Unit, University of Oxford\n- Senior Tutor at Alice Lee Centre for Nursing Studies, National University of Singapore\n- PhD, MPH, BSN (Hons), RN\n- Research focus: health economics and outcomes research, healthcare decision-making\n- Led projects securing over SGD 1.6 million in funding\n- Published 70+ peer-reviewed articles\n- Supervised 30+ undergraduate and 8 postgraduate theses\n- Senior Editor for Systematic Reviews journal, Associate Editor for Quality of Life Research\n- Member of EuroQol Group, ISPOR, ISOQOL, PROMIS Health Organization\n- Expert in health economics, quality of life research, systematic reviews\n\nRecent conversation context:\n' + conversationHistory + '\n\nCurrent user message: "' + messageToSend + '"\n\nGuidelines:\n- Respond naturally and conversationally to the specific message\n- If asked about research topics, provide specific details about Dr Cheng\'s work\n- If asked about collaboration, explain his areas of expertise and suggest next steps\n- If the message is very short/unclear, ask clarifying questions\n- Keep responses helpful but concise (2-3 sentences max)\n- If appropriate, suggest using "Connect with Dr Cheng" button for detailed discussions\n- Be friendly and professional\n\nRespond only with your reply, no extra formatting:').then(function(response) {
+        window.claude.complete('You are Dr Cheng Ling Jie\'s AI assistant helping visitors on his academic website. You should provide helpful, contextual responses based on the conversation.\n\nContext about Dr Cheng:\n- Postdoctoral Fellow at National Perinatal Epidemiology Unit, University of Oxford\n- Senior Tutor at Alice Lee Centre for Nursing Studies, National University of Singapore\n- PhD, MPH, BSN (Hons), RN\n- Research focus: health economics and outcomes research, healthcare decision-making\n- Led projects securing over SGD 1.6 million in funding\n- Published 70+ peer-reviewed articles\n- Supervised 30+ undergraduate and 8 postgraduate theses\n- Senior Editor for Systematic Reviews journal, Associate Editor for Quality of Life Research\n- Member of EuroQol Group, ISPOR, ISOQOL, PROMIS Health Organization\n- Expert in health economics, quality of life research, systematic reviews\n\nRecent conversation context:\n' + conversationHistory + '\n\nCurrent user message: "' + messageToSend + '"\n\nGuidelines:\n- Be warm, friendly, and conversational - like a helpful colleague\n- For greetings like "how are you", respond naturally and personally\n- For casual conversation, be engaging and show interest in the person\n- If asked about research topics, provide specific details about Dr Cheng\'s work\n- If asked about collaboration, explain his areas of expertise and suggest next steps\n- If the message is very short/unclear, ask clarifying questions\n- Keep responses helpful but conversational (2-4 sentences)\n- Use a warm, approachable tone - not robotic or overly formal\n- If appropriate, suggest using "Connect with Dr Cheng" button for detailed discussions\n- Match the user\'s energy level and communication style\n\nRespond only with your reply, no extra formatting:').then(function(response) {
           
           var assistantMessage = {
             id: self.messageIdCounter++,
@@ -494,7 +496,7 @@ export default {
       var confirmMessage = {
         id: this.messageIdCounter++,
         sender: 'assistant',
-        text: 'Thank you, ' + this.visitorInfo.name + '! I\'ve noted your contact information. Dr Cheng will be able to follow up with you directly at ' + this.visitorInfo.email + '. How else can I help you today?',
+        text: 'Perfect! Thanks ' + this.visitorInfo.name + '! 🙏 I\'ve saved your info and Dr Cheng will be able to reach out to you at ' + this.visitorInfo.email + ' if there are good collaboration opportunities. Now, what else would you like to know about his work?',
         time: this.getCurrentTime()
       };
       this.messages.push(confirmMessage);
@@ -515,7 +517,7 @@ export default {
       var skipMessage = {
         id: this.messageIdCounter++,
         sender: 'assistant',
-        text: 'No problem! You can continue our conversation. If you need Dr Cheng to follow up with you later, just click "Connect with Dr Cheng" button below.',
+        text: 'No worries at all! We can continue chatting. If you decide later that you\'d like Dr Cheng to reach out directly, just click the "Connect with Dr Cheng" button below. What else would you like to know? 😊',
         time: this.getCurrentTime()
       };
       this.messages.push(skipMessage);
@@ -754,21 +756,76 @@ export default {
     generateFallbackResponse: function(message) {
       var lowerMsg = message.toLowerCase();
       
-      if (lowerMsg.includes('research') || lowerMsg.includes('study')) {
-        return "Dr Cheng's research focuses on health economics and outcomes research. He's particularly interested in improving healthcare decision-making through evidence-based approaches. Would you like to know more about any specific research area?";
-      } else if (lowerMsg.includes('collaboration') || lowerMsg.includes('collaborate')) {
-        return "Dr Cheng is always open to research collaborations! His areas include health economics, quality of life research, and systematic reviews. Click 'Connect with Dr Cheng' to discuss potential partnerships.";
-      } else if (lowerMsg.includes('phd') || lowerMsg.includes('student') || lowerMsg.includes('supervision')) {
-        return "Dr Cheng has supervised over 30 undergraduate and 8 postgraduate students. He's experienced in mentoring research in health economics and nursing. Are you interested in pursuing research under his guidance?";
-      } else if (lowerMsg.includes('publication') || lowerMsg.includes('paper') || lowerMsg.includes('article')) {
-        return "Dr Cheng has published more than 70 peer-reviewed articles in health economics and outcomes research. He also serves as Senior Editor for Systematic Reviews journal. Looking for specific publications?";
-      } else if (lowerMsg.includes('contact') || lowerMsg.includes('email') || lowerMsg.includes('reach')) {
-        return "You can reach Dr Cheng at lingjie.cheng@npeu.ox.ac.uk or use the 'Connect with Dr Cheng' button below for priority contact. What would you like to discuss with him?";
-      } else if (lowerMsg.length <= 3) {
-        return "I'd be happy to help! Could you tell me more about what you're interested in regarding Dr Cheng's work? Are you looking for research collaboration, publication information, or something else?";
-      } else {
-        return 'Thanks for your message! I\'d be happy to help you learn more about Dr Cheng\'s work in health economics and outcomes research. Could you elaborate on what specific information you\'re looking for?';
+      // 问候和日常对话
+      if (lowerMsg.includes('how are you') || lowerMsg.includes('how\'s it going') || lowerMsg.includes('how are things')) {
+        var greetingResponses = [
+          "I'm doing great, thank you for asking! 😊 I'm here and ready to help you learn about Dr Cheng's fascinating work in health economics. What brings you to his website today?",
+          "I'm wonderful, thanks! It's always exciting to meet someone interested in Dr Cheng's research. Are you perhaps looking into health economics or considering collaboration?",
+          "I'm doing well, thank you! I love helping people discover Dr Cheng's work - he's doing some really impactful research. What would you like to know about?"
+        ];
+        return greetingResponses[Math.floor(Math.random() * greetingResponses.length)];
       }
+      
+      if (lowerMsg.includes('hello') || lowerMsg.includes('hi ') || lowerMsg === 'hi' || lowerMsg.includes('hey')) {
+        return "Hello there! Nice to meet you! 👋 I'm here to help you learn about Dr Cheng's research and work. What caught your interest about his profile?";
+      }
+      
+      if (lowerMsg.includes('good morning') || lowerMsg.includes('good afternoon') || lowerMsg.includes('good evening')) {
+        return "Good day to you too! It's lovely to have you here. I'm excited to tell you about Dr Cheng's work in health economics and outcomes research. What would you like to explore?";
+      }
+      
+      // 研究相关
+      if (lowerMsg.includes('research') || lowerMsg.includes('study')) {
+        return "Dr Cheng's research is fascinating! He focuses on health economics and outcomes research, working to improve healthcare decision-making through evidence-based approaches. He's particularly known for his work with quality of life measures. What aspect interests you most?";
+      } 
+      
+      // 合作相关
+      if (lowerMsg.includes('collaboration') || lowerMsg.includes('collaborate') || lowerMsg.includes('work together')) {
+        return "That's exciting! Dr Cheng loves collaborating with fellow researchers. His expertise spans health economics, quality of life research, and systematic reviews. He's currently at Oxford but maintains strong ties with Singapore. What kind of collaboration are you thinking about?";
+      } 
+      
+      // 学术指导
+      if (lowerMsg.includes('phd') || lowerMsg.includes('student') || lowerMsg.includes('supervision') || lowerMsg.includes('mentor')) {
+        return "Dr Cheng is a wonderful mentor! He's supervised over 30 undergraduate and 8 postgraduate students in health economics and nursing research. He's really passionate about developing the next generation of researchers. Are you considering pursuing research in his field?";
+      } 
+      
+      // 发表论文
+      if (lowerMsg.includes('publication') || lowerMsg.includes('paper') || lowerMsg.includes('article') || lowerMsg.includes('journal')) {
+        return "Dr Cheng has an impressive publication record - over 70 peer-reviewed articles! He also serves as Senior Editor for Systematic Reviews and Associate Editor for Quality of Life Research. Are you looking for his recent work or interested in publishing in his field?";
+      } 
+      
+      // 联系方式
+      if (lowerMsg.includes('contact') || lowerMsg.includes('email') || lowerMsg.includes('reach') || lowerMsg.includes('get in touch')) {
+        return "I'd be happy to help you connect with Dr Cheng! You can reach him at lingjie.cheng@npeu.ox.ac.uk, or use the 'Connect with Dr Cheng' button below for priority contact. He's very responsive to genuine research inquiries. What would you like to discuss with him?";
+      }
+      
+      // 简单或不清楚的消息
+      if (lowerMsg.length <= 3 || lowerMsg === 'ok' || lowerMsg === 'okay' || lowerMsg === 'yes' || lowerMsg === 'no') {
+        return "I'm here to help! 😊 Could you tell me a bit more about what you're interested in? Are you looking for research collaboration opportunities, information about Dr Cheng's publications, or something else entirely?";
+      }
+      
+      // 默认回复
+      return "Thanks for reaching out! I'd love to help you learn more about Dr Cheng's work in health economics and outcomes research. He's doing some really impactful work at both Oxford and Singapore. What specific aspect would you like to know more about?";
+    },
+    
+    shouldCollectInfo: function() {
+      // 只有在对话显示真正兴趣时才收集信息
+      var userMessages = this.messages.filter(function(msg) {
+        return msg.sender === 'user';
+      });
+      
+      if (userMessages.length < 3) return false;
+      
+      // 检查是否提到了实质性内容
+      var substantiveKeywords = ['research', 'collaboration', 'phd', 'student', 'publication', 'work', 'study', 'project', 'academic', 'university'];
+      var hasSubstantiveContent = userMessages.some(function(msg) {
+        var lowerText = msg.text.toLowerCase();
+        return substantiveKeywords.some(function(keyword) {
+          return lowerText.includes(keyword);
+        });
+      });
+      
+      return hasSubstantiveContent;
     },
     showAdminPanel: function() {
       if (confirm('Show admin panel? (For Dr Cheng only)')) {
@@ -1050,6 +1107,8 @@ h2 {
   margin: 20px;
   border-radius: 12px;
   border: 2px solid #e3e9f1;
+  width: calc(100% - 40px); /* 确保容器不会超出 */
+  box-sizing: border-box;
 }
 
 .form-header h4 {
@@ -1069,6 +1128,7 @@ h2 {
   display: flex;
   gap: 12px;
   margin-bottom: 16px;
+  width: 100%;
 }
 
 .visitor-input {
@@ -1079,6 +1139,8 @@ h2 {
   font-size: 0.9em;
   outline: none;
   transition: border-color 0.2s;
+  min-width: 0; /* 确保不会被压缩过小 */
+  width: 100%;
 }
 
 .visitor-input:focus {
@@ -1649,7 +1711,13 @@ h2 {
   
   .form-row {
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
+    width: 100%;
+  }
+  
+  .visitor-input {
+    width: 100%;
+    min-width: auto;
   }
   
   .form-actions {
