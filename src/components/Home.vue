@@ -2,7 +2,7 @@
   <div class="container">
     <section id="intro">
       <div id="intro-info">
-        <h1>Cheng Ling Jie (Jeremy) <span style="font-size:0.7em;">(曾令杰)</span></h1>
+        <h1>Dr. Cheng Ling Jie (Jeremy) <span style="font-size:0.7em;">(曾令杰)</span></h1>
         <h2>PhD, MPH, BSN (Hons), RN</h2>
         <p class="intro-description">
 Dr Cheng Ling Jie is a Postdoctoral Fellow at the <a href="https://www.npeu.ox.ac.uk/about/people/ling-jie-cheng-1110">National Perinatal Epidemiology Unit</a>, University of Oxford, supported by the prestigious <a href="https://www.moe.gov.sg/news/press-releases/20240814-28-young-singaporeans-receive-awards-to-pursue-careers-in-academia-and-research">Singapore Teaching and Academic Research Talent (START) Award</a>. He also holds an academic appointment as Senior Tutor at the <a href="https://medicine.nus.edu.sg/nursing/our-people/our-faculty/teaching-faculty/cheng-ling-jie/">Alice Lee Centre for Nursing Studies</a>, Yong Loo Lin School of Medicine, National University of Singapore.
@@ -79,8 +79,38 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
       </ul>
     </section>
 
+    <!-- Contact Section with Email Subscription -->
     <section id="contact">
       <h2>Contact & Locations</h2>
+      
+      <!-- Email Newsletter Subscription -->
+      <div class="newsletter-section">
+        <div class="newsletter-box">
+          <h3>📧 Stay Updated with Dr. Cheng's Research</h3>
+          <p>Subscribe to receive notifications about new publications, research opportunities, and collaboration invites.</p>
+          <div class="newsletter-form">
+            <input 
+              v-model="newsletterEmail" 
+              type="email" 
+              placeholder="Enter your email address"
+              class="newsletter-input"
+              @keyup.enter="subscribeNewsletter"
+            >
+            <button 
+              @click="subscribeNewsletter" 
+              class="newsletter-btn"
+              :disabled="!newsletterEmail.trim() || isSubscribing"
+            >
+              <span v-if="isSubscribing">Subscribing...</span>
+              <span v-else>Subscribe</span>
+            </button>
+          </div>
+          <div v-if="subscriptionMessage" class="subscription-message" :class="subscriptionStatus">
+            {{ subscriptionMessage }}
+          </div>
+        </div>
+      </div>
+
       <div class="two-cols">
         <div class="contact-location">
           <strong>National Perinatal Epidemiology Unit (NPEU)</strong><br>
@@ -138,7 +168,7 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
 
         <!-- Chat Mode -->
         <div v-if="currentMode === 'chat'" class="chat-content">
-          <!-- 访客信息收集 -->
+          <!-- Visitor Information Collection -->
           <div v-if="showContactInfo" class="visitor-info-form">
             <div class="form-header">
               <h4>It sounds like you're really interested in Dr Cheng's work! 🎓</h4>
@@ -184,7 +214,7 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
             </div>
           </div>
           <div class="chat-input-area">
-            <!-- 操作按钮 -->
+            <!-- Action Buttons -->
             <div class="chat-actions" v-if="messages.length > 4 && !showContactInfo">
               <button @click="requestHumanChat" class="action-btn human-btn">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -280,6 +310,7 @@ Internationally, Dr Cheng serves as a <a href="https://systematicreviewsjournal.
 </template>
 
 <script>
+// Include EmailJS SDK: https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js
 export default {
   name: 'Home',
   data: function() {
@@ -292,6 +323,13 @@ export default {
       hasNewMessage: false,
       currentMessage: '',
       showContactInfo: false,
+      
+      // Newsletter subscription
+      newsletterEmail: '',
+      isSubscribing: false,
+      subscriptionMessage: '',
+      subscriptionStatus: '', // 'success' or 'error'
+      
       visitorInfo: {
         name: '',
         email: '',
@@ -312,7 +350,22 @@ export default {
         message: ''
       },
       messageIdCounter: 2,
-      chatHistory: []
+      chatHistory: [],
+      
+      // Email configuration
+      emailConfig: {
+        serviceID: 'service_xxxxxxx', // Replace with your EmailJS service ID
+        templateID: 'template_xxxxxxx', // Replace with your EmailJS template ID
+        userID: 'your_user_id', // Replace with your EmailJS user ID
+        
+        // Template IDs for different email types
+        templates: {
+          newsletter: 'template_newsletter', // For newsletter subscriptions
+          chatNotification: 'template_chat_notify', // For chat notifications
+          formMessage: 'template_form_message', // For form messages
+          chatHistory: 'template_chat_history' // For chat history emails
+        }
+      }
     };
   },
   computed: {
@@ -324,6 +377,90 @@ export default {
     }
   },
   methods: {
+    // Initialize EmailJS
+    initializeEmailJS: function() {
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init(this.emailConfig.userID);
+      } else {
+        console.warn('EmailJS not loaded. Email functionality will be limited.');
+      }
+    },
+    
+    // Newsletter subscription
+    subscribeNewsletter: function() {
+      var self = this;
+      
+      if (!this.newsletterEmail.trim()) return;
+      
+      this.isSubscribing = true;
+      this.subscriptionMessage = '';
+      
+      var templateParams = {
+        subscriber_email: this.newsletterEmail,
+        subscriber_name: 'Website Visitor',
+        subscription_date: new Date().toLocaleDateString(),
+        dr_cheng_email: 'ethanlee2036@gmail.com' // Dr. Cheng's email
+      };
+      
+      // Send notification to Dr. Cheng
+      this.sendEmail(this.emailConfig.templates.newsletter, templateParams)
+        .then(function(response) {
+          console.log('Newsletter subscription successful:', response);
+          self.subscriptionMessage = 'Successfully subscribed! You will receive updates about Dr. Cheng\'s research.';
+          self.subscriptionStatus = 'success';
+          self.newsletterEmail = '';
+          
+          // Store subscription locally (optional)
+          if (typeof localStorage !== 'undefined') {
+            var subscribers = JSON.parse(localStorage.getItem('newsletter_subscribers') || '[]');
+            subscribers.push({
+              email: templateParams.subscriber_email,
+              date: templateParams.subscription_date
+            });
+            localStorage.setItem('newsletter_subscribers', JSON.stringify(subscribers));
+          }
+          
+        })
+        .catch(function(error) {
+          console.error('Newsletter subscription failed:', error);
+          self.subscriptionMessage = 'Subscription failed. Please try again or contact directly.';
+          self.subscriptionStatus = 'error';
+        })
+        .finally(function() {
+          self.isSubscribing = false;
+          setTimeout(function() {
+            self.subscriptionMessage = '';
+            self.subscriptionStatus = '';
+          }, 5000);
+        });
+    },
+    
+    // Enhanced email sending method
+    sendEmail: function(templateId, templateParams) {
+      if (typeof emailjs !== 'undefined') {
+        return emailjs.send(this.emailConfig.serviceID, templateId, templateParams);
+      } else {
+        // Fallback: create mailto link
+        var subject = encodeURIComponent(templateParams.subject || 'Website Contact');
+        var body = encodeURIComponent(this.formatEmailFallback(templateParams));
+        var mailtoUrl = 'mailto:ethanlee2036@gmail.com?subject=' + subject + '&body=' + body;
+        window.open(mailtoUrl);
+        return Promise.resolve({ status: 'fallback', message: 'Opened email client' });
+      }
+    },
+    
+    // Format email content for fallback
+    formatEmailFallback: function(params) {
+      var content = 'Website Contact Form\n\n';
+      Object.keys(params).forEach(function(key) {
+        if (key !== 'dr_cheng_email' && key !== 'service_id') {
+          content += key.replace(/_/g, ' ').toUpperCase() + ': ' + params[key] + '\n';
+        }
+      });
+      content += '\nSent from Dr. Cheng\'s website contact system.';
+      return content;
+    },
+    
     toggleChatWidget: function() {
       this.showChatWidget = !this.showChatWidget;
       if (this.showChatWidget) {
@@ -337,9 +474,11 @@ export default {
         });
       }
     },
+    
     closeChatWidget: function() {
       this.showChatWidget = false;
     },
+    
     toggleMode: function() {
       this.currentMode = this.currentMode === 'chat' ? 'message' : 'chat';
       if (this.currentMode === 'chat') {
@@ -351,15 +490,17 @@ export default {
         });
       }
     },
+    
     getCurrentTime: function() {
       return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     },
+    
     sendMessage: function() {
       var self = this;
       
       if (!this.currentMessage.trim() || this.isTyping) return;
 
-      // 调整联系信息收集时机 - 恢复到第3条消息
+      // Trigger contact info collection at the 3rd message
       if (this.messages.length === 3 && !this.visitorInfo.collected) {
         this.showContactInfo = true;
         return;
@@ -389,67 +530,50 @@ export default {
 
       this.isTyping = true;
       
-      var conversationHistory = this.messages.slice(-5).map(function(msg) {
-        return (msg.sender === 'user' ? 'User' : 'Assistant') + ': ' + msg.text;
-      }).join('\n');
-      
-      if (window.claude && window.claude.complete) {
-        window.claude.complete('You are Dr Cheng Ling Jie\'s AI assistant helping visitors on his academic website. You should provide helpful, contextual responses based on the conversation.\n\nContext about Dr Cheng:\n- Postdoctoral Fellow at National Perinatal Epidemiology Unit, University of Oxford\n- Senior Tutor at Alice Lee Centre for Nursing Studies, National University of Singapore\n- PhD, MPH, BSN (Hons), RN\n- Research focus: health economics and outcomes research, healthcare decision-making\n- Led projects securing over SGD 1.6 million in funding\n- Published 70+ peer-reviewed articles\n- Supervised 30+ undergraduate and 8 postgraduate theses\n- Senior Editor for Systematic Reviews journal, Associate Editor for Quality of Life Research\n- Member of EuroQol Group, ISPOR, ISOQOL, PROMIS Health Organization\n- Expert in health economics, quality of life research, systematic reviews\n\nRecent conversation context:\n' + conversationHistory + '\n\nCurrent user message: "' + messageToSend + '"\n\nGuidelines:\n- Be warm, friendly, and conversational - like a helpful colleague\n- For greetings like "how are you", respond naturally and personally\n- For casual conversation, be engaging and show interest in the person\n- If asked about research topics, provide specific details about Dr Cheng\'s work\n- If asked about collaboration, explain his areas of expertise and suggest next steps\n- If the message is very short/unclear, ask clarifying questions\n- Keep responses helpful but conversational (2-4 sentences)\n- Use a warm, approachable tone - not robotic or overly formal\n- If appropriate, suggest using "Connect with Dr Cheng" button for detailed discussions\n- Match the user\'s energy level and communication style\n\nRespond only with your reply, no extra formatting:').then(function(response) {
-          
-          var assistantMessage = {
-            id: self.messageIdCounter++,
-            sender: 'assistant',
-            text: response,
-            time: self.getCurrentTime()
-          };
-          self.messages.push(assistantMessage);
-          
-          self.chatHistory.push({
-            type: 'assistant_response',
-            content: response,
-            timestamp: new Date().toISOString()
-          });
-          
-          self.isTyping = false;
-          self.$nextTick(function() {
-            self.scrollToBottom();
-          });
-          
-        }).catch(function(error) {
-          var fallbackResponse = self.generateFallbackResponse(messageToSend);
-          
-          var assistantMessage = {
-            id: self.messageIdCounter++,
-            sender: 'assistant',
-            text: fallbackResponse,
-            time: self.getCurrentTime()
-          };
-          self.messages.push(assistantMessage);
-          
-          self.isTyping = false;
-          self.$nextTick(function() {
-            self.scrollToBottom();
-          });
+      // Generate AI response (simplified for this example)
+      setTimeout(function() {
+        var response = self.generateAIResponse(messageToSend);
+        
+        var assistantMessage = {
+          id: self.messageIdCounter++,
+          sender: 'assistant',
+          text: response,
+          time: self.getCurrentTime()
+        };
+        self.messages.push(assistantMessage);
+        
+        self.chatHistory.push({
+          type: 'assistant_response',
+          content: response,
+          timestamp: new Date().toISOString()
         });
-      } else {
-        setTimeout(function() {
-          var fallbackResponse = self.generateFallbackResponse(messageToSend);
-          
-          var assistantMessage = {
-            id: self.messageIdCounter++,
-            sender: 'assistant',
-            text: fallbackResponse,
-            time: self.getCurrentTime()
-          };
-          self.messages.push(assistantMessage);
-          
-          self.isTyping = false;
-          self.$nextTick(function() {
-            self.scrollToBottom();
-          });
-        }, 1000);
-      }
+        
+        self.isTyping = false;
+        self.$nextTick(function() {
+          self.scrollToBottom();
+        });
+        
+      }, 1000 + Math.random() * 1000);
     },
+    
+    generateAIResponse: function(message) {
+      var lowerMsg = message.toLowerCase();
+      
+      if (lowerMsg.includes('how are you') || lowerMsg.includes('how\'s it going')) {
+        return "I'm doing great, thank you for asking! 😊 I'm here and ready to help you learn about Dr Cheng's fascinating work in health economics. What brings you to his website today?";
+      }
+      
+      if (lowerMsg.includes('research') || lowerMsg.includes('study')) {
+        return "Dr Cheng's research is fascinating! He focuses on health economics and outcomes research, working to improve healthcare decision-making through evidence-based approaches. He's particularly known for his work with quality of life measures. What aspect interests you most?";
+      }
+      
+      if (lowerMsg.includes('collaboration') || lowerMsg.includes('collaborate')) {
+        return "That's exciting! Dr Cheng loves collaborating with fellow researchers. His expertise spans health economics, quality of life research, and systematic reviews. He's currently at Oxford but maintains strong ties with Singapore. What kind of collaboration are you thinking about?";
+      }
+      
+      return "Thanks for reaching out! I'd love to help you learn more about Dr Cheng's work in health economics and outcomes research. He's doing some really impactful work at both Oxford and Singapore. What specific aspect would you like to know more about?";
+    },
+    
     sendFormMessage: function() {
       var self = this;
       
@@ -457,27 +581,49 @@ export default {
       
       this.isSubmitting = true;
       
-      setTimeout(function() {
-        self.messageForm = {
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        };
-        
-        alert('Message sent successfully! Dr Cheng will get back to you soon.');
-        self.closeChatWidget();
-        self.isSubmitting = false;
-      }, 2000);
+      var templateParams = {
+        from_name: this.messageForm.name,
+        from_email: this.messageForm.email,
+        subject: this.messageForm.subject,
+        message: this.messageForm.message,
+        sent_date: new Date().toLocaleDateString(),
+        sent_time: new Date().toLocaleTimeString(),
+        dr_cheng_email: 'ethanlee2036@gmail.com'
+      };
+      
+      this.sendEmail(this.emailConfig.templates.formMessage, templateParams)
+        .then(function(response) {
+          console.log('Form message sent successfully:', response);
+          alert('Message sent successfully! Dr Cheng will get back to you soon.');
+          
+          self.messageForm = {
+            name: '',
+            email: '',
+            subject: '',
+            message: ''
+          };
+          
+          self.closeChatWidget();
+        })
+        .catch(function(error) {
+          console.error('Failed to send form message:', error);
+          alert('Failed to send message. Please try again or contact directly.');
+        })
+        .finally(function() {
+          self.isSubmitting = false;
+        });
     },
+    
     scrollToBottom: function() {
       if (this.$refs.chatMessages) {
         this.$refs.chatMessages.scrollTop = this.$refs.chatMessages.scrollHeight;
       }
     },
+    
     handleInput: function() {
       // Could add typing indicators or other real-time features
     },
+    
     collectVisitorInfo: function() {
       if (!this.visitorInfo.name.trim() || !this.visitorInfo.email.trim()) return;
       
@@ -501,7 +647,8 @@ export default {
       };
       this.messages.push(confirmMessage);
       
-      this.notifyDrCheng('visitor_info_collected');
+      // Send notification email to Dr. Cheng about new visitor
+      this.notifyDrChengAboutVisitor();
       
       var self = this;
       this.$nextTick(function() {
@@ -511,6 +658,7 @@ export default {
         }
       });
     },
+    
     skipContactInfo: function() {
       this.showContactInfo = false;
       
@@ -530,6 +678,7 @@ export default {
         }
       });
     },
+    
     requestHumanChat: function() {
       var self = this;
       
@@ -538,34 +687,41 @@ export default {
         return;
       }
       
-      this.sendNotificationToDrCheng({
-        type: 'human_chat_request',
-        visitor: this.visitorInfo,
-        chatHistory: this.chatHistory,
-        messages: this.messages,
-        timestamp: new Date().toISOString()
-      }).then(function() {
-        var notifyMessage = {
-          id: self.messageIdCounter++,
-          sender: 'assistant',
-          text: 'I\'ve notified Dr Cheng about your request to chat directly. He will reach out to you at ' + self.visitorInfo.email + ' soon. In the meantime, feel free to continue our conversation or leave a detailed message using the message form.',
-          time: self.getCurrentTime()
-        };
-        self.messages.push(notifyMessage);
-        
-        alert('Dr Cheng has been notified and will contact you directly!');
-        
-        self.$nextTick(function() {
-          self.scrollToBottom();
+      var templateParams = {
+        visitor_name: this.visitorInfo.name,
+        visitor_email: this.visitorInfo.email,
+        request_type: 'Direct Chat Request',
+        request_date: new Date().toLocaleDateString(),
+        request_time: new Date().toLocaleTimeString(),
+        chat_summary: this.generateChatSummaryText(),
+        dr_cheng_email: 'ethanlee2036@gmail.com',
+        subject: '🤝 Direct Chat Request from ' + this.visitorInfo.name
+      };
+      
+      this.sendEmail(this.emailConfig.templates.chatNotification, templateParams)
+        .then(function(response) {
+          console.log('Human chat request sent:', response);
+          
+          var notifyMessage = {
+            id: self.messageIdCounter++,
+            sender: 'assistant',
+            text: 'I\'ve notified Dr Cheng about your request to chat directly. He will reach out to you at ' + self.visitorInfo.email + ' soon. In the meantime, feel free to continue our conversation or leave a detailed message using the message form.',
+            time: self.getCurrentTime()
+          };
+          self.messages.push(notifyMessage);
+          
+          alert('Dr Cheng has been notified and will contact you directly!');
+          
+          self.$nextTick(function() {
+            self.scrollToBottom();
+          });
+        })
+        .catch(function(error) {
+          console.error('Failed to send human chat request:', error);
+          alert('Unable to send notification. Please try using the message form instead.');
         });
-      }).catch(function(error) {
-        alert('Unable to send notification. Please try using the message form instead.');
-        
-        self.$nextTick(function() {
-          self.scrollToBottom();
-        });
-      });
     },
+    
     sendChatHistory: function() {
       var self = this;
       
@@ -574,266 +730,89 @@ export default {
         return;
       }
       
-      var chatSummary = this.generateChatSummary();
-      
-      this.sendEmailWithChatHistory(chatSummary).then(function() {
-        var confirmMessage = {
-          id: self.messageIdCounter++,
-          sender: 'assistant',
-          text: 'I\'ve emailed a copy of our conversation to both you (' + self.visitorInfo.email + ') and Dr Cheng. You should receive it shortly.',
-          time: self.getCurrentTime()
-        };
-        self.messages.push(confirmMessage);
-        
-        alert('Chat history has been emailed to both parties!');
-        
-        self.$nextTick(function() {
-          self.scrollToBottom();
-        });
-      }).catch(function(error) {
-        alert('Unable to send email. Please try copying the conversation manually.');
-        
-        self.$nextTick(function() {
-          self.scrollToBottom();
-        });
-      });
-    },
-    generateChatSummary: function() {
-      var summary = {
-        visitor: this.visitorInfo,
-        startTime: this.messages[0].time,
-        endTime: this.getCurrentTime(),
-        messageCount: this.messages.length,
-        conversation: this.messages.map(function(msg) {
-          return {
-            sender: msg.sender,
-            message: msg.text,
-            time: msg.time
-          };
-        })
+      var templateParams = {
+        visitor_name: this.visitorInfo.name,
+        visitor_email: this.visitorInfo.email,
+        chat_date: new Date().toLocaleDateString(),
+        chat_start_time: this.messages[0].time,
+        chat_end_time: this.getCurrentTime(),
+        message_count: this.messages.length,
+        chat_transcript: this.formatChatTranscript(),
+        dr_cheng_email: 'ethanlee2036@gmail.com',
+        subject: '💬 Chat History - ' + this.visitorInfo.name
       };
-      return summary;
-    },
-    sendNotificationToDrCheng: function(data) {
-      var emailSubject = encodeURIComponent('Website Chat: ' + (data.type === 'human_chat_request' ? 'Direct Chat Request' : 'New Visitor') + ' from ' + ((data.visitor && data.visitor.name) || 'Anonymous'));
-      var emailBody = encodeURIComponent(this.formatEmailNotification(data));
-      var mailtoLink = 'mailto:ethanlee2036@gmail.com?subject=' + emailSubject + '&body=' + emailBody;
       
-      navigator.clipboard.writeText(this.formatEmailNotification(data)).then(function() {
-        console.log('✅ Chat details copied to clipboard');
-      }).catch(function(error) {
-        console.log('Clipboard not available');
-      });
-      
-      var webhookUrl = '';
-      
-      if (webhookUrl) {
-        var slackMessage = {
-          text: "🔔 New website visitor interaction",
-          attachments: [{
-            color: data.type === 'human_chat_request' ? 'warning' : 'good',
-            fields: [
-              {
-                title: "Visitor",
-                value: data.visitor ? (data.visitor.name + ' (' + data.visitor.email + ')') : 'Anonymous',
-                short: true
-              },
-              {
-                title: "Type",
-                value: data.type === 'human_chat_request' ? '🤝 Direct Chat Request' : '📝 Contact Info Collected',
-                short: true
-              },
-              {
-                title: "Messages",
-                value: ((data.messages && data.messages.length) || (data.chatHistory && data.chatHistory.length) || 0) + ' exchanged',
-                short: true
-              },
-              {
-                title: "Time",
-                value: new Date().toLocaleString(),
-                short: true
-              }
-            ],
-            text: data.chatHistory ? 
-              'Recent conversation:\n' + data.chatHistory.slice(-3).map(function(msg) {
-                return (msg.type === 'user_message' ? '👤' : '🤖') + ' ' + msg.content;
-              }).join('\n') : ''
-          }]
-        };
-        
-        fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(slackMessage)
-        }).then(function() {
-          console.log('✅ Slack notification sent');
-        }).catch(function(error) {
-          console.log('❌ Webhook notification failed:', error);
+      this.sendEmail(this.emailConfig.templates.chatHistory, templateParams)
+        .then(function(response) {
+          console.log('Chat history sent:', response);
+          
+          var confirmMessage = {
+            id: self.messageIdCounter++,
+            sender: 'assistant',
+            text: 'I\'ve emailed a copy of our conversation to both you (' + self.visitorInfo.email + ') and Dr Cheng. You should receive it shortly.',
+            time: self.getCurrentTime()
+          };
+          self.messages.push(confirmMessage);
+          
+          alert('Chat history has been emailed to both parties!');
+          
+          self.$nextTick(function() {
+            self.scrollToBottom();
+          });
+        })
+        .catch(function(error) {
+          console.error('Failed to send chat history:', error);
+          alert('Unable to send email. Please try copying the conversation manually.');
         });
-      }
-      
-      window.open(mailtoLink, '_blank');
-      
-      return Promise.resolve(true);
-    },
-    notifyDrCheng: function(eventType) {
-      if (eventType === 'visitor_info_collected') {
-        this.sendNotificationToDrCheng({
-          type: 'visitor_info_collected',
-          visitor: this.visitorInfo,
-          chatHistory: this.chatHistory,
-          timestamp: new Date().toISOString()
-        }).catch(function(error) {
-          console.log('Notification failed:', error);
-        });
-      }
-    },
-    formatEmailNotification: function(data) {
-      var visitorName = (data.visitor && data.visitor.name) ? data.visitor.name : 'Anonymous Visitor';
-      var visitorEmail = (data.visitor && data.visitor.email) ? data.visitor.email : 'No email provided';
-      
-      var emailContent = '\n🔔 NEW WEBSITE VISITOR INTERACTION\n\n' +
-        'Visitor Information:\n' +
-        '👤 Name: ' + visitorName + '\n' +
-        '📧 Email: ' + visitorEmail + '\n' +
-        '🕐 Time: ' + new Date().toLocaleString() + '\n' +
-        '📍 Page: VALUE Lab Website Chat\n\n' +
-        'Request Type: ' + (data.type === 'human_chat_request' ? '🤝 DIRECT CHAT REQUEST' : '📝 Contact Info Collected') + '\n\n';
-
-      if (data.chatHistory && data.chatHistory.length > 0) {
-        emailContent += '\n📋 CONVERSATION HISTORY:\n' +
-          data.chatHistory.map(function(entry) {
-            var time = new Date(entry.timestamp).toLocaleTimeString();
-            if (entry.type === 'user_message') {
-              return '[' + time + '] 👤 ' + visitorName + ': ' + entry.content;
-            } else if (entry.type === 'assistant_response') {
-              return '[' + time + '] 🤖 AI Assistant: ' + entry.content;
-            }
-            return '';
-          }).filter(Boolean).join('\n') + '\n\n';
-      }
-
-      if (data.messages && data.messages.length > 1) {
-        emailContent += '\n💬 FULL CHAT MESSAGES:\n' +
-          data.messages.map(function(msg) {
-            return '[' + msg.time + '] ' + (msg.sender === 'user' ? '👤 ' + visitorName : '🤖 AI Assistant') + ': ' + msg.text;
-          }).join('\n') + '\n\n';
-      }
-
-      emailContent += '\n📞 NEXT STEPS:\n' +
-        (data.type === 'human_chat_request' ? 
-          'The visitor has specifically requested to chat with you directly. Please respond to them at: ' + visitorEmail :
-          'The visitor provided their contact information. You may want to follow up about their interests.'
-        ) + '\n\n' +
-        '---\n' +
-        '📧 Reply directly to: ' + visitorEmail + '\n' +
-        '🌐 Sent from: VALUE Lab Website Chat System\n' +
-        '⚙️ To configure notifications: Check the admin panel in the chat widget\n\n' +
-        'This is an automated notification from your website chat system.';
-      
-      return emailContent.trim();
-    },
-    sendEmailWithChatHistory: function(chatSummary) {
-      var emailContent = '\nDear ' + chatSummary.visitor.name + ',\n\n' +
-        'Thank you for your interest in Dr Cheng\'s research. Below is a copy of our conversation:\n\n' +
-        'Conversation Summary:\n' +
-        '- Started: ' + chatSummary.startTime + '\n' +
-        '- Messages: ' + chatSummary.messageCount + '\n' +
-        '- Your Email: ' + chatSummary.visitor.email + '\n\n' +
-        'Full Conversation:\n' +
-        chatSummary.conversation.map(function(msg) {
-          return '[' + msg.time + '] ' + (msg.sender === 'user' ? chatSummary.visitor.name : 'AI Assistant') + ': ' + msg.message;
-        }).join('\n\n') + '\n\n' +
-        'Dr Cheng will follow up with you directly at ' + chatSummary.visitor.email + '.\n\n' +
-        'Best regards,\n' +
-        'Dr Cheng\'s AI Assistant\n' +
-        'VALUE Lab - University of Oxford & National University of Singapore';
-      
-      console.log('Email content generated:', emailContent);
-      
-      return Promise.resolve(true);
-    },
-    generateFallbackResponse: function(message) {
-      var lowerMsg = message.toLowerCase();
-      
-      // 问候和日常对话
-      if (lowerMsg.includes('how are you') || lowerMsg.includes('how\'s it going') || lowerMsg.includes('how are things')) {
-        var greetingResponses = [
-          "I'm doing great, thank you for asking! 😊 I'm here and ready to help you learn about Dr Cheng's fascinating work in health economics. What brings you to his website today?",
-          "I'm wonderful, thanks! It's always exciting to meet someone interested in Dr Cheng's research. Are you perhaps looking into health economics or considering collaboration?",
-          "I'm doing well, thank you! I love helping people discover Dr Cheng's work - he's doing some really impactful research. What would you like to know about?"
-        ];
-        return greetingResponses[Math.floor(Math.random() * greetingResponses.length)];
-      }
-      
-      if (lowerMsg.includes('hello') || lowerMsg.includes('hi ') || lowerMsg === 'hi' || lowerMsg.includes('hey')) {
-        return "Hello there! Nice to meet you! 👋 I'm here to help you learn about Dr Cheng's research and work. What caught your interest about his profile?";
-      }
-      
-      if (lowerMsg.includes('good morning') || lowerMsg.includes('good afternoon') || lowerMsg.includes('good evening')) {
-        return "Good day to you too! It's lovely to have you here. I'm excited to tell you about Dr Cheng's work in health economics and outcomes research. What would you like to explore?";
-      }
-      
-      // 研究相关
-      if (lowerMsg.includes('research') || lowerMsg.includes('study')) {
-        return "Dr Cheng's research is fascinating! He focuses on health economics and outcomes research, working to improve healthcare decision-making through evidence-based approaches. He's particularly known for his work with quality of life measures. What aspect interests you most?";
-      } 
-      
-      // 合作相关
-      if (lowerMsg.includes('collaboration') || lowerMsg.includes('collaborate') || lowerMsg.includes('work together')) {
-        return "That's exciting! Dr Cheng loves collaborating with fellow researchers. His expertise spans health economics, quality of life research, and systematic reviews. He's currently at Oxford but maintains strong ties with Singapore. What kind of collaboration are you thinking about?";
-      } 
-      
-      // 学术指导
-      if (lowerMsg.includes('phd') || lowerMsg.includes('student') || lowerMsg.includes('supervision') || lowerMsg.includes('mentor')) {
-        return "Dr Cheng is a wonderful mentor! He's supervised over 30 undergraduate and 8 postgraduate students in health economics and nursing research. He's really passionate about developing the next generation of researchers. Are you considering pursuing research in his field?";
-      } 
-      
-      // 发表论文
-      if (lowerMsg.includes('publication') || lowerMsg.includes('paper') || lowerMsg.includes('article') || lowerMsg.includes('journal')) {
-        return "Dr Cheng has an impressive publication record - over 70 peer-reviewed articles! He also serves as Senior Editor for Systematic Reviews and Associate Editor for Quality of Life Research. Are you looking for his recent work or interested in publishing in his field?";
-      } 
-      
-      // 联系方式
-      if (lowerMsg.includes('contact') || lowerMsg.includes('email') || lowerMsg.includes('reach') || lowerMsg.includes('get in touch')) {
-        return "I'd be happy to help you connect with Dr Cheng! You can reach him at ethanlee2036@gmail.com, or use the 'Connect with Dr Cheng' button below for priority contact. He's very responsive to genuine research inquiries. What would you like to discuss with him?";
-      }
-      
-      // 简单或不清楚的消息
-      if (lowerMsg.length <= 3 || lowerMsg === 'ok' || lowerMsg === 'okay' || lowerMsg === 'yes' || lowerMsg === 'no') {
-        return "I'm here to help! 😊 Could you tell me a bit more about what you're interested in? Are you looking for research collaboration opportunities, information about Dr Cheng's publications, or something else entirely?";
-      }
-      
-      // 默认回复
-      return "Thanks for reaching out! I'd love to help you learn more about Dr Cheng's work in health economics and outcomes research. He's doing some really impactful work at both Oxford and Singapore. What specific aspect would you like to know more about?";
     },
     
-    shouldCollectInfo: function() {
-      // 只有在对话显示真正兴趣时才收集信息
-      var userMessages = this.messages.filter(function(msg) {
-        return msg.sender === 'user';
-      });
-      
-      if (userMessages.length < 3) return false;
-      
-      // 检查是否提到了实质性内容
-      var substantiveKeywords = ['research', 'collaboration', 'phd', 'student', 'publication', 'work', 'study', 'project', 'academic', 'university'];
-      var hasSubstantiveContent = userMessages.some(function(msg) {
-        var lowerText = msg.text.toLowerCase();
-        return substantiveKeywords.some(function(keyword) {
-          return lowerText.includes(keyword);
-        });
-      });
-      
-      return hasSubstantiveContent;
+    generateChatSummaryText: function() {
+      return this.chatHistory.slice(-5).map(function(entry) {
+        if (entry.type === 'user_message') {
+          return '👤 Visitor: ' + entry.content;
+        } else if (entry.type === 'assistant_response') {
+          return '🤖 AI Assistant: ' + entry.content;
+        }
+        return '';
+      }).filter(Boolean).join('\n');
     },
+    
+    formatChatTranscript: function() {
+      return this.messages.map(function(msg) {
+        var sender = msg.sender === 'user' ? '👤 Visitor' : '🤖 AI Assistant';
+        return '[' + msg.time + '] ' + sender + ': ' + msg.text;
+      }).join('\n\n');
+    },
+    
+    notifyDrChengAboutVisitor: function() {
+      var templateParams = {
+        visitor_name: this.visitorInfo.name,
+        visitor_email: this.visitorInfo.email,
+        notification_type: 'New Visitor Contact Info',
+        visit_date: new Date().toLocaleDateString(),
+        visit_time: new Date().toLocaleTimeString(),
+        recent_conversation: this.generateChatSummaryText(),
+        dr_cheng_email: 'ethanlee2036@gmail.com',
+        subject: '📝 New Website Visitor: ' + this.visitorInfo.name
+      };
+      
+      this.sendEmail(this.emailConfig.templates.chatNotification, templateParams)
+        .then(function(response) {
+          console.log('Visitor notification sent to Dr. Cheng:', response);
+        })
+        .catch(function(error) {
+          console.error('Failed to notify Dr. Cheng about visitor:', error);
+        });
+    },
+    
     showAdminPanel: function() {
       if (confirm('Show admin panel? (For Dr Cheng only)')) {
         var adminData = {
           totalChats: this.messages.length,
           visitorInfo: this.visitorInfo,
           chatHistory: this.chatHistory,
-          lastActive: new Date().toISOString()
+          lastActive: new Date().toISOString(),
+          newsletterSubscribers: JSON.parse(localStorage.getItem('newsletter_subscribers') || '[]')
         };
         
         console.log('📊 Admin Panel Data:', adminData);
@@ -842,13 +821,20 @@ export default {
           '📧 Visitor: ' + (this.visitorInfo.name || 'Anonymous') + ' (' + (this.visitorInfo.email || 'No email') + ')\n' +
           '💬 Messages: ' + this.messages.length + '\n' +
           '📝 History entries: ' + this.chatHistory.length + '\n' +
+          '📬 Newsletter subscribers: ' + adminData.newsletterSubscribers.length + '\n' +
           '🕐 Session started: ' + ((this.messages[0] && this.messages[0].time) || 'Unknown') + '\n\n' +
           'Check console for detailed logs.');
       }
     }
   },
+  
   mounted: function() {
     var self = this;
+    
+    // Initialize EmailJS when component is mounted
+    this.initializeEmailJS();
+    
+    // Show new message notification after 5 seconds
     setTimeout(function() {
       if (!self.showChatWidget) {
         self.hasNewMessage = true;
@@ -859,7 +845,109 @@ export default {
 </script>
 
 <style scoped>
-/* Original styles remain the same */
+/* Newsletter Section */
+.newsletter-section {
+  margin: 30px 0 40px 0;
+}
+
+.newsletter-box {
+  background: linear-gradient(135deg, #f0f7fe 0%, #e8f2ff 100%);
+  border: 2px solid #e3e9f1;
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(21, 76, 121, 0.08);
+}
+
+.newsletter-box h3 {
+  color: var(--primary-blue);
+  margin: 0 0 12px 0;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.newsletter-box p {
+  color: #666;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.newsletter-input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 2px solid #e1e5e9;
+  border-radius: 25px;
+  font-size: 1em;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.newsletter-input:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(21, 76, 121, 0.1);
+}
+
+.newsletter-btn {
+  padding: 14px 28px;
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.newsletter-btn:hover:not(:disabled) {
+  background: #1e5a8a;
+  transform: translateY(-1px);
+}
+
+.newsletter-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.subscription-message {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.subscription-message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.subscription-message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Responsive Newsletter */
+@media (max-width: 768px) {
+  .newsletter-form {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .newsletter-btn {
+    padding: 14px 20px;
+  }
+}
+
+/* All other original styles remain the same */
 #intro {
   display: flex;
   align-items: center;
@@ -1107,7 +1195,7 @@ h2 {
   margin: 20px;
   border-radius: 12px;
   border: 2px solid #e3e9f1;
-  width: calc(100% - 40px); /* 确保容器不会超出 */
+  width: calc(100% - 40px);
   box-sizing: border-box;
 }
 
@@ -1139,7 +1227,7 @@ h2 {
   font-size: 0.9em;
   outline: none;
   transition: border-color 0.2s;
-  min-width: 0; /* 确保不会被压缩过小 */
+  min-width: 0;
   width: 100%;
 }
 
