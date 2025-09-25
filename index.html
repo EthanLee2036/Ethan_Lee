@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EQUIP-AI Platform - EQ-5D价值集分析平台</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .logo-text h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        
+        .logo-text p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .status-badge {
+            background: #dcfce7;
+            color: #166534;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .nav-tabs {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+        }
+        
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 8px;
+            border: none;
+            background: none;
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .nav-tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+        
+        .nav-tab:hover {
+            color: #374151;
+        }
+        
+        .main-content {
+            padding: 30px 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .card-subtitle {
+            color: #6b7280;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #8b5cf6, #3b82f6);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #10b981, #3b82f6);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .select {
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: white;
+        }
+        
+        .select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .grid {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+        
+        .value-set-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .value-set-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .value-set-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .country-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .flag {
+            font-size: 2rem;
+        }
+        
+        .country-name h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .country-name p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .version-badge {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .description {
+            color: #4b5563;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            font-weight: 500;
+            color: #1f2937;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .date-info {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        
+        .link-btn {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .link-btn:hover {
+            color: #1d4ed8;
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .dimension-group {
+            margin-bottom: 24px;
+        }
+        
+        .dimension-label {
+            display: block;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        
+        .dimension-desc {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .level-buttons {
+            display: flex;
+            gap: 8px;
+            margin: 12px 0;
+        }
+        
+        .level-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .level-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .level-btn:hover:not(.active) {
+            border-color: #93c5fd;
+            background: #f8fafc;
+        }
+        
+        .level-hint {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+        
+        .result-card {
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 30px;
+        }
+        
+        .result-score {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #3b82f6;
+            display: block;
+        }
+        
+        .score-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+            color: #6b7280;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .batch-textarea {
+            width: 100%;
+            height: 160px;
+            padding: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        
+        .batch-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .finding-card {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .finding-title {
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+        
+        .finding-content {
+            color: #1e40af;
+            line-height: 1.5;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .comparison-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f9fafb;
+        }
+        
+        .methodology-card {
+            background: #f9fafb;
+            padding: 24px;
+            border-radius: 10px;
+        }
+        
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .methodology-item h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+        
+        .methodology-item p {
+            color: #1f2937;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .tag {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .recommendations {
+            list-style: none;
+        }
+        
+        .recommendation-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .recommendation-number {
+            width: 24px;
+            height: 24px;
+            background: #fed7aa;
+            color: #ea580c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .footer {
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 24px 0;
+            margin-top: 48px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .footer-text {
+            color: #6b7280;
+        }
+        
+        .footer-info {
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .loading-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .loading-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #e5e7eb;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-container {
+                gap: 20px;
+                padding: 0 15px;
+            }
+            
+            .calculator-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                min-width: auto;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .level-buttons {
+                flex-wrap: wrap;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <div class="logo-icon">🧠</div>
+                        <div class="logo-text">
+                            <h1>EQUIP-AI</h1>
+                            <p>EQ-5D价值集智能分析平台</p>
+                        </div>
+                    </div>
+                    <div class="status-badge">
+                        ● 在线预览版
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <div class="container">
+                <div class="nav-container">
+                    <button class="nav-tab active" data-tab="repository">
+                        📊 数字仓库
+                    </button>
+                    <button class="nav-tab" data-tab="calculator">
+                        🧮 效用计算器
+                    </button>
+                    <button class="nav-tab" data-tab="ai-report">
+                        📈 AI报告
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <!-- Repository Tab -->
+                <div id="repository-tab" class="tab-content fade-in">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title">EQ-5D价值集数据库</h2>
+                                <p class="card-subtitle">搜索和浏览全球EQ-5D价值集数据</p>
+                            </div>
+                            <button id="generate-ai-report" class="btn btn-primary">
+                                ✨ 生成AI报告
+                            </button>
+                        </div>
+
+                        <!-- Search and Filter -->
+                        <div class="search-container">
+                            <input type="text" id="search-input" class="search-input" placeholder="搜索国家或价值集...">
+                            <select id="country-filter" class="select">
+                                <option value="all">所有国家</option>
+                                <option value="argentina">阿根廷</option>
+                                <option value="united kingdom">英国</option>
+                                <option value="china">中国</option>
+                                <option value="singapore">新加坡</option>
+                            </select>
+                        </div>
+
+                        <!-- Value Sets Grid -->
+                        <div id="value-sets-grid" class="grid grid-2">
+                            <!-- Content will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator Tab -->
+                <div id="calculator-tab" class="tab-content hidden">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title">EQ-5D效用计算器</h2>
+                                <p class="card-subtitle">计算健康状态的效用分数</p>
+                            </div>
+                            <label style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="batch-mode"> 批量计算模式
+                            </label>
+                        </div>
+
+                        <!-- Single Calculation Mode -->
+                        <div id="single-calc-mode" class="calculator-grid">
+                            <div>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 24px;">健康状态输入</h3>
+                                <div id="health-dimensions">
+                                    <!-- Health dimensions will be populated by JavaScript -->
+                                </div>
+                                <button id="calculate-btn" class="btn btn-success" style="width: 100%; margin-top: 24px;">
+                                    🧮 计算效用分数
+                                </button>
+                            </div>
+
+                            <div>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 24px;">计算结果</h3>
+                                <div id="calculation-result">
+                                    <div class="empty-state">
+                                        <div class="empty-icon">🧮</div>
+                                        <p>请输入健康状态并点击计算按钮</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Batch Calculation Mode -->
+                        <div id="batch-calc-mode" class="hidden">
+                            <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px;">批量数据输入</h3>
+                            <p style="color: #6b7280; margin-bottom: 16px;">
+                                请输入健康状态数据，每行一个状态，格式: 12345 (代表5个维度的水平)
+                            </p>
+                            <textarea id="batch-data" class="batch-textarea" placeholder="11111&#10;12321&#10;33333&#10;54321"></textarea>
+                            
+                            <div class="btn-group" style="margin-top: 24px;">
+                                <button id="batch-calculate-btn" class="btn btn-success">
+                                    ▶️ 开始批量计算
+                                </button>
+                                <button id="load-sample-btn" class="btn btn-secondary">
+                                    📄 加载示例数据
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Report Tab -->
+                <div id="ai-report-tab" class="tab-content hidden">
+                    <div id="ai-report-content">
+                        <div class="empty-state">
+                            <div class="empty-icon">✨</div>
+                            <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 8px;">AI报告未生成</h3>
+                            <p style="color: #6b7280; margin-bottom: 24px;">请在数字仓库页面点击"生成AI报告"按钮来创建智能分析报告</p>
+                            <button class="btn btn-primary" onclick="switchTab('repository')">前往数字仓库</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <p class="footer-text">© 2024 EQUIP-AI Platform. 预览版本。</p>
+                    <p class="footer-info">Powered by AI & Machine Learning</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <span style="font-size: 1.1rem; font-weight: 500;">处理中，请稍候...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock data for EQ-5D value sets
+        const mockValueSets = [
+            {
+                id: 1,
+                country: "阿根廷",
+                countryEn: "Argentina",
+                flag: "🇦🇷",
+                version: "EQ-5D-5L",
+                year: 2019,
+                method: "DCE",
+                sizeN: 2000,
+                tariff: "Argentina_2019",
+                description: "基于离散选择实验的阿根廷EQ-5D-5L价值集",
+                healthStates: 3125,
+                minValue: -0.516,
+                maxValue: 1.000,
+                publicationDate: "2019-03-15"
+            },
+            {
+                id: 2,
+                country: "英国",
+                countryEn: "United Kingdom",
+                flag: "🇬🇧",
+                version: "EQ-5D-5L",
+                year: 2018,
+                method: "Composite TTO",
+                sizeN: 996,
+                tariff: "UK_2018",
+                description: "英国EQ-5D-5L标准时间权衡法价值集",
+                healthStates: 3125,
+                minValue: -0.594,
+                maxValue: 1.000,
+                publicationDate: "2018-05-20"
+            },
+            {
+                id: 3,
+                country: "中国",
+                countryEn: "China",
+                flag: "🇨🇳",
+                version: "EQ-5D-5L",
+                year: 2017,
+                method: "Composite TTO",
+                sizeN: 1000,
+                tariff: "China_2017",
+                description: "中国EQ-5D-5L价值集研究",
+                healthStates: 3125,
+                minValue: -0.391,
+                maxValue: 1.000,
+                publicationDate: "2017-12-01"
+            },
+            {
+                id: 4,
+                country: "新加坡",
+                countryEn: "Singapore",
+                flag: "🇸🇬",
+                version: "EQ-5D-5L",
+                year: 2019,
+                method: "Composite TTO", 
+                sizeN: 1000,
+                tariff: "Singapore_2019",
+                description: "新加坡多种族人群EQ-5D-5L价值集",
+                healthStates: 3125,
+                minValue: -0.769,
+                maxValue: 1.000,
+                publicationDate: "2019-08-10"
+            }
+        ];
+
+        // Mock AI Report Data
+        const mockAIReport = {
+            title: "EQ-5D-5L跨国价值集比较分析报告",
+            generatedDate: "2024-01-15",
+            countries: ["阿根廷", "英国", "中国", "新加坡"],
+            keyFindings: [
+                {
+                    title: "价值范围差异显著",
+                    content: "四个国家的EQ-5D-5L价值集在最低值方面存在显著差异，新加坡最低(-0.769)，中国最高(-0.391)。"
+                },
+                {
+                    title: "方法学影响",
+                    content: "阿根廷采用DCE方法，其他国家使用复合TTO方法，这可能导致价值分布的系统性差异。"
+                },
+                {
+                    title: "文化敏感性",
+                    content: "各国价值集反映了不同文化背景下对健康状态的偏好差异，建议在跨国研究中谨慎选择。"
+                }
+            ],
+            methodology: {
+                dataSource: "EQUIP-AI数据库",
+                analysisMethod: "机器学习算法分析",
+                comparisonMetrics: ["价值范围", "分布特征", "方法学差异", "人群特征"]
+            },
+            recommendations: [
+                "在多国研究中应考虑使用本土化价值集",
+                "建议进行敏感性分析比较不同价值集的影响",
+                "关注方法学差异对结果的潜在影响"
+            ]
+        };
+
+        // Health dimensions for calculator
+        const healthDimensions = [
+            { key: 'mobility', label: '行动能力', desc: '走动方面' },
+            { key: 'selfCare', label: '自理能力', desc: '自我照顾方面' },
+            { key: 'usualActivities', label: '日常活动', desc: '日常活动方面' },
+            { key: 'painDiscomfort', label: '疼痛/不适', desc: '疼痛或不适方面' },
+            { key: 'anxietyDepression', label: '焦虑/抑郁', desc: '焦虑或抑郁方面' }
+        ];
+
+        // Application state
+        let appState = {
+            activeTab: 'repository',
+            searchTerm: '',
+            selectedCountry: 'all',
+            healthState: {
+                mobility: 1,
+                selfCare: 1,
+                usualActivities: 1,
+                painDiscomfort: 1,
+                anxietyDepression: 1
+            },
+            calculationResult: null,
+            batchMode: false,
+            batchData: '',
+            isLoading: false,
+            aiReportGenerated: false
+        };
+
+        // Utility functions
+        function showLoading() {
+            appState.isLoading = true;
+            document.getElementById('loading-overlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            appState.isLoading = false;
+            document.getElementById('loading-overlay').classList.add('hidden');
+        }
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat().format(num);
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            appState.activeTab = tabName;
+            
+            // Update tab buttons
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Show/hide tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+            document.getElementById(`${tabName}-tab`).classList.add('fade-in');
+        }
+
+        // Filter value sets
+        function getFilteredValueSets() {
+            return mockValueSets.filter(vs => {
+                const matchesSearch = vs.country.toLowerCase().includes(appState.searchTerm.toLowerCase()) ||
+                                    vs.countryEn.toLowerCase().includes(appState.searchTerm.toLowerCase()) ||
+                                    vs.description.toLowerCase().includes(appState.searchTerm.toLowerCase());
+                const matchesCountry = appState.selectedCountry === 'all' || 
+                                     vs.countryEn.toLowerCase() === appState.selectedCountry.toLowerCase();
+                return matchesSearch && matchesCountry;
+            });
+        }
+
+        // Render value sets
+        function renderValueSets() {
+            const grid = document.getElementById('value-sets-grid');
+            const filteredSets = getFilteredValueSets();
+            
+            grid.innerHTML = filteredSets.map(vs => `
+                <div class="value-set-card">
+                    <div class="value-set-header">
+                        <div class="country-info">
+                            <span class="flag">${vs.flag}</span>
+                            <div class="country-name">
+                                <h3>${vs.country}</h3>
+                                <p>${vs.countryEn}</p>
+                            </div>
+                        </div>
+                        <span class="version-badge">${vs.version}</span>
+                    </div>
+                    
+                    <p class="description">${vs.description}</p>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">研究年份</span>
+                            <p class="info-value">${vs.year}</p>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">评估方法</span>
+                            <p class="info-value">${vs.method}</p>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">样本量</span>
+                            <p class="info-value">${formatNumber(vs.sizeN)}</p>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">价值范围</span>
+                            <p class="info-value">${vs.minValue} ~ ${vs.maxValue}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <span class="date-info">发布: ${vs.publicationDate}</span>
+                        <a href="#" class="link-btn">🔗 详细信息</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render health dimensions
+        function renderHealthDimensions() {
+            const container = document.getElementById('health-dimensions');
+            
+            container.innerHTML = healthDimensions.map(dimension => `
+                <div class="dimension-group">
+                    <label class="dimension-label">
+                        ${dimension.label}
+                        <span class="dimension-desc">(${dimension.desc})</span>
+                    </label>
+                    <div class="level-buttons" data-dimension="${dimension.key}">
+                        ${[1, 2, 3, 4, 5].map(level => `
+                            <button class="level-btn ${appState.healthState[dimension.key] === level ? 'active' : ''}" 
+                                    data-level="${level}">
+                                ${level}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <p class="level-hint">1=无问题, 5=极重问题</p>
+                </div>
+            `).join('');
+
+            // Add event listeners for level buttons
+            container.querySelectorAll('.level-buttons').forEach(buttonGroup => {
+                const dimension = buttonGroup.dataset.dimension;
+                buttonGroup.querySelectorAll('.level-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const level = parseInt(btn.dataset.level);
+                        appState.healthState[dimension] = level;
+                        
+                        // Update button states
+                        buttonGroup.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                    });
+                });
+            });
+        }
+
+        // Calculate utility score
+        function calculateUtilityScore() {
+            showLoading();
+            
+            setTimeout(() => {
+                const ukTariff = mockValueSets.find(vs => vs.countryEn === 'United Kingdom');
+                const stateCode = `${appState.healthState.mobility}${appState.healthState.selfCare}${appState.healthState.usualActivities}${appState.healthState.painDiscomfort}${appState.healthState.anxietyDepression}`;
+                
+                // Simple mock calculation
+                const baseScore = 1.0;
+                const deductions = (appState.healthState.mobility - 1) * 0.08 + 
+                                 (appState.healthState.selfCare - 1) * 0.07 + 
+                                 (appState.healthState.usualActivities - 1) * 0.06 + 
+                                 (appState.healthState.painDiscomfort - 1) * 0.09 + 
+                                 (appState.healthState.anxietyDepression - 1) * 0.08;
+                
+                const score = Math.max(baseScore - deductions, ukTariff.minValue);
+                
+                appState.calculationResult = {
+                    stateCode,
+                    score: score.toFixed(3),
+                    tariff: ukTariff.tariff,
+                    country: ukTariff.country,
+                    confidence: "95%"
+                };
+                
+                renderCalculationResult();
+                hideLoading();
+            }, 1500);
+        }
+
+        // Render calculation result
+        function renderCalculationResult() {
+            const container = document.getElementById('calculation-result');
+            
+            if (appState.calculationResult) {
+                container.innerHTML = `
+                    <div class="result-card">
+                        <div class="result-score">
+                            <span class="score-value">${appState.calculationResult.score}</span>
+                            <p class="score-label">效用分数</p>
+                        </div>
+                        
+                        <div class="result-details">
+                            <div class="info-item">
+                                <span class="info-label">健康状态编码</span>
+                                <p class="info-value">${appState.calculationResult.stateCode}</p>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">价值集</span>
+                                <p class="info-value">${appState.calculationResult.country}</p>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">关税文件</span>
+                                <p class="info-value">${appState.calculationResult.tariff}</p>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">置信度</span>
+                                <p class="info-value">${appState.calculationResult.confidence}</p>
+                            </div>
+                        </div>
+
+                        <button onclick="exportCSV()" class="btn btn-secondary" style="width: 100%;">
+                            💾 导出CSV
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Export CSV
+        function exportCSV() {
+            const csvContent = "State Code,Utility Score,Country,Tariff\n" +
+                             (appState.calculationResult ? 
+                              `${appState.calculationResult.stateCode},${appState.calculationResult.score},${appState.calculationResult.country},${appState.calculationResult.tariff}` : 
+                              "No data available");
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'eq5d_calculation_results.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Generate AI Report
+        function generateAIReport() {
+            showLoading();
+            
+            setTimeout(() => {
+                appState.aiReportGenerated = true;
+                renderAIReport();
+                switchTab('ai-report');
+                hideLoading();
+            }, 2000);
+        }
+
+        // Render AI Report
+        function renderAIReport() {
+            const container = document.getElementById('ai-report-content');
+            
+            container.innerHTML = `
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">${mockAIReport.title}</h2>
+                            <p class="card-subtitle">生成日期: ${mockAIReport.generatedDate}</p>
+                            <p class="card-subtitle">分析国家: ${mockAIReport.countries.join(', ')}</p>
+                        </div>
+                        <span style="background: #f3e8ff; color: #7c3aed; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500;">
+                            🤖 AI生成
+                        </span>
+                    </div>
+
+                    <!-- Key Findings -->
+                    <div style="margin-bottom: 32px;">
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                            💡 关键发现
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 16px;">
+                            ${mockAIReport.keyFindings.map(finding => `
+                                <div class="finding-card">
+                                    <h4 class="finding-title">${finding.title}</h4>
+                                    <p class="finding-content">${finding.content}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Cross-country Comparison -->
+                    <div style="margin-bottom: 32px;">
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                            🌐 跨国比较分析
+                        </h3>
+                        <div style="overflow-x: auto;">
+                            <table class="comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th>国家</th>
+                                        <th>价值范围</th>
+                                        <th>评估方法</th>
+                                        <th>样本量</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${mockValueSets.map(vs => `
+                                        <tr>
+                                            <td>
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <span>${vs.flag}</span>
+                                                    ${vs.country}
+                                                </div>
+                                            </td>
+                                            <td>${vs.minValue} ~ ${vs.maxValue}</td>
+                                            <td>${vs.method}</td>
+                                            <td>${formatNumber(vs.sizeN)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Methodology -->
+                    <div style="margin-bottom: 32px;">
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                            ⚙️ 分析方法学
+                        </h3>
+                        <div class="methodology-card">
+                            <div class="methodology-grid">
+                                <div class="methodology-item">
+                                    <h4>数据来源</h4>
+                                    <p>${mockAIReport.methodology.dataSource}</p>
+                                </div>
+                                <div class="methodology-item">
+                                    <h4>分析方法</h4>
+                                    <p>${mockAIReport.methodology.analysisMethod}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 0.85rem; font-weight: 600; color: #374151; margin-bottom: 8px;">比较指标</h4>
+                                <div class="tags">
+                                    ${mockAIReport.methodology.comparisonMetrics.map(metric => `
+                                        <span class="tag">${metric}</span>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendations -->
+                    <div style="margin-bottom: 32px;">
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                            💭 建议与推荐
+                        </h3>
+                        <ul class="recommendations">
+                            ${mockAIReport.recommendations.map((rec, index) => `
+                                <li class="recommendation-item">
+                                    <div class="recommendation-number">${index + 1}</div>
+                                    <p>${rec}</p>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Export Options -->
+                    <div style="padding-top: 24px; border-top: 1px solid #e5e7eb;">
+                        <div class="btn-group">
+                            <button class="btn" style="background: #3b82f6; color: white;" onclick="alert('PDF下载功能将在完整版本中提供')">
+                                📄 下载PDF报告
+                            </button>
+                            <button class="btn" style="background: #10b981; color: white;" onclick="alert('分享功能将在完整版本中提供')">
+                                📤 分享报告
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize the application
+        function initApp() {
+            // Render initial content
+            renderValueSets();
+            renderHealthDimensions();
+
+            // Tab navigation
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    switchTab(tab.dataset.tab);
+                });
+            });
+
+            // Search and filter
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                appState.searchTerm = e.target.value;
+                renderValueSets();
+            });
+
+            document.getElementById('country-filter').addEventListener('change', (e) => {
+                appState.selectedCountry = e.target.value;
+                renderValueSets();
+            });
+
+            // Calculator mode toggle
+            document.getElementById('batch-mode').addEventListener('change', (e) => {
+                appState.batchMode = e.target.checked;
+                document.getElementById('single-calc-mode').classList.toggle('hidden', appState.batchMode);
+                document.getElementById('batch-calc-mode').classList.toggle('hidden', !appState.batchMode);
+            });
+
+            // Calculation buttons
+            document.getElementById('calculate-btn').addEventListener('click', calculateUtilityScore);
+            
+            document.getElementById('batch-calculate-btn').addEventListener('click', () => {
+                alert('批量计算功能将在完整版本中提供');
+            });
+            
+            document.getElementById('load-sample-btn').addEventListener('click', () => {
+                document.getElementById('batch-data').value = "11111\n12345\n22222\n33333\n54321";
+            });
+
+            // AI Report generation
+            document.getElementById('generate-ai-report').addEventListener('click', generateAIReport);
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
