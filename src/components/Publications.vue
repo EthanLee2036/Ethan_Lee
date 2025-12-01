@@ -143,7 +143,7 @@ export default {
         },
         {
           title: "Cao, Y., Li, H., Jin, X., King, M.T., Norman, R., Cheng, L.J., Yu, H., Huang, W.D., & Luo, N. (2025). Quality of Life Utility-Core 10 Dimensions (QLU-C10D) scores based on cancer patients' health preferences are more sensitive than those based on general public's health preferences.",
-          journal: "Quality of Life Research",
+          journal: "The European Journal of Health Economics",
           doi: "https://doi.org/10.1007/s10198-025-01848-6",
           year: 2025
         },
