@@ -115,7 +115,7 @@ export default {
         ]
       },
       dataSpecialists:[
-        {name: 'Li Xun', degree: 'MSc', institution: 'MSc in Data Science and AI and BSc (Hons) in computing'}
+        {name: 'Li Xun (Ethan)', degree: 'MSc', institution: 'MSc in Data Science and AI and BSc (Hons) in Computing'}
       ],
       collaborators: [
         { name: 'Annushiah Vasan Thakumar', degree: 'PhD', institution: 'Taylor\'s University' },
@@ -131,7 +131,7 @@ export default {
       currentStudents: [
         {
           name: 'Zhao Qian',
-          degree: 'PhD',
+          degree: 'PhD student',
           program: 'NUS Nursing, National University of Singapore, Singapore'
         }
       ],
