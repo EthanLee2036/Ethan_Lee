@@ -545,138 +545,138 @@ export default {
           year: 2018
         },
         // ========== Under Review / In Preparation ==========
-        {
-          title: "Cheng, L.J., Ratushnyak, S., Abel, L., Rivero-arias, O., Mcmanus, R., Chappel, L.C., Campbell, H. (Under review). Economic evaluations of hypertension interventions in pregnancy lack standardisation: results of a systematic review.",
-          journal: "Value in Health: the journal of the International Society for Pharmacoeconomics and Outcomes Research",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Cheng, L.J., Vasan Thakumar, A., Zhang, X., Li, X., Slaap, B, Kennedy-Martin, T., Herdman, M., & Boye, K.S. (Under review). Value sets used with Multi-Attribute Utility Instruments for HTA: A Systematic Review of Their Availability and Characteristics.",
-          journal: "Value in Health: the journal of the International Society for Pharmacoeconomics and Outcomes Research",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Cheng, L.J., Chern, W.J.C., Cheng, J.Y., Yen, K.Y., Mohamad Nizam Muhammad, D., Vasan Thakumar, A., Zhang, X., Goh, S.S.N, Tam, W.S.W. (Under review). Home-based multidimensional survivorship programmes for breast cancer survivors.",
-          journal: "Cochrane Database of Systematic Reviews",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Teow, E.L., Zhang, X., Tan, W.L.B, Kong, C.K, Sivasubramanian, H., Tan, M.K., Liau, Z.Q.G., Bansback, N., Luo, N., Tam, W.S.W., & Cheng, L.J. (Under review). Longitudinal Analysis of Clinical and Sociodemographic Determinants of Patient-Reported Outcomes Following Total Knee Replacement: A 5-Year Surgery Registry Study.",
-          journal: "International Journal of Surgery (London, England)",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Chern, C.W.J., Cheng, L.J., Chiang, G.S.W., Yap, S.Y., Giang, T.A., & Lau, S.T. (Under review). Effectiveness of physio-cognitive dual-task training on improving global cognition, health-related quality of life, and physical outcomes among older adults with neurocognitive disorders: An umbrella review.",
-          journal: "Age and Ageing",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Chiang, G.S.W., Cheng, L.J., Chern, C.W.J., Yap, S.Y., Levett-Jones, T., & Lau, S.T. (Under review). Mapping the Determinants of Health-Related Quality of Life in University Students: An Umbrella Review and Conceptual Framework Development.",
-          journal: "Educational Research Review",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Wang, X., Cheng, L.J., Tan, J.Z., Chua, W.L. (Under review). Mapping Instruments for Post-Sepsis Recovery and Health-Related Quality of Life: A Review with Implications for Future Research.",
-          journal: "Intensive & Critical Care Nursing",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Sun, J., Jin, X., Li, H., Zhou, L., Cheng, L.J., Li, R., Shi, J., Cao, Y., Li, J., Cai, X., Zhai, T., & Huang, W. (Under review). Economic Evaluation of National Immunisation Programme Vaccines in China: A Systematic Review.",
-          journal: "Health Economics Review",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Lian, X., Dalan, R., Cheng, L.J., Teo, J.Y.C., Tan, J.S.I., Lim, H., Chew, H.S.J., & Wang, W. (Under review). Impact of Real-Time Continuous Glucose Monitoring (rtCGM) on Glycemic Control and Cardiometabolic Parameters in Adults with Type 2 Diabetes: A Systematic Review and Meta-Analysis.",
-          journal: "Journal of Clinical Nursing",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Wallen, M.P., Christina, J., Dick, N., Johal, J., Han, C.Y., Joseph, R., Alfano, C.M., Ashbury, F., Chan, A., Cheng, L.J., Denehy, L., Hart, N., Jefford, M., Lustberg, M.B., Nekhlyudov, L., Mina, D.S., Scotté, F., Soto-Perez-de-Celis, E., Stout, N.L., Paterson, C., & Chan, R.J. (Under review). Interprofessional lifestyle-based prehabilitation before cancer treatments: An Overview and Meta-Analyses of Systematic Reviews.",
-          journal: "Lancet Healthy Longevity",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Ng, Z.Q., Teo, J.Y.C., Jiang, Y., Chong, C.Y.J., Cheng, L.J., & Wang, W. (Under review). Effectiveness of e-health based psychosocial interventions amongst children and adolescents with type 1 diabetes: A systematic review and meta-analysis.",
-          journal: "Pediatric Diabetes",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Park, J., Gill, T.H., Cheng, L.J., Kang, S.H., Hwang, G., & Lau, S.T. (Under review). Digital Health Literacy and Health Information-Seeking Behaviors among Childcare Workers in an Orphanage: A Cross-Sectional Study.",
-          journal: "Child & Family Social Work",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Li, Y., Xiao, X., Lu, Q., Qin, Zi., Duan, Y., Cheng, L.J., Wang, H., & Wang, W. (Under review). Effectiveness of non-Pharmacological interventions for reducing risky sexual behaviors among people living with HIV: a network meta-analysis and systematic review.",
-          journal: "Journal of the International AIDS Society",
-          doi: "",
-          year: "Under Review"
-        },
-        {
-          title: "Cheng, L.J., Lee, J.J., Shou, Y.Y., Hao, S., Subramaniam, M., & Luo, N. (In preparation). Post-pandemic changes in population health-related quality of life: comparative analysis of Singapore population norms before and after COVID-19.",
-          journal: "Lancet Healthy Longevity",
-          doi: "",
-          year: "In Preparation"
-        },
-        {
-          title: "Cheng, L.J., Hey, H.W.D., Liu, G.P.L., & Luo, N. (In preparation). Anchor-based MIDs are unstable and context-dependent in the perioperative period: Evidence from a lumbar spine surgery registry.",
-          journal: "Value in Health: the journal of the International Society for Pharmacoeconomics and Outcomes Research",
-          doi: "",
-          year: "In Preparation"
-        },
-        {
-          title: "Cheng, L.J., Teo, Q.A., Chern, W.J., Li, X., Wang, W., Tan, J.H.J., Luo, N., & Hey, H.W.D. (In preparation). Durability and Concordance of Functional Recovery, Health-Related Quality of Life, and Patient Satisfaction Following Surgery: A 2-Year Longitudinal Cohort Study.",
-          journal: "JAMA Surgery",
-          doi: "",
-          year: "In Preparation"
-        },
-        {
-          title: "Akemu X., Lee, J.J., Shou, Y.Y., Hao, S., Subramaniam, M., Luo, N. & Cheng, L.J. (In preparation). EQ-5D-5L Population Norms for Singapore: A Household Survey-Based Analysis.",
-          journal: "Quality of Life Research",
-          doi: "",
-          year: "In Preparation"
-        },
-        {
-          title: "Vasan Thakumar, A., Kennedy-Martin, T., Zhang, X., Slaap, B., Herdman, M., & Cheng, L.J. (In preparation). How far have we come with EQ-5D value sets? A systematic review and lessons learnt from general population and patient valuation studies.",
-          journal: "Value in Health: the journal of the International Society for Pharmacoeconomics and Outcomes Research",
-          doi: "",
-          year: "In Preparation"
-        },
-        {
-          title: "Yap, S.Y., Cheng, L.J., Lew, S.L., & Lau S.T. (In preparation). Efficacy of stem cell therapy in improving β-cell function, C-peptide levels, HbA1c levels and insulin requirements among patients with Diabetes Mellitus: An Umbrella Review of Systematic Reviews and Meta-Analysis.",
-          journal: "",
-          doi: "",
-          year: "In Preparation"
-        },
-        {
-          title: "Yeo, Y.Y., Cheng, L.J., Lee, Z.R., Rolfson, D.B., & Wu, V.X. (In preparation). Reliability of the Clinical Frailty Scale among older adults and the impact of different raters: A Systematic Review and Meta-Analysis.",
-          journal: "",
-          doi: "",
-          year: "In Preparation"
-        },
-        {
-          title: "Cheng, L.J., Kreimeier, S., Chen, L.A., Herdman M.J., & Luo, N. (In preparation). Using the Five-level Version of the EQ-5D-Y for Assessment of Health-related Quality of Life among Children and Adolescents: A Systematic Review and Meta-regression of Psychometric Properties.",
-          journal: "Value in Health",
-          doi: "",
-          year: "In Preparation"
-        },
-        {
-          title: "Cheng, L.J., Chen, L.A., Cheng, J. Y., & Luo, N. (In preparation). Measurement properties of EQ-5D in patients with lower back pain: A systematic review and meta-regression.",
-          journal: "",
-          doi: "",
-          year: "In Preparation"
-        }
+        // {
+        //   title: "Cheng, L.J., Ratushnyak, S., Abel, L., Rivero-arias, O., Mcmanus, R., Chappel, L.C., Campbell, H. (Under review). Economic evaluations of hypertension interventions in pregnancy lack standardisation: results of a systematic review.",
+        //   journal: "Value in Health: the journal of the International Society for Pharmacoeconomics and Outcomes Research",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Cheng, L.J., Vasan Thakumar, A., Zhang, X., Li, X., Slaap, B, Kennedy-Martin, T., Herdman, M., & Boye, K.S. (Under review). Value sets used with Multi-Attribute Utility Instruments for HTA: A Systematic Review of Their Availability and Characteristics.",
+        //   journal: "Value in Health: the journal of the International Society for Pharmacoeconomics and Outcomes Research",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Cheng, L.J., Chern, W.J.C., Cheng, J.Y., Yen, K.Y., Mohamad Nizam Muhammad, D., Vasan Thakumar, A., Zhang, X., Goh, S.S.N, Tam, W.S.W. (Under review). Home-based multidimensional survivorship programmes for breast cancer survivors.",
+        //   journal: "Cochrane Database of Systematic Reviews",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Teow, E.L., Zhang, X., Tan, W.L.B, Kong, C.K, Sivasubramanian, H., Tan, M.K., Liau, Z.Q.G., Bansback, N., Luo, N., Tam, W.S.W., & Cheng, L.J. (Under review). Longitudinal Analysis of Clinical and Sociodemographic Determinants of Patient-Reported Outcomes Following Total Knee Replacement: A 5-Year Surgery Registry Study.",
+        //   journal: "International Journal of Surgery (London, England)",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Chern, C.W.J., Cheng, L.J., Chiang, G.S.W., Yap, S.Y., Giang, T.A., & Lau, S.T. (Under review). Effectiveness of physio-cognitive dual-task training on improving global cognition, health-related quality of life, and physical outcomes among older adults with neurocognitive disorders: An umbrella review.",
+        //   journal: "Age and Ageing",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Chiang, G.S.W., Cheng, L.J., Chern, C.W.J., Yap, S.Y., Levett-Jones, T., & Lau, S.T. (Under review). Mapping the Determinants of Health-Related Quality of Life in University Students: An Umbrella Review and Conceptual Framework Development.",
+        //   journal: "Educational Research Review",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Wang, X., Cheng, L.J., Tan, J.Z., Chua, W.L. (Under review). Mapping Instruments for Post-Sepsis Recovery and Health-Related Quality of Life: A Review with Implications for Future Research.",
+        //   journal: "Intensive & Critical Care Nursing",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Sun, J., Jin, X., Li, H., Zhou, L., Cheng, L.J., Li, R., Shi, J., Cao, Y., Li, J., Cai, X., Zhai, T., & Huang, W. (Under review). Economic Evaluation of National Immunisation Programme Vaccines in China: A Systematic Review.",
+        //   journal: "Health Economics Review",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Lian, X., Dalan, R., Cheng, L.J., Teo, J.Y.C., Tan, J.S.I., Lim, H., Chew, H.S.J., & Wang, W. (Under review). Impact of Real-Time Continuous Glucose Monitoring (rtCGM) on Glycemic Control and Cardiometabolic Parameters in Adults with Type 2 Diabetes: A Systematic Review and Meta-Analysis.",
+        //   journal: "Journal of Clinical Nursing",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Wallen, M.P., Christina, J., Dick, N., Johal, J., Han, C.Y., Joseph, R., Alfano, C.M., Ashbury, F., Chan, A., Cheng, L.J., Denehy, L., Hart, N., Jefford, M., Lustberg, M.B., Nekhlyudov, L., Mina, D.S., Scotté, F., Soto-Perez-de-Celis, E., Stout, N.L., Paterson, C., & Chan, R.J. (Under review). Interprofessional lifestyle-based prehabilitation before cancer treatments: An Overview and Meta-Analyses of Systematic Reviews.",
+        //   journal: "Lancet Healthy Longevity",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Ng, Z.Q., Teo, J.Y.C., Jiang, Y., Chong, C.Y.J., Cheng, L.J., & Wang, W. (Under review). Effectiveness of e-health based psychosocial interventions amongst children and adolescents with type 1 diabetes: A systematic review and meta-analysis.",
+        //   journal: "Pediatric Diabetes",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Park, J., Gill, T.H., Cheng, L.J., Kang, S.H., Hwang, G., & Lau, S.T. (Under review). Digital Health Literacy and Health Information-Seeking Behaviors among Childcare Workers in an Orphanage: A Cross-Sectional Study.",
+        //   journal: "Child & Family Social Work",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Li, Y., Xiao, X., Lu, Q., Qin, Zi., Duan, Y., Cheng, L.J., Wang, H., & Wang, W. (Under review). Effectiveness of non-Pharmacological interventions for reducing risky sexual behaviors among people living with HIV: a network meta-analysis and systematic review.",
+        //   journal: "Journal of the International AIDS Society",
+        //   doi: "",
+        //   year: "Under Review"
+        // },
+        // {
+        //   title: "Cheng, L.J., Lee, J.J., Shou, Y.Y., Hao, S., Subramaniam, M., & Luo, N. (In preparation). Post-pandemic changes in population health-related quality of life: comparative analysis of Singapore population norms before and after COVID-19.",
+        //   journal: "Lancet Healthy Longevity",
+        //   doi: "",
+        //   year: "In Preparation"
+        // },
+        // {
+        //   title: "Cheng, L.J., Hey, H.W.D., Liu, G.P.L., & Luo, N. (In preparation). Anchor-based MIDs are unstable and context-dependent in the perioperative period: Evidence from a lumbar spine surgery registry.",
+        //   journal: "Value in Health: the journal of the International Society for Pharmacoeconomics and Outcomes Research",
+        //   doi: "",
+        //   year: "In Preparation"
+        // },
+        // {
+        //   title: "Cheng, L.J., Teo, Q.A., Chern, W.J., Li, X., Wang, W., Tan, J.H.J., Luo, N., & Hey, H.W.D. (In preparation). Durability and Concordance of Functional Recovery, Health-Related Quality of Life, and Patient Satisfaction Following Surgery: A 2-Year Longitudinal Cohort Study.",
+        //   journal: "JAMA Surgery",
+        //   doi: "",
+        //   year: "In Preparation"
+        // },
+        // {
+        //   title: "Akemu X., Lee, J.J., Shou, Y.Y., Hao, S., Subramaniam, M., Luo, N. & Cheng, L.J. (In preparation). EQ-5D-5L Population Norms for Singapore: A Household Survey-Based Analysis.",
+        //   journal: "Quality of Life Research",
+        //   doi: "",
+        //   year: "In Preparation"
+        // },
+        // {
+        //   title: "Vasan Thakumar, A., Kennedy-Martin, T., Zhang, X., Slaap, B., Herdman, M., & Cheng, L.J. (In preparation). How far have we come with EQ-5D value sets? A systematic review and lessons learnt from general population and patient valuation studies.",
+        //   journal: "Value in Health: the journal of the International Society for Pharmacoeconomics and Outcomes Research",
+        //   doi: "",
+        //   year: "In Preparation"
+        // },
+        // {
+        //   title: "Yap, S.Y., Cheng, L.J., Lew, S.L., & Lau S.T. (In preparation). Efficacy of stem cell therapy in improving β-cell function, C-peptide levels, HbA1c levels and insulin requirements among patients with Diabetes Mellitus: An Umbrella Review of Systematic Reviews and Meta-Analysis.",
+        //   journal: "",
+        //   doi: "",
+        //   year: "In Preparation"
+        // },
+        // {
+        //   title: "Yeo, Y.Y., Cheng, L.J., Lee, Z.R., Rolfson, D.B., & Wu, V.X. (In preparation). Reliability of the Clinical Frailty Scale among older adults and the impact of different raters: A Systematic Review and Meta-Analysis.",
+        //   journal: "",
+        //   doi: "",
+        //   year: "In Preparation"
+        // },
+        // {
+        //   title: "Cheng, L.J., Kreimeier, S., Chen, L.A., Herdman M.J., & Luo, N. (In preparation). Using the Five-level Version of the EQ-5D-Y for Assessment of Health-related Quality of Life among Children and Adolescents: A Systematic Review and Meta-regression of Psychometric Properties.",
+        //   journal: "Value in Health",
+        //   doi: "",
+        //   year: "In Preparation"
+        // },
+        // {
+        //   title: "Cheng, L.J., Chen, L.A., Cheng, J. Y., & Luo, N. (In preparation). Measurement properties of EQ-5D in patients with lower back pain: A systematic review and meta-regression.",
+        //   journal: "",
+        //   doi: "",
+        //   year: "In Preparation"
+        // }
       ]
     }
   },
