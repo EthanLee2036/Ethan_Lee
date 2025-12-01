@@ -115,8 +115,7 @@ export default {
         ]
       },
       dataSpecialists:[
-        {name: 'Li Xun (Ethan)', degree: 'MSc in Data Science and AI', institution: 'Oxford Brookes University, United Kingdom<br>
-          <p style="font-style: italic !important;">Leads advanced data science and AI projects, and oversees the lab\'s computational and web infrastructure</p>'}
+        {name: 'Li Xun (Ethan)', degree: 'MSc in Data Science and AI', institution: 'Oxford Brookes University, United Kingdom<br><p style="font-style: italic !important;">Leads advanced data science and AI projects, and oversees the lab\'s computational and web infrastructure</p>'}
       ],
       collaborators: [
         { name: 'Annushiah Vasan Thakumar', degree: 'PhD', institution: 'Taylor\'s University, Malaysia' },
