@@ -118,7 +118,7 @@ export default {
         {name: 'Li Xun', degree: 'MSc', institution: 'MSc in Data Science and AI and BSc (Hons) in computing'}
       ],
       collaborators: [
-        { name: 'Annushiah Vasan Thakumar', degree: 'PhD', institution: 'Taylor's University' },
+        { name: 'Annushiah Vasan Thakumar', degree: 'PhD', institution: 'Taylor\'s University' },
         { name: 'Zhang Xin', degree: 'PhD', institution: 'National University of Singapore' }
       ],
       teamMembers: [
