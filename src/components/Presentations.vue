@@ -133,21 +133,10 @@ export default {
           title: 'Poster Presentations',
           category: 'poster',
           presentations: [
-            {
-              content: 'Cheng, L.J., Bansback, N., Liu, G.K.P., Wang, W., Wu, V.X., Luo, N. & Hey, H.D. "A Systematic Review and Head-to-Head Comparison of EQ-5D and PROPr: Psychometric Performance and Distributional Patterns". Poster presentation in the 11th Annual PROMIS International Conference, Milwaukee, Wisconsin, USA',
-              date: '26th-28th October 2025'
-            },
-            {
-              content: 'Cheng, L.J., Hey, H.D., Liu, G.K.P., & Luo, N. "Differential responsiveness and minimally important difference of EQ-5D: truth or artefact?". Poster presentation in the 11th Annual PROMIS International Conference, Milwaukee, Wisconsin, USA',
-              date: '26th-28th October 2025'
-            },
+            // 2025 - November (ISPOR Europe)
             {
               content: 'Cheng, L.J., Hey, H.D., Liu, G.K.P., & Luo, N. "Differential responsiveness and minimally important difference of EQ-5D: truth or artefact?". Poster presentation in the ISPOR Europe 2025, Glasgow, Scotland, UK',
               date: '9th-12th November 2025'
-            },
-            {
-              content: 'Zhang, X., Vasan Thakumar, A., Luo, N. & Cheng, L.J. "A Systematic Review and Head-to-Head Comparison of EQ-5D and PROPr: Psychometric Performance and Distributional Patterns". Poster presentation in the 11th Annual PROMIS International Conference, Milwaukee, Wisconsin, USA',
-              date: '26th-28th October 2025'
             },
             {
               content: 'Vasan Thakumar, A., Kennedy-Martin, T., Boye, K.S., Zhang, X., Slaap, B., Herdman, M., & Cheng, L.J. "How far have we come with EQ-5D-5L value sets? An updated systematic literature review of 55 valuation studies". Poster presentation in the ISPOR Europe 2025, Glasgow, Scotland, UK',
@@ -165,6 +154,20 @@ export default {
               content: 'Zhang, X., Cheng, L.J., Qian, Y., Tan, W.L.B., Bansback, N., Tam, W.S.W., He, H., Po, H.H., Tan, M., Liau, G., Pang, K.C., Sivasubramanian, H., & Luo, N. "Patient-Reported Outcomes after Total Knee Arthroplasty: A Comparisons across TKA Procedures and PRO Domains". Poster presentation in the ISPOR Europe 2025, Glasgow, Scotland, UK',
               date: '9th-12th November 2025'
             },
+            // 2025 - October (PROMIS)
+            {
+              content: 'Cheng, L.J., Bansback, N., Liu, G.K.P., Wang, W., Wu, V.X., Luo, N. & Hey, H.D. "A Systematic Review and Head-to-Head Comparison of EQ-5D and PROPr: Psychometric Performance and Distributional Patterns". Poster presentation in the 11th Annual PROMIS International Conference, Milwaukee, Wisconsin, USA',
+              date: '26th-28th October 2025'
+            },
+            {
+              content: 'Cheng, L.J., Hey, H.D., Liu, G.K.P., & Luo, N. "Differential responsiveness and minimally important difference of EQ-5D: truth or artefact?". Poster presentation in the 11th Annual PROMIS International Conference, Milwaukee, Wisconsin, USA',
+              date: '26th-28th October 2025'
+            },
+            {
+              content: 'Zhang, X., Vasan Thakumar, A., Luo, N. & Cheng, L.J. "A Systematic Review and Head-to-Head Comparison of EQ-5D and PROPr: Psychometric Performance and Distributional Patterns". Poster presentation in the 11th Annual PROMIS International Conference, Milwaukee, Wisconsin, USA',
+              date: '26th-28th October 2025'
+            },
+            // 2024 - November (ISPOR Europe)
             {
               content: 'Cheng, L.J., Vasan Thakumar, A., & Luo, N. "Who prefers death to life in composite time trade-off interviews and why: A mixed-methods analysis of the Singapore EQ-5D-5L valuation study". Poster presentation in the ISPOR Europe 2024, Barcelona, Spain',
               date: '17th-20th November 2024'
@@ -173,10 +176,12 @@ export default {
               content: 'Cheng, L.J., Chen, L.A., Cheng, J.Y., Herdman, M.J., & Luo, N. "Construct Validity and Test-Retest Reliability of the Three-Level and Five-Level Versions of the EQ-5D-Y: A Systematic Review and Meta-Regression of Head-to-Head Comparison Studies". Poster presentation in the ISPOR Europe 2024, Barcelona, Spain',
               date: '17th-20th November 2024'
             },
+            // 2024 - September (EuroQol)
             {
               content: 'Cheng, L.J., Vasan Thakumar, A., & Luo, N. "Who prefers death to life in composite time trade-off interviews and why: A mixed-methods analysis of the Singapore EQ-5D-5L valuation study". Poster presentation in the 41st EuroQol Plenary Meeting 2024, Rotterdam, the Netherlands',
               date: '17th-20th September 2024'
             },
+            // 2024 - March (EQ ECR)
             {
               content: 'Cheng, L.J., Herdman, M., Chen, L.A., & Luo, N. "Systematic review of Minimally Important Difference (MID) estimates for EQ-5D Index and VAS Scores and their influential factors". Poster presentation in the 4th EQ ECR Meeting 2024, Copenhagen, Denmark',
               date: '4th-6th March 2024'
@@ -185,22 +190,27 @@ export default {
               content: 'Chua, A.P., Janssen, B., Cheng, L.J., Chen, L.A., Liao, M.X., Nalusamy, N., Busschbach, J., & Luo, N. "An Exploratory Study on Test-Retest Reliability and Responsiveness of Respiratory Bolt-ons for EQ-5D-5L in Obstructive Airway Diseases". Poster presentation in the 4th EQ ECR Meeting 2024, Copenhagen, Denmark',
               date: '4th-6th March 2024'
             },
+            // 2023 - October (ISOQOL)
             {
               content: 'Cheng, L.J., Bansback, N., Liu, G.P.L., Hey, H.W.D., & Luo, N. "Patient-Specific Prediction Model for Health-Related Quality of Life Outcomes Following Lumbar Spine Surgery: A Retrospective, Single-Centre Cohort Study". Poster presentation in the 30th ISOQOL Annual Conference, Calgary, Alberta, Canada',
               date: '18th-21st October 2023'
             },
+            // 2023 - September (EuroQol)
             {
               content: 'Cheng, L.J., Kreimeier, S., Chen, L.A., Herdman, M.J., & Luo, N. "Head-to-head Comparisons of the Measurement Properties of the Three-level and Five-level Version of the EQ-5D-Y: A Systematic Review". Poster presentation in the 40th EuroQol Plenary Meeting 2023, Rome, Italy',
               date: '19th-21st September 2023'
             },
+            // 2023 - March (EQ ECR)
             {
               content: 'Cheng, L.J., Engel, L., Chen, L.A., & Luo, N. "Using the EQ-5D for proxy assessment in aged care homes: A systematic review of feasibility and measurement properties". Poster presentation in the 3rd EQ ECR Meeting 2023, Milan, Italy',
               date: '7th-9th March 2023'
             },
+            // 2022 - November (APSR)
             {
               content: 'Chua, A.P., Chen, L.A., Cheng, L.J., & Luo, N. "Validity and Responsiveness of EuroQol-5-Dimensions in Asthma: A Systematic Review and Meta-analysis". Poster presentation in the 26th Congress of the Asian Pacific Society of Respirology (APSR 2022), Gangnam-gu, Seoul, South Korea',
               date: '17th-20th November 2022'
             },
+            // 2022 - September (EuroQol)
             {
               content: 'Cheng, L.J., Pan, T., Mulhern, B., Devlin, N., & Luo, N. "The ceiling effects of EQ-5D in general population health surveys: A systematic review and meta-analysis". Poster presentation in the 39th EuroQol Plenary Meeting 2022, Chicago, USA',
               date: '20th-23rd September 2022'
@@ -208,6 +218,16 @@ export default {
             {
               content: 'Chua, A.P., Janssen, B., Cheng, L.J., Soh, S.Z.Y., Chen, L.A., Liao, M.X., Nalusamy, N., Busschbach, J., & Luo, N. "An Exploratory Study of Alternative Timeframes and Frequency-Based Descriptors for EQ-5D-5L in Obstructive Airway Diseases: An Analysis of 184 Patients". Poster presentation in the 39th EuroQol Plenary Meeting 2022, Chicago, USA',
               date: '20th-23rd September 2022'
+            },
+            // 2021 - December (IPA)
+            {
+              content: 'Anh, G.T., Cheng, L. J., Tang, Q.C., Chua, M.J., Araújo, J.P., & Yap, L.K.P. "Humanitude Care on Older Patients with Dementia or Delirium in Acute Hospital Improves Outcomes". Poster presentation in the 2021 IPA Virtual Congress',
+              date: 'December 2021'
+            },
+            // 2021 - October (EuGMS & SHBC)
+            {
+              content: 'Anh, G.T., Cheng, L. J., Tang, Q.C., Chua, M.J., Araújo, J.P., & Yap, L.K.P. "Humanitude Care on Older Patients with Dementia or Delirium in Acute Hospital Improves Outcomes". Poster presentation in the 17th EuGMS Congress',
+              date: '11th-13th October 2021'
             },
             {
               content: 'Cheng, L.J., Yen, K.Y., Wong, S.H., Cheng, J.Y., & Lau, Y. "Effect of digital cognitive behavioural therapy on depressive, anxiety and stress symptoms in perinatal women: A systematic review and meta-regression". Abstract presentation in the Singapore Health and Biomedical Congress 2021, Singapore',
@@ -217,18 +237,12 @@ export default {
               content: 'Cheng, L.J., Chua, W.L., & Lau, Y. "Multi-group structural equation models of self-esteem and life satisfaction on positive psychological well-being among university students: Effect of seniority". Abstract presentation in the Singapore Health and Biomedical Congress 2021, Singapore',
               date: '7th-8th October 2021'
             },
-            {
-              content: 'Anh, G.T., Cheng, L. J., Tang, Q.C., Chua, M.J., Araújo, J.P., & Yap, L.K.P. "Humanitude Care on Older Patients with Dementia or Delirium in Acute Hospital Improves Outcomes". Poster presentation in the 2021 IPA Virtual Congress',
-              date: 'December 2021'
-            },
-            {
-              content: 'Anh, G.T., Cheng, L. J., Tang, Q.C., Chua, M.J., Araújo, J.P., & Yap, L.K.P. "Humanitude Care on Older Patients with Dementia or Delirium in Acute Hospital Improves Outcomes". Poster presentation in the 17th EuGMS Congress',
-              date: '11th-13th October 2021'
-            },
+            // 2021 - March (EQ Academy)
             {
               content: 'Cheng, L.J., Tan, L.Y.R., & Luo, N. "Measurement Properties of The EuroQoL Visual Analog Scale (EQ-VAS) around the Globe: A Systematic Review and Meta-Analysis". Poster presentation in the 5th EQ Academy Meeting 2021 - A Virtual Meeting',
               date: '1st-2nd March 2021'
             },
+            // 2019 - October (SHBC)
             {
               content: 'Goh, Q.L.P., Cheng, L.J., Chin, G.F., & Liaw, S.Y. "Factors Influencing Teamwork Among Nurses in General Ward Setting: An Exploratory Descriptive Study". Poster presentation in the Singapore Health and Biomedical Congress 2019, Singapore',
               date: '10th-12th October 2019'
@@ -241,14 +255,17 @@ export default {
               content: 'Ser, T.F., Cheng, L.J., Chin, G.F., & Liaw, S.Y. "Exploring the perceptions of registered nurses and non-registered nurses towards nursing teamwork in the general ward setting: A qualitative study". Poster presentation in the Singapore Health and Biomedical Congress 2019, Singapore',
               date: '10th-12th October 2019'
             },
+            // 2019 - January (EAFONS)
             {
               content: 'Cheng, L.J., Jiang, Y., Wu, V.X., & Wang, W. "Effectiveness of vinegar as complementary and alternative medicine on glycaemic control in patients with type II diabetes: A systematic review and meta-analysis". Poster presentation in the 22nd East Asian Forum of Nursing Scholars (EAFONS), National University of Singapore',
               date: '17th-18th January 2019'
             },
+            // 2018 - July
             {
               content: 'Cheng, L.J., Wu, V.X., Dawkes, S., Lim, S.T., & Wang, W. "Diet barriers and their influencing factors among outpatients with poorly controlled type 2 diabetes". Poster presentation in the 20th Asia Pacific Diabetes Conference, Sydney, Australia',
               date: '16th-17th July 2018'
             },
+            // 2018 - February
             {
               content: 'Cheng, L.J., Wu, V.X., Dawkes, S., Lim, S.T., & Wang, W. "Diet barriers and their influencing factors among outpatients with poorly controlled type 2 diabetes". Poster presentation in the Global Conference on Integrated Care, Singapore',
               date: '2nd-3rd February 2018'
