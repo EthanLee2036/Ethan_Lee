@@ -79,6 +79,10 @@ export default {
           category: 'oral',
           presentations: [
             {
+              content: 'Cheng, L.J., Feng, Y-S., Cheng, J.Y., Chen, L.A., & Luo, N. "Exploring Variability in EQ VAS scores: A Systematic Review and Meta-regression of Population Health Studies". Oral presentation in the ISPOR Europe 2025, Glasgow, Scotland, UK',
+              date: '9th-12th November 2025'
+            },
+            {
               content: 'Cheng, L.J., Feng, Y-S., Cheng, J.Y., Chen, L.A., & Luo, N. "Exploring Variability in EQ VAS scores: A Systematic Review and Meta-regression of Population Health Studies". Oral presentation in the 32nd ISOQOL Annual Conference, Milwaukee, Wisconsin, USA',
               date: '22nd-25th October 2025',
               award: '[2025 New Investigator Oral Presentation Award Finalists]'
@@ -86,10 +90,6 @@ export default {
             {
               content: 'Cheng, L.J., Ng, Q.X., Lee, J.G.J., Koh, G.C.H. & Luo, N. "Measuring What Matters in Primary Care: Health-Related Quality of Life and Its Predictors Among Users of Public Primary Care Clinics in Singapore Using the EQ-5D-5L". Oral presentation in the 32nd ISOQOL Annual Conference, Milwaukee, Wisconsin, USA',
               date: '22nd-25th October 2025'
-            },
-            {
-              content: 'Cheng, L.J., Feng, Y-S., Cheng, J.Y., Chen, L.A., & Luo, N. "Exploring Variability in EQ VAS scores: A Systematic Review and Meta-regression of Population Health Studies". Oral presentation in the ISPOR Europe 2025, Glasgow, Scotland, UK',
-              date: '9th-12th November 2025'
             },
             {
               content: 'Vasan Thakumar, A., Kennedy-Martin, T., Zhang, X., Slaap, B., Herdman, M., & Cheng, L.J. "How far have we come with EQ-5D-5L value sets? A systematic review and lesson learnt from general population and patient valuation studies". Paper presentation in the 42nd EuroQol Plenary Meeting 2025, Vienna, Austria',
