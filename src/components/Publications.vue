@@ -54,7 +54,7 @@ export default {
         {
           title: "Cheng, L.J., Cheng, J.Y., Chern, C.W.J., Liew, H.M., Tay, S.P., Ja'affar, M.H., Wu, V.X., Wang, W., & He, H.G. (2025). Global prevalence of perioperative depression among elective surgical patients: An umbrella review of current evidence of systematic review and meta-analyses.",
           journal: "International Journal of Nursing Studies",
-          doi: "",
+          doi: "https://doi.org/10.1016/j.ijnurstu.2025.105213",
           year: 2025
         },
         {
@@ -66,7 +66,7 @@ export default {
         {
           title: "Cheng, L.J., Vasan Thakumar, A., Chen, L.A., Tan, R.L.Y., Liao, M., Luo, N. (2025). Who prefers death to life in composite time trade-off interviews and why: A mixed-methods analysis of the Singapore EQ-5D-5L valuation study.",
           journal: "The Patient - Patient-Centered Outcomes Research",
-          doi: "",
+          doi: "https://doi.org/10.1007/s40271-025-00777-z",
           year: 2025
         },
         {
@@ -144,7 +144,7 @@ export default {
         {
           title: "Cao, Y., Li, H., Jin, X., King, M.T., Norman, R., Cheng, L.J., Yu, H., Huang, W.D., & Luo, N. (2025). Quality of Life Utility-Core 10 Dimensions (QLU-C10D) scores based on cancer patients' health preferences are more sensitive than those based on general public's health preferences.",
           journal: "Quality of Life Research",
-          doi: "",
+          doi: "https://doi.org/10.1007/s10198-025-01848-6",
           year: 2025
         },
         {
