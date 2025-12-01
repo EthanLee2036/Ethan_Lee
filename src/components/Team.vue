@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div class="section-title">Data Science, AI and Computer Science Specialist</div>
+    <div class="section-title">Data Science, AI and Computational Systems Specialist</div>
     <ul class="team-list">
       <li v-for="member in dataSpecialists" :key="member.name" class="team-member">
         <strong>{{ member.name }} [{{ member.degree }}]</strong>
@@ -115,7 +115,7 @@ export default {
         ]
       },
       dataSpecialists:[
-        {name: 'Li Xun (Ethan)', degree: 'MSc in Data Science and AI', institution: 'Oxford Brookes University, United Kingdom'}
+        {name: 'Li Xun (Ethan)', degree: 'MSc in Data Science and AI', institution: 'Oxford Brookes University, United Kingdom\nLeads advanced data science and AI projects, and oversees the lab\'s computational and web infrastructure'}
       ],
       collaborators: [
         { name: 'Annushiah Vasan Thakumar', degree: 'PhD', institution: 'Taylor\'s University, Malaysia' },
