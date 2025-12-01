@@ -36,7 +36,7 @@
     <ul class="team-list">
       <li v-for="member in dataSpecialists" :key="member.name" class="team-member">
         <strong>{{ member.name }} [{{ member.degree }}]</strong>
-        <span class="member-education">{{ member.institution }}</span>
+        <div class="member-education" v-html="member.institution"></div>
       </li>
     </ul>
 
@@ -115,7 +115,11 @@ export default {
         ]
       },
       dataSpecialists:[
-        {name: 'Li Xun (Ethan)', degree: 'MSc in Data Science and AI', institution: 'Oxford Brookes University, United Kingdom<br><p style="font-style: italic !important;">Leads advanced data science and AI projects, and oversees the lab\'s computational and web infrastructure</p>'}
+        {
+          name: 'Li Xun (Ethan)', 
+          degree: 'MSc in Data Science and AI', 
+          institution: `Oxford Brookes University, United Kingdom<br><p style="font-style: italic;">Leads advanced data science and AI projects, and oversees the lab's computational and web infrastructure</p>`
+        }
       ],
       collaborators: [
         { name: 'Annushiah Vasan Thakumar', degree: 'PhD', institution: 'Taylor\'s University, Malaysia' },
@@ -402,6 +406,11 @@ h1 {
   font-size: 0.95em;
   line-height: 1.4;
   margin-top: 6px;
+}
+
+.member-education p {
+  margin: 4px 0 0 0;
+  padding: 0;
 }
 
 .award {
