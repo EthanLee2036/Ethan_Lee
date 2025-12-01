@@ -201,12 +201,17 @@ nav {
 .mobile-menu-btn {
   display: none;
   flex-direction: column;
+  justify-content: center;  
+  align-items: center;     
   background: none;
   border: none;
   cursor: pointer;
   padding: 8px;
   position: absolute;
   right: 20px;
+  top: 50%;                
+  transform: translateY(-50%);
+  height: 40px;             
 }
 
 .mobile-menu-btn span {
