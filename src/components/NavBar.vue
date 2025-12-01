@@ -1,3 +1,4 @@
+// components/NavBar.vue
 <template>
   <header class="site-header">
     <div class="navbar">
@@ -22,12 +23,14 @@
           <li><router-link to="/contact">Contact</router-link></li>
         </ul>
         
+        <!-- Mobile menu button -->
         <button class="mobile-menu-btn" @click="toggleMobileMenu" :class="{ active: mobileMenuVisible }">
           <span></span>
           <span></span>
           <span></span>
         </button>
         
+        <!-- Mobile menu -->
         <ul class="mobile-menu" :class="{ active: mobileMenuVisible }">
           <li><router-link to="/" @click="closeMobileMenu">Home</router-link></li>
           <li><router-link to="/about" @click="closeMobileMenu">About VALUE Lab</router-link></li>
@@ -86,14 +89,19 @@ export default {
 }
 
 .navbar {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   height: 72px;
-  padding: 0 28px;
+  padding: 0 40px;
   position: relative;
+}
+
+.logo {
+  position: absolute;
+  left: 20px;
 }
 
 .logo img {
@@ -102,12 +110,18 @@ export default {
   display: block;
 }
 
+nav {
+  display: flex;
+  justify-content: center;
+}
+
 .nav-menu {
   display: flex;
-  gap: 32px;
+  gap: 40px;
   list-style: none;
   margin: 0;
   padding: 0;
+  justify-content: center;
 }
 
 .nav-menu li a,
@@ -136,16 +150,27 @@ export default {
 .submenu {
   display: none;
   position: absolute;
-  left: 0;
-  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(100% + 8px);
   background: white;
-  min-width: 170px;
+  min-width: 200px;
   box-shadow: 0 4px 16px rgba(21,76,121,0.13);
   border-radius: 0 0 10px 10px;
   z-index: 10;
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+.submenu::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: transparent;
 }
 
 .submenu.active,
@@ -155,12 +180,13 @@ export default {
 
 .submenu a {
   color: var(--primary-blue) !important;
-  padding: 12px 20px;
+  padding: 12px 0;
   display: block;
   text-decoration: none;
   font-size: 1em;
   border-bottom: 1px solid #f0f0f0;
   transition: background 0.2s, color 0.2s;
+  text-align: center;
 }
 
 .submenu a:last-child {
@@ -179,6 +205,8 @@ export default {
   border: none;
   cursor: pointer;
   padding: 8px;
+  position: absolute;
+  right: 20px;
 }
 
 .mobile-menu-btn span {
@@ -235,6 +263,16 @@ export default {
   color: var(--primary-orange);
 }
 
+@media (max-width: 1000px) {
+  .navbar {
+    max-width: 1200px;
+  }
+  
+  .nav-menu {
+    gap: 28px;
+  }
+}
+
 @media (max-width: 800px) {
   .nav-menu {
     display: none;
@@ -246,6 +284,11 @@ export default {
   
   .navbar {
     padding: 0 12px;
+    justify-content: flex-start;
+  }
+  
+  .logo {
+    position: static;
   }
 }
 </style>
