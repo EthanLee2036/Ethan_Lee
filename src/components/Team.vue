@@ -35,8 +35,8 @@
     <div class="section-title">Data Science, AI and Computer Science Specialist</div>
     <ul class="team-list">
       <li v-for="member in dataSpecialists" :key="member.name" class="team-member">
-      <strong>{{ member.name }} [{{ member.degree }}]</strong>
-      <span class="member-education">{{ member.institution }}</span>
+        <strong>{{ member.name }} [{{ member.degree }}]</strong>
+        <span class="member-education">{{ member.institution }}</span>
       </li>
     </ul>
 
@@ -162,7 +162,7 @@ export default {
           name: 'Justin Lee Guang Jie',
           degree: 'MPH',
           program: 'NUS Public Health, National University of Singapore, Singapore'
-        }
+        },
         {
           name: 'Ustunkan Fulya',
           degree: 'MPH',
