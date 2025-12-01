@@ -40,7 +40,7 @@
       </li>
     </ul>
 
-    <div class="section-title">Collaborators</div>
+    <div class="section-title">Health Preference & HEOR Specialists</div>
     <ul class="team-list">
       <li v-for="member in collaborators" :key="member.name" class="team-member">
         <strong>{{ member.name }} [{{ member.degree }}]</strong>
