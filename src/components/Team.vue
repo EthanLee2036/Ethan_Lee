@@ -115,18 +115,18 @@ export default {
         ]
       },
       dataSpecialists:[
-        {name: 'Li Xun (Ethan)', degree: 'MSc', institution: 'MSc in Data Science and AI and BSc (Hons) in Computing'}
+        {name: 'Li Xun (Ethan)', degree: 'MSc in Data Science and AI', institution: 'Oxford Brookes University, United Kingdom'}
       ],
       collaborators: [
-        { name: 'Annushiah Vasan Thakumar', degree: 'PhD', institution: 'Taylor\'s University' },
-        { name: 'Zhang Xin', degree: 'PhD', institution: 'National University of Singapore' }
+        { name: 'Annushiah Vasan Thakumar', degree: 'PhD', institution: 'Taylor\'s University, Malaysia' },
+        { name: 'Zhang Xin', degree: 'PhD', institution: 'National University of Singapore, Singapore' }
       ],
       teamMembers: [
-        { name: 'Chen Le Ann', degree: 'MPH', institution: 'National University of Singapore' },
-        { name: 'Chern Wei Jie Calvin', degree: 'BSN (Hons)', institution: 'National University of Singapore' },
-        { name: 'Cheng Jing Ying', degree: 'BSN (Hons)', institution: 'National University of Singapore' },
-        { name: 'Yen Kai Yoong', degree: 'BSN (Hons)', institution: 'National University of Singapore' },
-        { name: 'Yap Xin Yi', degree: 'BSc', institution: 'National University of Singapore' }
+        { name: 'Chen Le Ann', degree: 'MPH', institution: 'National University of Singapore, Singapore' },
+        { name: 'Chern Wei Jie Calvin', degree: 'BSN (Hons)', institution: 'National University of Singapore, Singapore' },
+        { name: 'Cheng Jing Ying', degree: 'BSN (Hons)', institution: 'National University of Singapore, Singapore' },
+        { name: 'Yen Kai Yoong', degree: 'BSN (Hons)', institution: 'National University of Singapore, Singapore' },
+        { name: 'Yap Xin Yi', degree: 'BSc', institution: 'National University of Singapore, Singapore' }
       ],
       currentStudents: [
         {
