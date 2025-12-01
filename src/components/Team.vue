@@ -32,6 +32,14 @@
       </div>
     </div>
 
+    <div class="section-title">Data Science, AI and Computer Science Specialist</div>
+    <ul class="team-list">
+      <li v-for="member in dataSpecialists" :key="member.name" class="team-member">
+      <strong>{{ member.name }} [{{ member.degree }}]</strong>
+      <span class="member-education">{{ member.institution }}</span>
+      </li>
+    </ul>
+
     <div class="section-title">Collaborators</div>
     <ul class="team-list">
       <li v-for="member in collaborators" :key="member.name" class="team-member">
@@ -106,7 +114,7 @@ export default {
           'Associate Editor, Quality of Life Research'
         ]
       },
-      Data Science, AI and Computer Science Specialist:[
+      dataSpecialists:[
         {name: 'Li Xun', degree: 'MSc', institution: 'MSc in Data Science and AI and BSc (Hons) in computing'}
       ],
       collaborators: [
