@@ -106,9 +106,12 @@ export default {
           'Associate Editor, Quality of Life Research'
         ]
       },
+      Data Science, AI and Computer Science Specialist:[
+        {name: 'Li Xun', degree: 'MSc', institution: 'MSc in Data Science and AI and BSc (Hons) in computing'}
+      ],
       collaborators: [
-        { name: 'Annushiah Vasan Thakumar', degree: 'PhD', institution: 'Universiti Sains Malaysia' },
-        { name: 'Zhang Xin', degree: 'PhD', institution: 'University of Groningen' }
+        { name: 'Annushiah Vasan Thakumar', degree: 'PhD', institution: 'Taylor's University' },
+        { name: 'Zhang Xin', degree: 'PhD', institution: 'National University of Singapore' }
       ],
       teamMembers: [
         { name: 'Chen Le Ann', degree: 'MPH', institution: 'National University of Singapore' },
@@ -119,9 +122,9 @@ export default {
       ],
       currentStudents: [
         {
-          name: 'Tay Jie Yin',
-          degree: 'MPH',
-          program: 'NUS Public Health, National University of Singapore, Singapore'
+          name: 'Zhao Qian',
+          degree: 'PhD',
+          program: 'NUS Nursing, National University of Singapore, Singapore'
         }
       ],
       currentUndergraduates: [
@@ -134,9 +137,24 @@ export default {
           name: 'Mabel Madeline Lee De Ean',
           degree: 'BSN (Hons) candidate',
           program: 'NUS Nursing, National University of Singapore, Singapore'
+        },
+        {
+          name: 'Yeow Yu Heng',
+          degree: 'BSN (Hons) candidate',
+          program: 'NUS Nursing, National University of Singapore, Singapore'
+        },
+        {
+          name: 'Tan Chloe',
+          degree: 'BSN (Hons) candidate',
+          program: 'NUS Nursing, National University of Singapore, Singapore'
         }
       ],
       pastStudents: [
+        {
+          name: 'Justin Lee Guang Jie',
+          degree: 'MPH',
+          program: 'NUS Public Health, National University of Singapore, Singapore'
+        }
         {
           name: 'Ustunkan Fulya',
           degree: 'MPH',
